@@ -21,7 +21,7 @@ public class Factory {
 
     public VendingMachine getCurrentMachine(){
         int n = vendingMachineList.size();
-        return vendingMachineList.get(n);
+        return vendingMachineList.get(n-1);
     }
 
     public void testVendingFeatures(double money){
@@ -45,14 +45,22 @@ public class Factory {
             System.out.println("Proceed with transaction? [Y]es [N]o");
             confirm = sc.nextLine();
 
-            if(confirm == Y){
+            if(confirm.equals("Y") || confirm.equals("y")){
                 // Checks if the vending machine can produce change
                 valid = machine.isValidTransaction(choice-1, moneyInput, itemNum);
             }
 
-        }while(choice > 5 || choice < 1 && valid == false);
+        }while(choice > 5 || choice < 1 && !valid);
 
         sc.close();
     }
 
+    public void machineMaintenance(){
+        System.out.println("=== MAINTENANCE FEATURES ===");
+        System.out.println("[ 1 ] Restock items");
+        System.out.println("[ 2 ] Stock items");
+        System.out.println("[ 3 ] Collect income");
+        System.out.println("[ 4 ] Set item price");
+        System.out.println("[ 5 ] Replenish system funds");
+    }
 }

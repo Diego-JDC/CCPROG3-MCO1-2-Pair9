@@ -21,6 +21,7 @@ public class VendingMachine {
         this.income = 0;
     }
 
+    /*
     public void menu() {
         Scanner scan = new Scanner(System.in);
         System.out.println("   === MENU === \n");
@@ -43,9 +44,8 @@ public class VendingMachine {
         } else {
             maintenance();
         }
-        
-
     }
+    */
 
     /*
 
