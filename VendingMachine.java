@@ -47,6 +47,8 @@ public class VendingMachine {
 
     }
 
+    /*
+
     private void vendingFeatures() {
         System.out.println("   ===VENDING FEATURES=== \n");
     }
@@ -55,12 +57,42 @@ public class VendingMachine {
         System.out.println("   ===MAINTENANCE FEATURES=== \n");
     }
 
+    */
+
+    public int displayItems(){
+        int num = 1;
+        for(Item i : inventory){
+            System.out.println("[ " + num + " ] "+ i.getName() + ", " + i.getPrice() + ", " + "Stock: " + i.getQuantity() + " Calories: " + i.getCalories());
+            num++;
+        }
+
+        return num;
+    }
+
     private void stockUp() {
 
     }
 
-    private double collectIncome() {
+    public boolean collectIncome() {
 
+    }
+
+    public boolean isValidTransaction(int index, double money, int itemNum) {
+        boolean valid = true;
+
+        /*
+         * Not valid if:
+         * - Item selected is < 0 or > itemNum
+         * - Machine does not have enough money to give change
+         * - User does not give enough money
+         */
+
+        if(index > itemNum || index < 0){
+            valid = false;
+        }
+        else if()
+
+        return valid;
     }
 
     private void replenishBalance(double amount) {
