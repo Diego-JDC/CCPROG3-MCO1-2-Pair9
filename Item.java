@@ -11,27 +11,27 @@ public class Item {
         this.quantity = 0;
     }
 
-    private void addStock(int amount) {
+    public void addStock(int amount) {
         this.quantity += amount;
     }
 
-    private void setPrice(double amount) {
+    public void setPrice(double amount) {
         this.price = amount;
     }
 
-    private String getName() {
+    public String getName() {
         return this.name;
     }
 
-    private int getQuantity() {
+    public int getQuantity() {
         return this.quantity;
     }
 
-    private double getCalories() {
+    public double getCalories() {
         return this.calories;
     }
 
-    private double getPrice() {
+    public double getPrice() {
         return this.price;
     }
 }
