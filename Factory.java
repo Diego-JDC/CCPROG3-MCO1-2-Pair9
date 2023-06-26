@@ -55,12 +55,36 @@ public class Factory {
         sc.close();
     }
 
-    public void machineMaintenance(){
-        System.out.println("=== MAINTENANCE FEATURES ===");
-        System.out.println("[ 1 ] Restock items");
-        System.out.println("[ 2 ] Stock items");
-        System.out.println("[ 3 ] Collect income");
-        System.out.println("[ 4 ] Set item price");
-        System.out.println("[ 5 ] Replenish system funds");
+    public void machineMaintenance(VendingMachine vm){
+        Scanner scan = new Scanner(System.in);
+        int choice;
+        do {
+            System.out.println("=== MAINTENANCE FEATURES ===");
+            System.out.println("[ 1 ] Stock/Restock items");
+            System.out.println("[ 2 ] Collect income");
+            System.out.println("[ 3 ] Set item price");
+            System.out.println("[ 4 ] Replenish system funds");
+            System.out.println("[ 5 ] Back to main menu");
+            System.out.println("Enter choice : ");
+            choice = scan.nextInt();
+
+            if(choice > 5 || choice < 1) {
+                System.out.println("Invalid input! Try again.");
+            }
+
+        } while(choice > 5 || choice < 1);
+        
+        switch(choice) {
+            case 1 : vm.stockUp();
+                     break;
+            case 2 : //function to collect income
+                     break;
+            case 3 : //vm.setItemPrice
+                     break;
+            case 4 : //updateBalance() ??
+                     break;
+        }
+        
+        scan.close();
     }
 }
