@@ -38,7 +38,7 @@ public class Item {
         return this.calories;
     }
 
-    public double getPrice() {
+    public int getPrice() {
         return this.price;
     }
 

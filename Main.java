@@ -3,33 +3,45 @@ import java.util.Scanner;
 public class Main {
     public static void main(String[] args) {
         Factory factory = new Factory("Factory 1");
-
         Scanner scan = new Scanner(System.in);
-        System.out.println("   === MENU === \n");
-        System.out.println("Select feature to test : \n");
-        System.out.println("[ 1 ] Vending Features");
-        System.out.println("[ 2 ] Maintenance Features");
-        System.out.println("[ 3 ] Exit");
-
-        int choice;
+        int choice = 0;
         do {
-            System.out.println("Enter choice : ");
-            choice = scan.nextInt();
-            if(choice != 1 || choice != 2)
-                System.out.println("Invalid choice! try again. \n");
-        }while(choice != 1 || choice != 2);
+            System.out.println("=== MENU ===");
+            System.out.println("Select feature to test:");
+            System.out.println("[ 1 ] Create a vending machine");
+            System.out.println("[ 2 ] Vending Features");
+            System.out.println("[ 3 ] Maintenance Features");
+            System.out.println("[ 4 ] Exit");
 
-        double money;
-        int choice2;
+            do {
+                System.out.println("Enter choice : ");
+                choice = scan.nextInt();
 
-        if(choice == 1){
-            System.out.println("=== TESTING VENDING FEATURES ===");
-            System.out.println("Input cash value: ");
-            money = scan.nextDouble();
-            factory.testVendingFeatures(money);
-        }
-        else if(choice == 2){
-            factory.machineMaintenance();
-        }
+                if (choice != 1 && choice != 2 && choice != 3 && choice != 4) {
+                    System.out.println("Invalid choice! Try again.\n");
+                }
+                else if (choice == 4) {
+                    break;
+                }
+            } while (choice != 1 && choice != 2 && choice != 3);
+
+            String vmName;
+
+            if (choice == 1) {
+                scan.nextLine();
+                System.out.println("Input name of vending machine: ");
+                vmName = scan.nextLine();
+                factory.makeVendingMachine(vmName);
+
+            }
+            else if (choice == 2) {
+                factory.testVendingFeatures();
+            }
+            else if (choice == 3) {
+                factory.machineMaintenance(factory.getCurrentMachine());
+            }
+        } while (choice != 4);
+
+        scan.close();
     }
 }
