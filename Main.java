@@ -1,11 +1,46 @@
 import java.util.Scanner;
 
 public class Main {
+    public static Scanner scan = new Scanner(System.in);
     public static void main(String[] args) {
         Factory factory = new Factory("Factory 1");
-        Scanner scan = new Scanner(System.in);
+        //Scanner scan = new Scanner(System.in);
+
+        VendingMachine vm1 = new VendingMachine("Vending Machine 1");
+
+        Item marshmallows = new Item("Marshmallows", 200.0, 30);
+        Item chocolate = new Item("Chocolate", 100.0, 20);
+        Item iceCream = new Item("Ice Cream", 350.0, 40);
+        Item wafers = new Item("Wafers", 20.0, 10);
+        Item cookies = new Item("Cookies", 35.0, 25);
+        Item strawberries = new Item("Strawberries", 15.0, 16);
+        Item water = new Item("Water bottle", 0, 12);
+        Item banana = new Item("Banana", 17.5, 22);
+
+        vm1.addItem(marshmallows);
+        vm1.addItem(chocolate);
+        vm1.addItem(iceCream);
+        vm1.addItem(wafers);
+        vm1.addItem(cookies);
+        vm1.addItem(strawberries);
+        vm1.addItem(water);
+        vm1.addItem(banana);
+
+        vm1.addItemQuantity(marshmallows, 10);
+        vm1.addItemQuantity(chocolate, 10);
+        vm1.addItemQuantity(iceCream, 10);
+        vm1.addItemQuantity(wafers, 11);
+        vm1.addItemQuantity(cookies, 12);
+        vm1.addItemQuantity(strawberries, 13);
+        vm1.addItemQuantity(water, 9);
+        vm1.addItemQuantity(banana, 16);
+
+        factory.addToVendingMachineList(vm1);
+
+        
         int choice = 0;
         do {
+            
             System.out.println("=== MENU ===");
             System.out.println("Select feature to test:");
             System.out.println("[ 1 ] Create a vending machine");
@@ -14,16 +49,19 @@ public class Main {
             System.out.println("[ 4 ] Exit");
 
             do {
-                System.out.println("Enter choice : ");
+                System.out.print("Enter choice : ");
                 choice = scan.nextInt();
+
+                
+                
 
                 if (choice != 1 && choice != 2 && choice != 3 && choice != 4) {
                     System.out.println("Invalid choice! Try again.\n");
                 }
-                else if (choice == 4) {
-                    break;
-                }
-            } while (choice != 1 && choice != 2 && choice != 3);
+                //else if (choice == 4) { // we can remove this since it will exit if choice is 4 anyway
+                //    break;
+                //}
+            } while (choice != 1 && choice != 2 && choice != 3 && choice != 4);
 
             String vmName;
 
@@ -35,13 +73,20 @@ public class Main {
 
             }
             else if (choice == 2) {
-                factory.testVendingFeatures();
+                //factory.testVendingFeatures();
+                if(!factory.isVendingMachineListEmpty()) {
+                    factory.testVendingFeatures(factory.getCurrentMachine());
+                }
+                else {
+                    System.out.println("There are no vending machines!");
+                }
             }
             else if (choice == 3) {
                 factory.machineMaintenance(factory.getCurrentMachine());
             }
+            
         } while (choice != 4);
-
         scan.close();
+        
     }
 }

@@ -7,7 +7,8 @@ public class VendingMachine {
     private ArrayList<Item> inventory;
     private int balance; // denominations are 1, 5, 10, 20, 50, 100 PHP
     private int income;
-    private final int itemCapacity = 15; // temp : can be set by factory if needed, just remove final and add more to constructors. 
+    private final int itemCapacity = 15; // the maximum quantity of items per slot
+    private int inventoryCapacity = 10; // temp
     
     //constructors
     public VendingMachine(String name, int balance) { // Maybe we should delete so that the balance can only
@@ -37,14 +38,15 @@ public class VendingMachine {
      * Displays all items.
      * @return Number of items
      */
+    //we can remove the returning of an int because we already have getInventorySize()
     public int displayItems(){
         int num = 0;
         for(Item i : inventory){
-            System.out.println("[ " + inventory.indexOf(i) + " ] "+ i.getName() + ", " + i.getPrice());
-            System.out.println("Stock: " + i.getQuantity() + "  Calories: " + i.getCalories());
+            System.out.println("[ " + inventory.indexOf(i) + " ] "+ i.getName() + ", " + i.getPrice() + " PHP");
+            System.out.println("Stock: " + i.getQuantity() + "  Calories: " + i.getCalories() + "\n");
             num++;
         }
-        return num;
+        return num; 
     }
 
     /**
@@ -60,7 +62,7 @@ public class VendingMachine {
             System.out.println("Invalid calories set!");
             valid = false;
         }
-        else if(price < 0) {
+        else if(price < 0) { 
             System.out.println("Invalid price set!");
             valid = false;
         }
@@ -68,6 +70,10 @@ public class VendingMachine {
         Item n = new Item(name, calories, price);
         inventory.add(n);
         return valid;
+    }
+
+    public void addItem(Item item) {
+        inventory.add(item);
     }
 
     /**
@@ -83,88 +89,22 @@ public class VendingMachine {
             System.out.println("Invalid amount!");
             valid = false;
         }
-        item.addQuantity(amount);
-        //System.out.println(item.getName() + " : " + "Added " + amount + " stock.");
+
+        if(item.getQuantity() + amount > this.itemCapacity) {
+            System.out.println("Error : Tried to add " + amount + " of " + item.getName() );
+            System.out.println("    Amount exceeds maximum item capacity! (Max : 15)");
+            valid = false;
+        }
+
+        if(valid == true) {
+            item.addQuantity(amount);
+            System.out.println(item.getName() + " : " + "Added " + amount + " stock.");
+        }
+        
         return valid;
     }
 
-    /**
-     * Restocks or adds items.
-     */
-
-    public void stockUp() {
-        Scanner scan = new Scanner(System.in);
-        int choice;
-        boolean valid = false;
-        do {
-            do {
-                System.out.println("Select option :");
-                System.out.println("[ 1 ] Add items");
-                System.out.println("[ 2 ] Restock existing items");
-                System.out.println("[ 3 ] Back to previous menu");
-                System.out.println("Enter choice : ");
-                choice = scan.nextInt();
-
-                if(choice != 1 && choice != 2 && choice != 3) {
-                    System.out.println("Invalid input! Try again");
-                }
-            } while(choice != 1 && choice != 2 && choice != 3);
-
-            if(choice == 1){
-                if(inventory.size() <= itemCapacity){
-                    valid = true;
-                }
-            }
-
-            //checks to make sure restocking already has existing items in inventory
-            //regardless if their quantity is 0 or not
-            if(choice == 2) {
-                if(!inventory.isEmpty()) {
-                    valid = true;
-                }
-                else {
-                    System.out.println("Inventory is empty! Add items first.");
-                }
-            }
-        } while(!valid);
-
-        switch(choice) {
-            // case 1 : adding items via maintenance mode
-            case 1 : double calories;
-                int price;
-                String name;
-                System.out.println("===ADDING A NEW ITEM===");
-                do {
-                    System.out.println("Enter item name : ");
-                    scan.nextLine(); // Removes scanning error
-                    name = scan.nextLine();
-                    System.out.println("Enter calories : ");
-                    calories = scan.nextDouble();
-                    System.out.println("Enter price : ");
-                    price = scan.nextInt();
-                } while(!addItem(name, calories, price));
-                break;
-            // case 2 : restocking previously added items via maintenance mode
-            case 2 : int c, amount;
-                System.out.println("===RESTOCKING ITEMS===");
-                do {
-                    System.out.print("\n");
-                    System.out.println("------ITEM LIST------");
-                    displayItems();
-                    do {
-                        System.out.println("Enter index of your choice : ");
-                        c = scan.nextInt();
-                        if(c < 0 || c >= inventory.size()) {
-                            System.out.println("Invalid index! Try again.");
-                        }
-                    } while (c < 0 || c >= inventory.size());
-
-                    System.out.println("Enter amount to add : ");
-                    amount = scan.nextInt();
-                } while(!addItemQuantity(inventory.get(c), amount));
-                break;
-        }
-    }
+    
 
     /**
      * Sets the price of an item.
@@ -180,55 +120,28 @@ public class VendingMachine {
             valid = false;
         }
         item.setPrice(newPrice);
-        //System.out.println(item.getName() + " : " + "updated price to " + newPrice);
+        System.out.println(item.getName() + " : " + "updated price to " + newPrice);
         return valid;
     }
 
+    
+
     /**
-     * Picks an item to set a new price in the menu.
+     * Updates the balance of the machine for change
+     * @param change - amount of money to take from the machine's balance for change.
+     * @return boolean value. True if there is enough for change
      */
 
-    public void setPriceMenu() {
-        
-        if(!this.inventory.isEmpty()) {
-            Scanner scan = new Scanner(System.in);
-            int index, newPrice;
-            System.out.println("===UPDATE ITEM PRICE===");
-            System.out.println("------ITEM LIST------");
-            displayItems();
-            do {
-                System.out.println("Enter index of your choice : ");
-                index = scan.nextInt();
-
-                System.out.println("Enter new price : ");
-                newPrice = scan.nextInt();
-
-                if(index < 0 || index >= inventory.size()) {
-                    System.out.println("Invalid index! Try again.");
-                }
-                if(newPrice < 0) {
-                    System.out.println("Invalid price! Try again.");
-                }
-
-            } while (index < 0 || index >= inventory.size() || newPrice < 0); //protecting user from invalid price & index.
-            setPrice(inventory.get(index), newPrice);
-
-            scan.close();
+    public boolean updateBalance(int change) {
+        boolean result = true;
+        if(balance < change) { // there isn't enough money for change
+            result = false;
         }
-        else {
-            System.out.println("Inventory is empty! add items first.");
+        else { // we can assume that the balance is >= amount
+            this.balance -= change;
         }
-
+        return result;
     }
-
-    /**
-     * Updates the balance of the machine.
-     * @return New balance
-     */
-
-    //public boolean updateBalance() {
-
-    //}
 
     /**
      * Gets the price of an item given item index.
@@ -240,6 +153,12 @@ public class VendingMachine {
         return item.getPrice();
     }
 
+    public String getItemName(int index) {
+        Item item = inventory.get(index);
+        return item.getName();
+    }
+
+    
     public int computeChange(int money, int price){
         return price-money;
     }
@@ -275,15 +194,6 @@ public class VendingMachine {
         }
 
         return valid;
-    }
-
-    /**
-     * Replenishes the machine balance.
-     * @param amount Amount of money to be added
-     */
-
-    public void replenishBalance(int amount) {
-        this.balance += amount;
     }
 
     /**
@@ -324,4 +234,51 @@ public class VendingMachine {
     public void updateItemList(Item item){
         this.inventory.add(item);
     }
+
+    /**
+     * updates stock whenever a successful transaction is made
+     * @param index of the item in the inventory of the machine 
+     */
+    public void updateStock(int index) {
+        Item item = inventory.get(index);
+        item.removeStock(1);
+    }
+
+    public void addIncome(int amount) {
+        this.income += amount;
+    }
+
+   
+    /**
+     * Replenishes the machine balance.
+     * @param amount Amount of money to be added
+     */
+    public void addBalance(int amount) {
+        this.balance += amount;
+    }
+
+    public int getItemCapacity() {
+        return this.itemCapacity;
+    }
+
+    public int getIncome() {
+        return this.income;
+    }
+
+    public void setIncome(int amount) {
+        this.income = amount;
+    }
+
+    public Item getItem(int index) {
+        return inventory.get(index);
+    }
+
+    public ArrayList<Item> getInventory() {
+        return this.inventory;
+    }
+
+    public String getName() {
+        return this.name;
+    }
+    
 }

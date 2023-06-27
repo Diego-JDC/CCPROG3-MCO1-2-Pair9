@@ -3,12 +3,14 @@ public class Item {
     private int quantity;
     private double calories;
     private int price;
+    private int initQuantity;
 
     public Item(String name, double calories, int price) {
         this.name = name;
         this.calories = calories;
         this.price = price;
         this.quantity = 0;
+        this.initQuantity = 0;
     }
 
     public Item(String name, double calories, int price, int initQuantity) {
@@ -16,10 +18,15 @@ public class Item {
         this.calories = calories;
         this.price = price;
         this.quantity = initQuantity;
+        this.initQuantity = initQuantity;
     }
 
     public void addStock(int amount) {
         this.quantity += amount;
+    }
+
+    public void removeStock(int amount) {
+        this.quantity -= amount;
     }
 
     public void setPrice(int amount) {
@@ -44,5 +51,11 @@ public class Item {
 
     public void addQuantity(int amount) {
         this.quantity += amount;
+        this.initQuantity = quantity; 
     }
+
+    public int getInitQuantity() {
+        return this.initQuantity;
+    }
+
 }
