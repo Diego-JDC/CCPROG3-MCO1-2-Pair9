@@ -16,6 +16,9 @@ public class Main {
         Item strawberries = new Item("Strawberries", 15.0, 16);
         Item water = new Item("Water bottle", 0, 12);
         Item banana = new Item("Banana", 17.5, 22);
+        Item mango = new Item("Mango", 22, 17);
+        Item milk = new Item("Milk bottle", 22, 100);
+        Item pineapple = new Item("Pineapple", 2, 7);
 
         vm1.addItem(marshmallows);
         vm1.addItem(chocolate);
@@ -25,6 +28,9 @@ public class Main {
         vm1.addItem(strawberries);
         vm1.addItem(water);
         vm1.addItem(banana);
+        vm1.addItem(mango);
+        vm1.addItem(milk);
+        vm1.addItem(pineapple);
 
         vm1.addItemQuantity(marshmallows, 10);
         vm1.addItemQuantity(chocolate, 10);

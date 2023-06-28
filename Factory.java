@@ -258,38 +258,70 @@ public class Factory {
 
         switch(choice) {
             // case 1 : adding items via maintenance mode
-            case 1 : double calories;
-                int price;
-                String name;
+            //TODO Give user ability to exit in the middle of asking for inputs.
+            case 1 : double calories = -1.0; 
+                int price = -1;
+                String name = "-1";
                 System.out.println("===ADDING A NEW ITEM===");
-                do {
-                    System.out.println("Enter item name : ");
+                if(vm.getInventorySize() >= vm.getInventoryCapacity()) {
+                    System.out.println("Maximum slots occupied! (Max : " + vm.getInventoryCapacity() + ")");
+                }
+                else {
+                    System.out.println("Enter item name (-1 to Exit): ");
                     scan.nextLine(); // Removes scanning error
                     name = scan.nextLine();
-                    System.out.println("Enter calories : ");
-                    calories = scan.nextDouble();
-                    System.out.println("Enter price : ");
-                    price = scan.nextInt();
-                } while(!vm.addItem(name, calories, price));
+                    if(!name.equals("-1")) {
+                        do {
+                            System.out.println("Enter calories (-1 to Exit): ");
+                            calories = scan.nextDouble();
+                            if(calories < -1.0) {
+                                System.out.println("Invlid input! Try again.");
+                            }
+                        }while (calories < -1.0);
+                        if(calories != -1.0) {
+                            do {
+                                System.out.println("Enter price (-1 to Exit): ");
+                                price = scan.nextInt();
+                                if(price < -1) {
+                                    System.out.println("Invalid input! Try again.");
+                                }
+                            } while (price < -1);
+                        }   
+                    }
+                    if(!name.equals("-1") && calories != -1.0 && price != -1) {
+                        vm.addItem(name, calories, price);
+                    }
+                }
                 break;
             // case 2 : restocking previously added items via maintenance mode
-            case 2 : int c, amount;
+            case 2 : int c, amount = -1;
+                //TODO Give user option to exit in middle of getting inputs.
                 System.out.println("===RESTOCKING ITEMS===");
                 do {
-                    System.out.print("\n");
-                    System.out.println("------ITEM LIST------");
+                    System.out.println("\n------ITEM LIST------");
                     vm.displayItems();
                     do {
-                        System.out.println("Enter index of your choice : ");
+                        System.out.println("Enter index of your choice (-1 to Exit): ");
                         c = scan.nextInt();
-                        if(c < 0 || c > vm.getInventorySize() - 1) {
+                        if(c < -1 || c > vm.getInventorySize() - 1) {
                             System.out.println("Invalid index! Try again.");
                         }
-                    } while (c < 0 || c > vm.getInventorySize() - 1);
-
-                    System.out.println("Enter amount to add : ");
-                    amount = scan.nextInt();
-                } while(!vm.addItemQuantity(vm.getItem(c), amount));
+                    } while (c < -1 || c > vm.getInventorySize() - 1);
+                    if(c != -1) {
+                    Item i = vm.getItem(c);
+                        if(i.getQuantity() < vm.getItemCapacity()) {
+                            System.out.println("Enter amount to add (-1 to Exit): ");
+                            amount = scan.nextInt();
+                            if(amount < -1);
+                        }
+                        else {
+                            System.out.println("Item chosen is already at maximum capacity! (Max : " + vm.getItemCapacity() + ")");
+                        }
+                    }
+                } while(amount < -1);
+                if(c != -1 && amount != -1) {
+                    vm.addItemQuantity(vm.getItem(c), amount);
+                }
                 break;
         }
         System.out.println("Exiting Stock up menu... \n");
@@ -327,38 +359,33 @@ public class Factory {
     public void setPriceMenu(VendingMachine vm) {
         if(vm.getInventorySize() != 0) {
             int index, newPrice = 0;
-            boolean exit = false;
             System.out.println("===UPDATE ITEM PRICE===");
             System.out.println("------ITEM LIST------");
             vm.displayItems();
             do {
-                System.out.println("Enter index of your choice (-1 to exit): ");
-                index = scan.nextInt();
-
-                if(index < 0){
-                    exit = true;
-                }
-
-                else if(!exit && index > vm.getInventorySize() - 1){
-                    System.out.println("Invalid index! Try again.");
-                }
-
-                if(!exit){
-                    System.out.println("Enter new price : ");
+                do {
+                    System.out.println("Enter index of your choice (-1 to exit): ");
+                    index = scan.nextInt();
+                    if(index < -1 || index > vm.getInventorySize() - 1) {
+                        System.out.println("Invalid index! Try again.");
+                    }
+                } while(index < -1 || index > vm.getInventorySize() - 1);
+                if(index != -1){
+                    System.out.println("Enter new price (-1 to Exit): ");
                     newPrice = scan.nextInt();
-
-                    if(newPrice < 0) {
+                    if(newPrice < -1) {
                         System.out.println("Invalid price! Try again.");
                     }
                 }
-            } while (!exit && index > vm.getInventorySize() - 1 && newPrice < 0); //protecting user from invalid price & index.
-            if(!exit){
+            } while (newPrice < -1); //protecting user from invalid price & index.
+            if(index != -1 && newPrice != -1){
                 vm.setPrice(vm.getItem(index), newPrice);
             }
         }
         else {
             System.out.println("Inventory is empty! add items first.");
         }
+        System.out.println("Exiting set price menu...\n");
     }
 
     /**
@@ -370,14 +397,17 @@ public class Factory {
         Scanner scan = new Scanner(System.in);
         int addedBalance;
         do {
-            System.out.print("Enter balance to add to machine : ");
+            System.out.print("Enter balance to add to machine (-1 to Exit): ");
             addedBalance = scan.nextInt();
-            if(addedBalance < 0) {
+            if(addedBalance < -1) {
                 System.out.println("Invalid input! Try again.");
             }
-        } while(addedBalance < 0);
-        vm.addBalance(addedBalance);
-        System.out.println("Added " + addedBalance + " PHP to balance.");
+        } while(addedBalance < -1);
+        if(addedBalance != -1) {
+            vm.addBalance(addedBalance);
+            System.out.println("Added " + addedBalance + " PHP to balance.");
+        }
+        System.out.println("Exiting Menu...\n");
     }
 
     /**
@@ -389,20 +419,20 @@ public class Factory {
     public void printTransactionSummary(VendingMachine vm) {
 
         if(vm.getInventorySize() > 0){
-            System.out.println("\nPrinting Transaction Summary...");
+            System.out.println("\nPrinting Transaction Summary...\n");
 
             System.out.println("[ITEM NAME\t] : [INITIAL QUANTITY] : [# SOLD] : [CURRENT QUANTITY] : [PROFIT]");
             //some code to get the transaction summary
             for(Item i : vm.getInventory()) {
-                System.out.println("[ " + i.getName() + "\t] : " + "[ " + i.getInitQuantity() + " ] : " +
-                        "[ " + (i.getInitQuantity() - i.getQuantity()) + " ] : " + "[ " + i.getQuantity() + " ] : " +
+                System.out.println("[ " + i.getName() + "\t] " + "[ " + i.getInitQuantity() + " ] : " +
+                        "[ " + (i.getInitQuantity() - i.getQuantity()) + " ] " + "[ " + i.getQuantity() + " ] " +
                         "[ " + (i.getPrice() * (i.getInitQuantity() - i.getQuantity())) + " ]");
             }
 
-            System.out.println("Done printing!\n");
+            System.out.println("\nDone printing!\n");
         }
         else{
-            System.out.println("No items in inventory yet!");
+            System.out.println("No items in inventory yet!\n");
         }
     }
 }

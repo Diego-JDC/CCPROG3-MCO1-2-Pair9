@@ -8,7 +8,7 @@ public class VendingMachine {
     private int balance; // denominations are 1, 5, 10, 20, 50, 100 PHP
     private int income;
     private final int itemCapacity = 15; // the maximum quantity of items per slot
-    private int inventoryCapacity = 10; // temp
+    private final int inventoryCapacity = 10; // max slots the machine can accomodate.
     
     //constructors
     public VendingMachine(String name, int balance) { // Maybe we should delete so that the balance can only
@@ -66,14 +66,29 @@ public class VendingMachine {
             System.out.println("Invalid price set!");
             valid = false;
         }
-
-        Item n = new Item(name, calories, price);
-        inventory.add(n);
+        else if(inventory.size() + 1 > this.inventoryCapacity) {// + 1 because this would be *if* an extra item is added
+            System.out.println("Machine has reached max capacity for items!\n");
+            valid = false;
+        }
+        if(valid == true) {
+            Item n = new Item(name, calories, price);
+            inventory.add(n);
+            System.out.println("Successfully added " + name + "!\n");
+        }
+        
         return valid;
     }
 
     public void addItem(Item item) {
-        inventory.add(item);
+        if(inventory.size() + 1 > this.inventoryCapacity) { // + 1 because this would be *if* an extra item is added
+            System.out.println("Tried adding " + item.getName());
+            System.out.println("\tError : Machine has reached max capacity for items!\n");
+        }
+        else {
+            inventory.add(item);
+            System.out.println("Successfully added " + item.getName() + "!");
+        }
+        
     }
 
     /**
@@ -120,7 +135,7 @@ public class VendingMachine {
             valid = false;
         }
         item.setPrice(newPrice);
-        System.out.println(item.getName() + " : " + "updated price to " + newPrice);
+        System.out.println(item.getName() + " : " + "updated price to " + newPrice + " PHP");
         return valid;
     }
 
@@ -280,5 +295,8 @@ public class VendingMachine {
     public String getName() {
         return this.name;
     }
-    
+
+    public int getInventoryCapacity() {
+        return this.inventoryCapacity;
+    }
 }
