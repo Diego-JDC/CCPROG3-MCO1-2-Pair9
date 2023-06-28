@@ -55,9 +55,6 @@ public class Main {
                 if (choice != 1 && choice != 2 && choice != 3 && choice != 4) {
                     System.out.println("Invalid choice! Try again.\n");
                 }
-                //else if (choice == 4) { // we can remove this since it will exit if choice is 4 anyway
-                //    break;
-                //}
             } while (choice != 1 && choice != 2 && choice != 3 && choice != 4);
 
             String vmName;
@@ -70,7 +67,6 @@ public class Main {
 
             }
             else if (choice == 2) {
-                //factory.testVendingFeatures();
                 if(!factory.isVendingMachineListEmpty()) {
                     factory.testVendingFeatures(factory.getCurrentMachine());
                 }
@@ -84,6 +80,5 @@ public class Main {
             
         } while (choice != 4);
         scan.close();
-        
     }
 }
