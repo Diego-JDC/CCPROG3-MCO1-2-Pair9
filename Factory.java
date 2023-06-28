@@ -15,10 +15,19 @@ public class Factory {
         this.name = name;
     }
 
+    /**
+     * Adds a newly created vending machine to the machine list.
+     * @param vm Vending machine object
+     */
 
     public void addToVendingMachineList(VendingMachine vm) {
         vendingMachineList.add(vm);
     }
+
+    /**
+     * Checks if the vending machine list is empty.
+     * @return Boolean value
+     */
 
     public boolean isVendingMachineListEmpty() {
         boolean result = false;
@@ -52,12 +61,19 @@ public class Factory {
         }
     }
 
+    /**
+     * Tests the vending features of a given vending machine.
+     * @param vm Vending machine object
+     */
+
     public void testVendingFeatures(VendingMachine vm) {
         Scanner scan = new Scanner(System.in);
         int choice;
         int transaction = 0; // stores the cash in machine during transaction.
         int cash = 0;
         int change = 0;
+        int confirm = -1; // confirms if user wants to proceed with transaction after inputting cash.
+        boolean validCash; // checks if cash input is valid
 
         System.out.println("=== TESTING VENDING FEATURES ===");
         System.out.println("Vending machine : \" " + vm.getName() +  " \" ");
@@ -70,62 +86,75 @@ public class Factory {
             }
         } while(choice < -1 || choice > vm.getInventorySize() - 1);
 
-        
-
         //at this point, the user chose an item, or chose to exit
         if(choice != -1) {
             Item i = vm.getItem(choice);
             if(i.getQuantity() == 0) { // prints error if user chooses an item with 0 quantity.
-                System.out.println("Error : " + i.getName() + " has 0 quantity!");
+                System.out.println("Error : " + i.getName() + " is out of stock!");
                 choice = -1;
             }
 
-            do {
-                System.out.println("You chose : " + vm.getItemName(choice));
-                System.out.println("Price : " + vm.getItemPrice(choice));
-                System.out.println("Cash in machine : " + transaction);
+            if(choice != -1){
                 do {
-                    System.out.println("Accepted inputs : [1, 5, 10, 20, 50, 100] PHP");
-                    System.out.print("Input cash [0 to exit]: ");
-                    cash = scan.nextInt();
-                    if(cash != 0) { // makes sure not to print error if user wants to exit
-                        if(vm.isValidDenomination(cash) == false) {
-                            System.out.println("Invalid cash input! \n");
+                    do {
+                        System.out.println("You chose : " + vm.getItemName(choice));
+                        System.out.println("Price : " + vm.getItemPrice(choice));
+                        System.out.println("Cash in machine : " + transaction);
+                        validCash = true;
+                        System.out.println("Accepted inputs : [1, 5, 10, 20, 50, 100] PHP");
+                        System.out.print("Input cash [0 to exit]: ");
+                        cash = scan.nextInt();
+                        if(cash != 0) { // makes sure not to print error if user wants to exit
+                            if(!vm.isValidDenomination(cash) || cash < vm.getItemPrice(choice)) {
+                                System.out.println("Invalid cash input! \n");
+                                validCash = false;
+                            }
+                        }
+                    } while(!vm.isValidDenomination(cash) && !validCash);
+
+                    if(validCash && cash != 0){
+                        // User can exit after putting in cash in case they change their mind
+                        System.out.println("Proceed with transaction? [1] Yes   [2] No");
+                        confirm = scan.nextInt();
+                        if(confirm == 1){
+                            transaction += cash;
+                            System.out.println();
+                        }
+                        else{
+                            System.out.println("Returning money (" + cash + " PHP) to user");
                         }
                     }
-                } while(vm.isValidDenomination(cash) == false && cash != 0);
-                transaction += cash;
-                System.out.println();
-            } while(transaction < vm.getItemPrice(choice) && cash != 0); // loop won't exit until the user put enough money to pay for the item or they chose to exit.
+                } while(transaction < vm.getItemPrice(choice) && cash != 0 && confirm != 2); // loop won't exit until the user put enough money to pay for the item or they chose to exit.
 
-            //at this point, the money the user put in is enough to pay for the item or chose to exit.
-            if(cash != 0) {
-                System.out.println("Cash in machine : " + transaction); // just to let the user know how much they put in the machine as of this point.
-                if(transaction > vm.getItemPrice(choice)) { // machine needs to give change to the user
-                    change = transaction - vm.getItemPrice(choice);
-                    if(vm.updateBalance(change)) {//if the machine has enough balance to dispense change
-                        System.out.println("Machine has enough change!");
-                        System.out.println("Dispensing change : " + change + " PHP");
+                //at this point, the money the user put in is enough to pay for the item or chose to exit.
+                if(cash != 0 && confirm == 1) {
+                    System.out.println("Cash in machine : " + transaction); // just to let the user know how much they put in the machine as of this point.
+                    if(transaction > vm.getItemPrice(choice)) { // machine needs to give change to the user
+                        change = transaction - vm.getItemPrice(choice);
+                        if(vm.updateBalance(change)) {//if the machine has enough balance to dispense change
+                            System.out.println("Machine has enough change!");
+                            System.out.println("Dispensing change : " + change + " PHP");
+                            System.out.println("Transaction success!");
+                            vm.addIncome(transaction - change); // add the transaction money to income
+                            System.out.println("Dispensing : " + vm.getItemName(choice));
+                            vm.updateStock(choice); // takes out 1 stock from the item
+                        }
+                        else {//the machine doesn't have enough balance to produce change
+                            System.out.println("Machine does not have enough change! Terminating transaction...");
+                            System.out.println("Returning money (" + transaction + " PHP) to user...");
+                        }
+                    }
+                    else if(transaction == vm.getItemPrice(choice)) { // user put exact money to pay for the item, thus no change needed.
                         System.out.println("Transaction success!");
-                        vm.addIncome(transaction - change); // add the transaction money to income
+                        vm.addIncome(transaction); // add the transaction money to income
                         System.out.println("Dispensing : " + vm.getItemName(choice));
                         vm.updateStock(choice); // takes out 1 stock from the item
                     }
-                    else {//the machine doesn't have enough balance to produce change
-                        System.out.println("Machine does not have enough change! Terminating transaction...");
-                        System.out.println("Returning money (" + transaction + " PHP) to user...");
-                    }
-                } 
-                else if(transaction == vm.getItemPrice(choice)) { // user put exact money to pay for the item, thus no change needed.
-                    System.out.println("Transaction success!");
-                    vm.addIncome(transaction); // add the transaction money to income
-                    System.out.println("Dispensing : " + vm.getItemName(choice));
-                    vm.updateStock(choice); // takes out 1 stock from the item
                 }
             }
+
         }
         System.out.println("Exiting Vending Feature testing...\n");
-        //scan.close();
     }
 
     /**

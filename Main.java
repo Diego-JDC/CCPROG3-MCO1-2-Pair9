@@ -52,9 +52,6 @@ public class Main {
                 System.out.print("Enter choice : ");
                 choice = scan.nextInt();
 
-                
-                
-
                 if (choice != 1 && choice != 2 && choice != 3 && choice != 4) {
                     System.out.println("Invalid choice! Try again.\n");
                 }
