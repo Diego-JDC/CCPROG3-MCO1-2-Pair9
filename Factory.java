@@ -394,7 +394,6 @@ public class Factory {
      */
 
     public void addBalanceMenu(VendingMachine vm) {
-        Scanner scan = new Scanner(System.in);
         int addedBalance;
         do {
             System.out.print("Enter balance to add to machine (-1 to Exit): ");

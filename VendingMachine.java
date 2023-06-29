@@ -1,6 +1,4 @@
 import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
 
 public class VendingMachine {
     private String name;
@@ -11,8 +9,7 @@ public class VendingMachine {
     private final int inventoryCapacity = 10; // max slots the machine can accomodate.
     
     //constructors
-    public VendingMachine(String name, int balance) { // Maybe we should delete so that the balance can only
-                                                      // be changed through the maintenance tab
+    public VendingMachine(String name, int balance) {
         this.name = name;
         this.inventory = new ArrayList<Item>();
         this.balance = balance;
@@ -36,9 +33,7 @@ public class VendingMachine {
 
     /**
      * Displays all items.
-     * @return Number of items
      */
-    //we can remove the returning of an int because we already have getInventorySize()
     public int displayItems(){
         int num = 0;
         for(Item i : inventory){
@@ -46,7 +41,7 @@ public class VendingMachine {
             System.out.println("Stock: " + i.getQuantity() + "  Calories: " + i.getCalories() + "\n");
             num++;
         }
-        return num; 
+        return num;
     }
 
     /**
@@ -232,32 +227,33 @@ public class VendingMachine {
 
     /**
      * Gets number of items in inventory.
-     * @return Number of items
+     * @return number of items
      */
     public int getInventorySize(){
         return this.inventory.size();
     }
 
-    public void transactionSummary() {
-
-    }
-
     /**
      * Adds an item to the item list.
-     * @param item Item input of user
+     * @param item item input of user
      */
     public void updateItemList(Item item){
         this.inventory.add(item);
     }
 
     /**
-     * updates stock whenever a successful transaction is made
+     * Updates stock whenever a successful transaction is made
      * @param index of the item in the inventory of the machine 
      */
     public void updateStock(int index) {
         Item item = inventory.get(index);
         item.removeStock(1);
     }
+
+    /**
+     * Adds the amount of income when collected by user.
+     * @param amount the amount to be collected
+     */
 
     public void addIncome(int amount) {
         this.income += amount;
@@ -266,11 +262,17 @@ public class VendingMachine {
    
     /**
      * Replenishes the machine balance.
-     * @param amount Amount of money to be added
+     * @param amount amount of money to be added
      */
+
     public void addBalance(int amount) {
         this.balance += amount;
     }
+
+    /**
+     * Gets the item capacity of the vending machine.
+     * @return
+     */
 
     public int getItemCapacity() {
         return this.itemCapacity;
