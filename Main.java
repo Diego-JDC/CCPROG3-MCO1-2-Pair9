@@ -8,6 +8,7 @@ public class Main {
         //Scanner scan = new Scanner(System.in);
 
         VendingMachine vm1 = new VendingMachine("Vending Machine 1");
+        System.out.println("Created vending machine : " + vm1.getName());
 
         Item marshmallows = new Item("Marshmallows", 200.0, 30);
         Item chocolate = new Item("Chocolate", 100.0, 20);
