@@ -8,14 +8,16 @@ import java.util.Scanner;
 
 public class Factory {
     private ArrayList<VendingMachine> vendingMachineList;
+    private String name;
     private Scanner scan = new Scanner(System.in); // I put the scanners here since there were problems with
                                                    // declaring new scanners every method
 
     /**
-     * Constructor.
-     * @param name name of vending machine
+     * Constructor for Factory.
+     * @param name name of factory.
      */
     public Factory(String name) {
+        this.name = name;
         this.vendingMachineList = new ArrayList<VendingMachine>();
     }
 
@@ -430,5 +432,9 @@ public class Factory {
         else{
             System.out.println("No items in inventory yet!\n");
         }
+    }
+
+    public String getName() {
+        return this.name;
     }
 }

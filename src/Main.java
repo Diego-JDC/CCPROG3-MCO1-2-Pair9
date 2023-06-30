@@ -47,7 +47,7 @@ public class Main {
         
         int choice = 0;
         do {
-            
+            System.out.println("Factory : " + factory.getName());
             System.out.println("=== MENU ===");
             System.out.println("Select feature to test:");
             System.out.println("[ 1 ] Create a vending machine");
