@@ -1,3 +1,4 @@
+package src;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -7,22 +8,20 @@ import java.util.Scanner;
 
 public class Factory {
     private ArrayList<VendingMachine> vendingMachineList;
-    private String name;
     private Scanner scan = new Scanner(System.in); // I put the scanners here since there were problems with
                                                    // declaring new scanners every method
 
     /**
      * Constructor.
-     * @param name Name of vending machine
+     * @param name name of vending machine
      */
     public Factory(String name) {
         this.vendingMachineList = new ArrayList<VendingMachine>();
-        this.name = name;
     }
 
     /**
      * Adds a newly created vending machine to the machine list.
-     * @param vm Vending machine object
+     * @param vm vending machine object
      */
 
     public void addToVendingMachineList(VendingMachine vm) {
@@ -31,7 +30,7 @@ public class Factory {
 
     /**
      * Checks if the vending machine list is empty.
-     * @return Boolean value
+     * @return boolean value
      */
 
     public boolean isVendingMachineListEmpty() {
@@ -44,7 +43,7 @@ public class Factory {
 
     /***
      * Function to make a new vending machine.
-     * @param name Vending machine name
+     * @param name vending machine name
      */
     public void makeVendingMachine(String name) {
         VendingMachine n = new VendingMachine(name);
@@ -53,7 +52,7 @@ public class Factory {
 
     /**
      * Gets most recently created vending machine.
-     * @return  Vending machine object
+     * @return  vending machine object
      */
 
     public VendingMachine getCurrentMachine(){
@@ -68,7 +67,7 @@ public class Factory {
 
     /**
      * Tests the vending features of a given vending machine.
-     * @param vm Vending machine object
+     * @param vm vending machine object
      */
 
     public void testVendingFeatures(VendingMachine vm) {
@@ -179,7 +178,7 @@ public class Factory {
 
     /**
      * Edits different components of the vending machine.
-     * @param vm Vending machine object
+     * @param vm vending machine object
      */
 
     public void machineMaintenance(VendingMachine vm){
@@ -218,7 +217,7 @@ public class Factory {
 
     /**
      * Restocks or adds a particular item.
-     * @param vm Vending machine object
+     * @param vm vending machine object
      */
 
     public void stockUpMenu(VendingMachine vm) {
@@ -254,11 +253,10 @@ public class Factory {
                     System.out.println("Inventory is empty! Add items first.");
                 }
             }
-        } while(!valid);
+        } while(!valid && choice != 3);
 
         switch(choice) {
             // case 1 : adding items via maintenance mode
-            //TODO Give user ability to exit in the middle of asking for inputs.
             case 1 : double calories = -1.0; 
                 int price = -1;
                 String name = "-1";
@@ -295,7 +293,6 @@ public class Factory {
                 break;
             // case 2 : restocking previously added items via maintenance mode
             case 2 : int c, amount = -1;
-                //TODO Give user option to exit in middle of getting inputs.
                 System.out.println("===RESTOCKING ITEMS===");
                 do {
                     System.out.println("\n------ITEM LIST------");
@@ -329,7 +326,7 @@ public class Factory {
 
     /**
      * Collects income gained from sales.
-     * @param vm Vending machine object
+     * @param vm vending machine object
      */
 
     public void collectIncomeMenu(VendingMachine vm) {
@@ -373,11 +370,11 @@ public class Factory {
                 if(index != -1){
                     System.out.println("Enter new price (-1 to Exit): ");
                     newPrice = scan.nextInt();
-                    if(newPrice < -1) {
+                    if(newPrice < -1 || newPrice > 100) {
                         System.out.println("Invalid price! Try again.");
                     }
                 }
-            } while (newPrice < -1); //protecting user from invalid price & index.
+            } while ((newPrice < -1 || newPrice > 100) && index != -1); //protecting user from invalid price & index.
             if(index != -1 && newPrice != -1){
                 vm.setPrice(vm.getItem(index), newPrice);
             }
@@ -390,7 +387,7 @@ public class Factory {
 
     /**
      * Adds machine balance.
-     * @param vm Vending machine object
+     * @param vm vending machine object
      */
 
     public void addBalanceMenu(VendingMachine vm) {
@@ -412,7 +409,7 @@ public class Factory {
     /**
      * Prints transaction summary based on initial quantity, current quantity, number of an item sold
      * and profit gained from selling each item.
-     * @param vm Vending machine object
+     * @param vm vending machine object
      */
 
     public void printTransactionSummary(VendingMachine vm) {

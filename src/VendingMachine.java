@@ -1,3 +1,4 @@
+package src;
 import java.util.ArrayList;
 
 public class VendingMachine {
@@ -25,7 +26,7 @@ public class VendingMachine {
 
     /**
      * Gets the amount of money inside the vending machine.
-     * @return Money balance of machine
+     * @return money balance of machine
      */
     public int getBalance(){
         return this.balance;
@@ -46,18 +47,19 @@ public class VendingMachine {
 
     /**
      * Adds a new item to the vending machine.
-     * @param name Name of item
-     * @param calories Amount of calories
-     * @param price Price of item
+     * @param name name of item
+     * @param calories amount of calories
+     * @param price price of item
      * @return boolean value
      */
+
     public boolean addItem(String name, double calories, int price) {
         boolean valid = true;
         if(calories < 0) {
             System.out.println("Invalid calories set!");
             valid = false;
         }
-        else if(price < 0) { 
+        else if(price < 0 || price > 100) { 
             System.out.println("Invalid price set!");
             valid = false;
         }
@@ -74,6 +76,11 @@ public class VendingMachine {
         return valid;
     }
 
+    /**
+     * Adds an item to the vending machine.
+     * @param item item object to be added
+     */
+
     public void addItem(Item item) {
         if(inventory.size() + 1 > this.inventoryCapacity) { // + 1 because this would be *if* an extra item is added
             System.out.println("Tried adding " + item.getName());
@@ -88,9 +95,9 @@ public class VendingMachine {
 
     /**
      * Adds more of a particular item.
-     * @param item Item object
-     * @param amount Number of items to be added
-     * @return Boolean value
+     * @param item item object
+     * @param amount number of items to be added
+     * @return boolean value
      */
 
     public boolean addItemQuantity(Item item, int amount) {
@@ -114,18 +121,16 @@ public class VendingMachine {
         return valid;
     }
 
-    
-
     /**
      * Sets the price of an item.
-     * @param item Item object
-     * @param newPrice New item price
-     * @return Boolean value
+     * @param item item object
+     * @param newPrice new item price
+     * @return boolean value
      */
 
     public boolean setPrice(Item item, int newPrice) {
         boolean valid = true;
-        if(newPrice < 0) { // protecting programmer/driver from invalid prices
+        if(newPrice < 0 || newPrice > 100) { // protecting programmer/driver from invalid prices
             System.out.println("Invalid price!");
             valid = false;
         }
@@ -134,11 +139,9 @@ public class VendingMachine {
         return valid;
     }
 
-    
-
     /**
      * Updates the balance of the machine for change
-     * @param change - amount of money to take from the machine's balance for change.
+     * @param change amount of money to take from the machine's balance for change.
      * @return boolean value. True if there is enough for change
      */
 
@@ -155,19 +158,31 @@ public class VendingMachine {
 
     /**
      * Gets the price of an item given item index.
-     * @param index Index of an item inside inventory
-     * @return Price of the item
+     * @param index index of an item inside inventory
+     * @return price of the item
      */
     public int getItemPrice(int index){
         Item item = inventory.get(index);
         return item.getPrice();
     }
 
+    /**
+     * Gets the name of an item.
+     * @param index index of an item inside inventory
+     * @return name of item
+     */
+    
     public String getItemName(int index) {
         Item item = inventory.get(index);
         return item.getName();
     }
 
+    /**
+     * Computes for the change after buying an item.
+     * @param money money inputted by user
+     * @param price price of the item
+     * @return change
+     */
     
     public int computeChange(int money, int price){
         return price-money;
@@ -175,10 +190,10 @@ public class VendingMachine {
 
     /**
      * Verifies if a transaction is valid.
-     * @param index Index of the item chosen
-     * @param money Money given by the user
-     * @param itemNum Number of items currently in inventory
-     * @return Boolean value
+     * @param index index of the item chosen
+     * @param money money given by the user
+     * @param itemNum number of items currently in inventory
+     * @return boolean value
      */
 
     public boolean isValidTransaction(int index, int money, int itemNum) {
@@ -208,8 +223,8 @@ public class VendingMachine {
 
     /**
      * Checks if the user inputs a valid denomination.
-     * @param input Money inputted by user
-     * @return Boolean value
+     * @param input money inputted by user
+     * @return boolean value
      */
 
     public boolean isValidDenomination(int input){
@@ -242,8 +257,8 @@ public class VendingMachine {
     }
 
     /**
-     * Updates stock whenever a successful transaction is made
-     * @param index of the item in the inventory of the machine 
+     * Updates stock whenever a successful transaction is made.
+     * @param index index of the item in the inventory of the machine 
      */
     public void updateStock(int index) {
         Item item = inventory.get(index);
@@ -271,32 +286,63 @@ public class VendingMachine {
 
     /**
      * Gets the item capacity of the vending machine.
-     * @return
+     * @return item capacity of vending machine
      */
 
     public int getItemCapacity() {
         return this.itemCapacity;
     }
 
+    /**
+     * Gets the income from all purchases unclaimed.
+     * @return amount of income
+     */
+
     public int getIncome() {
         return this.income;
     }
+
+    /**
+     * Sets the amount of income based on amount collected.
+     * @param amount amount of income currently collected
+     */
 
     public void setIncome(int amount) {
         this.income = amount;
     }
 
+    /**
+     * Gets an item inside inventory based on index.
+     * @param index index of item
+     * @return item object
+     */
+
     public Item getItem(int index) {
         return inventory.get(index);
     }
+
+    /**
+     * Gets the inventory array list containing all items.
+     * @return inventory array list
+     */
 
     public ArrayList<Item> getInventory() {
         return this.inventory;
     }
 
+    /**
+     * Gets the name of the vending machine.
+     * @return name of machine
+     */
+
     public String getName() {
         return this.name;
     }
+
+    /**
+     * Gets the current maximum capacity of inventory space.
+     * @return inventory capacity
+     */
 
     public int getInventoryCapacity() {
         return this.inventoryCapacity;
