@@ -78,8 +78,10 @@ public class Factory {
         int cash = 0;
         int change = 0;
         String confirm = "n"; // confirms if user wants to proceed with transaction after inputting cash.
-        boolean validConfirm = true;
+        char charConfirm = 'n';
+        boolean validConfirm = true; //no need for this I think
         boolean validCash; // checks if cash input is valid
+        boolean inputCheck = true;
 
         System.out.println("=== TESTING VENDING FEATURES ===");
         System.out.println("Vending machine : \" " + vm.getName() +  " \" ");
@@ -116,37 +118,50 @@ public class Factory {
                             System.out.print("Input cash [0 to exit]: ");
                             cash = scan.nextInt();
                             if(cash != 0) { // makes sure not to print error if user wants to exit
-                                if(!vm.isValidDenomination(cash) || cash < vm.getItemPrice(choice)) {
+                                if(!vm.isValidDenomination(cash) /*|| cash < vm.getItemPrice(choice) */) { //outputs error if I put in 20 but product costs 30. We want the lines under here to not run in that case
                                     System.out.println("Invalid cash input! \n");
                                     validCash = false;
                                 }
                             }
                         } while(!vm.isValidDenomination(cash) && !validCash);
 
+                        //in case there is money in the machine and user chooses to exit in cash input phase
+                        if(transaction > 0 && cash == 0) {
+                            System.out.println("Returning money (" + cash + " PHP) to user");
+                        }
+
                         if(validCash && cash != 0){
-                            // User can exit after putting in cash in case they change their mind
-                            System.out.println("Proceed with transaction? [Y/N]");
-                            scan.nextLine();
-                            confirm = scan.nextLine();
-                            validConfirm = true;
+                            do {
+                                // User can exit after putting in cash in case they change their mind
+                                System.out.println("Proceed with transaction? [Y/N]");
+                                charConfirm = scan.next().charAt(0);
 
-                            if(!(confirm.equals("Y")) && !(confirm.equals("N")) && !(confirm.equals("n")) && !(confirm.equals("y"))) {
-                                System.out.println("Invalid input! Try again.");
-                                validConfirm = false;
-                            }
+                                //WTF YOU CAN DO THIS???!?!?!?!!?!?!?!?
+                                //inputCheck is true if user input is true, otherwise its false.
+                                inputCheck = (charConfirm == 'Y') || (charConfirm == 'N') || (charConfirm == 'y') || (charConfirm == 'n');
 
-                            if(confirm.equals("y") || confirm.equals("Y")){
+                                //validConfirm = true; no need for valid confirm bc it messes up the do while loops.
+
+                                //user error handling
+                                if(!inputCheck) {
+                                    System.out.println("Invalid input! Try again.");
+                                    //validConfirm = false;
+                                }
+                            } while(!inputCheck);
+
+                            if(charConfirm == 'y' || charConfirm == 'Y'){
                                 transaction += cash;
-                                System.out.println();
+                                System.out.println(transaction);
                             }
                             else{
                                 System.out.println("Returning money (" + cash + " PHP) to user");
                             }
                         }
-                    } while(transaction < vm.getItemPrice(choice) && cash != 0 && !validConfirm); // loop won't exit until the user put enough money to pay for the item or they chose to exit.
+                        
+                    } while(transaction < vm.getItemPrice(choice) && cash != 0/*&& !validConfirm*/); // loop won't exit until the user put enough money to pay for the item or they chose to exit.
 
                     //at this point, the money the user put in is enough to pay for the item or chose to exit.
-                    if(validConfirm && (confirm.equals("Y") || confirm.equals("y"))){
+                    if(/*validConfirm  &&*/ (confirm.equals("Y") || confirm.equals("y"))){
                         if(cash != 0) {
                             System.out.println("Cash in machine : " + transaction); // just to let the user know how much they put in the machine as of this point.
                             if(transaction > vm.getItemPrice(choice)) { // machine needs to give change to the user
