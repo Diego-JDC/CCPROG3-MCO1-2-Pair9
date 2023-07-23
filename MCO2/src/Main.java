@@ -1,4 +1,4 @@
-package src;
+//package src;
 import java.util.Scanner;
 
 public class Main {
@@ -8,6 +8,7 @@ public class Main {
         //Scanner scan = new Scanner(System.in);
 
         VendingMachine vm1 = new VendingMachine("Vending Machine 1");
+        System.out.println("Created vending machine : " + vm1.getName());
 
         Item marshmallows = new Item("Marshmallows", 200.0, 30);
         Item chocolate = new Item("Chocolate", 100.0, 20);
@@ -47,7 +48,7 @@ public class Main {
         
         int choice = 0;
         do {
-            System.out.println("Factory : " + factory.getName());
+            System.out.println("\nFactory : " + factory.getName());
             System.out.println("=== MENU ===");
             System.out.println("Select feature to test:");
             System.out.println("[ 1 ] Create a vending machine");

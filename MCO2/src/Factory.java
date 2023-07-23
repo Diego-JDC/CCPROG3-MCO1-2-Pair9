@@ -1,4 +1,4 @@
-package src;
+//package src;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -415,16 +415,11 @@ public class Factory {
      */
 
     public void printTransactionSummary(VendingMachine vm) {
-
         if(vm.getInventorySize() > 0){
             System.out.println("\nPrinting Transaction Summary...\n");
 
-            System.out.println("[ITEM NAME\t] : [INITIAL QUANTITY] : [# SOLD] : [CURRENT QUANTITY] : [PROFIT]");
-            //some code to get the transaction summary
             for(Item i : vm.getInventory()) {
-                System.out.println("[ " + i.getName() + "\t] " + "[ " + i.getInitQuantity() + " ] : " +
-                        "[ " + (i.getInitQuantity() - i.getQuantity()) + " ] " + "[ " + i.getQuantity() + " ] " +
-                        "[ " + (i.getPrice() * (i.getInitQuantity() - i.getQuantity())) + " ]");
+                System.out.println(i.getName() + " : " + "\nInitial Quantity : " + i.getInitQuantity() + "\nAmount sold : " + (i.getInitQuantity() - i.getQuantity()) + "\nCurrent Quantity : " + i.getQuantity() + "\nProfit : " + (i.getPrice() * (i.getInitQuantity() - i.getQuantity())) + " PHP\n");  
             }
 
             System.out.println("\nDone printing!\n");
