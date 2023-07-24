@@ -5,7 +5,12 @@ public class Main {
     public static Scanner scan = new Scanner(System.in);
     public static void main(String[] args) {
         Factory factory = new Factory("Factory 1");
-        //Scanner scan = new Scanner(System.in);
+
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                new ViewMenu().setVisible(true);
+            }
+        });
 
         VendingMachine vm1 = new VendingMachine("Vending Machine 1");
         System.out.println("Created vending machine : " + vm1.getName());
