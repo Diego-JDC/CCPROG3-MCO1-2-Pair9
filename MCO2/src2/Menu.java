@@ -1,77 +1,16 @@
-//package src;
-import java.util.ArrayList;
-import java.util.Scanner;
+package MCO2.src2;
 
-/**
- * Creates a vending machine factory.
- */
+public class Menu {
+    private VendingMachine currentVM;
 
-public class Factory {
-    private ArrayList<VendingMachine> vendingMachineList;
-    private String name;
-    private Scanner scan = new Scanner(System.in); // I put the scanners here since there were problems with
-                                                   // declaring new scanners every method
-
-    /**
-     * Constructor for Factory.
-     * @param name name of factory.
-     */
-    public Factory(String name) {
-        this.name = name;
-        this.vendingMachineList = new ArrayList<VendingMachine>();
+    public Menu(VendingMachine vm) {
+        this.currentVM = vm;
     }
 
-    /**
-     * Adds a newly created vending machine to the machine list.
-     * @param vm vending machine object
-     */
+    public Menu() {}
 
-    public void addToVendingMachineList(VendingMachine vm) {
-        vendingMachineList.add(vm);
-    }
-
-    /**
-     * Checks if the vending machine list is empty.
-     * @return boolean value
-     */
-
-    public boolean isVendingMachineListEmpty() {
-        boolean result = false;
-        if(vendingMachineList.isEmpty()) {
-            result = true;
-        } 
-        return result;
-    }
-
-    /***
-     * Function to make a new vending machine.
-     * @param name vending machine name
-     */
-    public void makeVendingMachine(String name) {
-        VendingMachine n = new VendingMachine(name);
-        vendingMachineList.add(n);
-    }
-
-    /**
-     * Gets most recently created vending machine.
-     * @return  vending machine object
-     */
-
-    public VendingMachine getCurrentMachine(){
-        int n = vendingMachineList.size();
-        if(n != 0) {
-            return vendingMachineList.get(n-1);
-        }
-        else{
-            return null;
-        }
-    }
-
-    /**
-     * Tests the vending features of a given vending machine.
-     * @param vm vending machine object
-     */
-
+    //TODO : 
+    //REFACTOR A LOT AHAHAHAHJKASDHKLJASHDLJAKSDHJLK
     public void testVendingFeatures(VendingMachine vm) {
         int choice;
         int transaction = 0; // stores the cash in machine during transaction.
@@ -441,9 +380,5 @@ public class Factory {
         else{
             System.out.println("No items in inventory yet!\n");
         }
-    }
-
-    public String getName() {
-        return this.name;
     }
 }
