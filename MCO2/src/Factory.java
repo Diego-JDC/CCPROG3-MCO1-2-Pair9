@@ -46,10 +46,14 @@ public class Factory {
     /***
      * Function to make a new vending machine.
      * @param name vending machine name
+     * @return new vending machine object
      */
-    public void makeVendingMachine(String name) {
+
+     // Changed from void to return vending machine (for controller class)
+    public VendingMachine makeVendingMachine(String name) {
         VendingMachine n = new VendingMachine(name);
         vendingMachineList.add(n);
+        return n;
     }
 
     /**
