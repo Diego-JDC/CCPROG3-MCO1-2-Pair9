@@ -6,7 +6,7 @@ public class Factory {
     private ArrayList<VendingMachine> vendingMachineList;
     private Menu menu;
 
-    public Factory(String name) {
+    public Factory() {
         this.vendingMachineList = new ArrayList<VendingMachine>();
         this.menu = new Menu();
     }

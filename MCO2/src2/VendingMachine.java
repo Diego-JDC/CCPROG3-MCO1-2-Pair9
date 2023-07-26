@@ -50,6 +50,14 @@ public class VendingMachine {
     }
 
     //TEMPORARY
+    public void displayInventory() {
+        int index = 0;
+        for(Slot s : this.inventory) {
+            System.out.println(index + " " + s.getName() + " stock: " + s.getItemList().size());
+        }
+    }
+
+    //TEMPORARY
     public void removeSlot(String name) {
         for(Slot s : inventory) {
             if(s.getName() == name) {
