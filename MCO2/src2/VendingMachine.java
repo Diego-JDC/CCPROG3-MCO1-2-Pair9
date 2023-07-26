@@ -1,5 +1,3 @@
-package MCO2.src2;
-
 import java.util.ArrayList;
 
 public class VendingMachine {

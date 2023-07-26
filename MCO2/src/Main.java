@@ -7,7 +7,6 @@ public class Main {
         Factory factory = new Factory("Factory 1");
 
         // GUI
-
         ViewMenu view = new ViewMenu();
         view.setVisible(true);
         Controller cont = new Controller(view, factory);

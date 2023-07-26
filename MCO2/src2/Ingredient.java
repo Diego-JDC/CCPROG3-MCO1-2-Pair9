@@ -1,4 +1,4 @@
-package MCO2.src2;
+
 
 public class Ingredient extends Item {
     private String preparationMsg;

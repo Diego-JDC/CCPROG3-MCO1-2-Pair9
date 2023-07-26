@@ -27,5 +27,11 @@ public class Controller {
                 }
             }
         });
+        
+        this.view.setFeaturesBtn(new ActionListener() {
+            public void actionPerformed(ActionEvent e){
+                
+            }
+        });
     }
 }
