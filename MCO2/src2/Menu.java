@@ -1,5 +1,7 @@
 package MCO2.src2;
 
+import java.util.Scanner;
+
 public class Menu {
     private VendingMachine currentVM;
 
@@ -12,6 +14,7 @@ public class Menu {
     //TODO : 
     //REFACTOR A LOT AHAHAHAHJKASDHKLJASHDLJAKSDHJLK
     public void testVendingFeatures(VendingMachine vm) {
+        Scanner scan = new Scanner(System.in);
         int choice;
         int transaction = 0; // stores the cash in machine during transaction.
         int cash = 0;
@@ -23,19 +26,19 @@ public class Menu {
 
         System.out.println("=== TESTING VENDING FEATURES ===");
         System.out.println("Vending machine : \" " + vm.getName() +  " \" ");
-        if(vm.getInventorySize() == 0){
+        if(currentVM.getInventory().isEmpty()){
             System.out.println("No items yet...");
         }
 
         else{
-            vm.displayItems();
+            vm.displayInventory();
             do {
                 System.out.print("Enter item by index [-1 to exit]: ");
                 choice = scan.nextInt();
-                if(choice < -1 || choice > vm.getInventorySize() - 1) {
+                if(choice < -1 || choice > currentVM.getInventory().size() - 1) {
                     System.out.println("Invalid choice!");
                 }
-            } while(choice < -1 || choice > vm.getInventorySize() - 1);
+            } while(choice < -1 || choice > currentVM.getInventory().size() - 1);
 
             //at this point, the user chose an item, or chose to exit
             if(choice != -1) {
@@ -309,11 +312,12 @@ public class Menu {
      */
 
     public void setPriceMenu(VendingMachine vm) {
+        Scanner scan = new Scanner(System.in);
         if(vm.getInventorySize() != 0) {
             int index, newPrice = 0;
             System.out.println("===UPDATE ITEM PRICE===");
             System.out.println("------ITEM LIST------");
-            vm.displayItems();
+            vm.displayInventory();
             do {
                 do {
                     System.out.println("Enter index of your choice (-1 to exit): ");
