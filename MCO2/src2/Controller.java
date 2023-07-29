@@ -13,15 +13,51 @@ public class Controller {
 
         this.view.setCreateBtn(new ActionListener() {
             public void actionPerformed(ActionEvent e){
-                
+
                 CreateMenu cMenu = new CreateMenu();
                 cMenu.setVisible(true);
+                cMenu.hideOptions();
+                cMenu.hideErrMsg();
                 view.setEnabled(false);
 
                 cMenu.setBack(new ActionListener() {
                     public void actionPerformed(ActionEvent e) {
                         view.setEnabled(true);
                         cMenu.dispose();
+                    }
+                });
+
+                cMenu.setSubmitBtn(new ActionListener() {
+                    public void actionPerformed(ActionEvent e){
+                        String name = cMenu.getName();
+
+                        if(name.length() > 10){
+                            do{
+                                cMenu.showErrMsg();
+                                cMenu.resetTextField();
+                                name = cMenu.getName();
+                            }while(name.length() > 10);
+                        }
+
+                        else{
+                            cMenu.showOptions();
+                            
+                            cMenu.setRegularBtn(new ActionListener() {
+                                public void actionPerformed(ActionEvent e){
+                                    String name = cMenu.getName();
+                                    cMenu.setMessage(name, "regular vending machine");
+                                    vm = new VendingMachine(name);
+                                    factory.addToVendingMachineList(vm);
+                                }
+                            });
+    
+                            cMenu.setSpecBtn(new ActionListener() {
+                                public void actionPerformed(ActionEvent e){
+                                    String name = cMenu.getName();
+                                    cMenu.setMessage(name, "special vending machine");
+                                }
+                            });
+                        }
                     }
                 });
 
@@ -36,6 +72,12 @@ public class Controller {
 
         this.view.setMaintenanceBtn(new ActionListener() {
             public void actionPerformed(ActionEvent e){
+            }
+        });
+
+        this.view.setFeaturesBtn(new ActionListener() {
+            public void actionPerformed(ActionEvent e){
+                
             }
         });
     }
