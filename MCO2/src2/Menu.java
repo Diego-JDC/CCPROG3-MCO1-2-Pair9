@@ -1,5 +1,7 @@
 import java.util.Scanner;
 
+//CURRENT STATUS : USELESS
+
 public class Menu {
     private VendingMachine currentVM;
 

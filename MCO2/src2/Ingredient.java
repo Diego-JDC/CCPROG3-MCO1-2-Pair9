@@ -1,5 +1,3 @@
-
-
 public class Ingredient extends Item {
     private String preparationMsg;
     private String type;

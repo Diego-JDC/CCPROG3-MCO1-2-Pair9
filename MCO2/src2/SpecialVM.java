@@ -1,7 +1,6 @@
 import java.util.ArrayList;
 
 public class SpecialVM extends VendingMachine {
-    private Recipe iceScramble;
     private ArrayList<Slot> specialInventory;
     private ArrayList<Item> currentOrder;
     private double totalCalories;
@@ -14,43 +13,34 @@ public class SpecialVM extends VendingMachine {
         super(name);
         this.specialInventory = new ArrayList<Slot>();
         this.currentOrder = new ArrayList<Item>();
-    }
+        this.totalCalories = 0;
 
-    public Recipe getRecipe() {
-        return this.iceScramble;
+        Item shavedIce = new Item("Shaved Ice", 0, 10);
+        Item powderedMilk = new Item("Powdered Milk", 2, 3);
+
+        specialInventory.add(new Slot("Shaved Ice"));
+        specialInventory.add(new Slot("Powdered Milk"));
+        super.stockItem(shavedIce, 10);
+        super.stockItem(powderedMilk, 10);
     }
 
     //prepare's order based on the currentOrder item list
-    public void prepareOrder() { 
-        
-    }
+    public ArrayList<String> prepareOrder() { 
 
-    //calculates calories and updates totalCalories attribute after.
-    public void calculateCalories() {
-
-    }
-
-    //TEMPORARY
-    //checks if the recipe contains all ingredients necessary to complete an order
-    public boolean checkRecipe() {
-        boolean ret = false;
-        int complete = 0; // counter for successful ingredients that made it in
-        if(!iceScramble.getIngredientList().isEmpty()) { // false if ingredient list is empty
-            for(int i = 0; i < ingredientOrder.length; i++) { // for each ingredient order
-                for(Ingredient ing : iceScramble.getIngredientList()) { // for each ingredient present in the ingredient list
-                    if(ing.getType().equals(ingredientOrder[i])) { // is the types match
-                        i++; // go to the next ingredient in ingredient order.
-                        complete++;
-                    }
+        //LOGIC RESERVED FOR CONTROLLER
+        ArrayList<String> result = new ArrayList<String>();
+        if(!currentOrder.isEmpty()) {
+            for(Item item : currentOrder) {
+                if(item instanceof Ingredient) {
+                    Ingredient i = (Ingredient)item;
+                    result.add(i.getPreparationMsg());
+                    currentOrder.remove(item);
                 }
-            }
-            if(complete < ingredientOrder.length) {
-                ret = false;
-            } else if(complete == ingredientOrder.length) {
-                ret = true;
+                totalCalories += item.getCalories(); //IDC ANYMORE
             }
         }
-        return ret;
+
+        return result;
     }
 
     public ArrayList<Slot> getSpecialInventory() {
