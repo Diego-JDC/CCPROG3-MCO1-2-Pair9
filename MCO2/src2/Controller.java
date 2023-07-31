@@ -1,6 +1,6 @@
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.WindowEvent;
+import java.util.ArrayList;
 
 public class Controller {
     private ViewMenu view;
@@ -72,12 +72,32 @@ public class Controller {
 
         this.view.setMaintenanceBtn(new ActionListener() {
             public void actionPerformed(ActionEvent e){
+                MaintenanceMenu mMenu = new MaintenanceMenu();
+
+                mMenu.setPriceBtn(new ActionListener() {
+                    public void actionPerformed(ActionEvent e){
+                        mMenu.showPriceMenu();
+                    }
+                });
+
+                mMenu.setReplenishBtn(new ActionListener() {
+                    public void actionPerformed(ActionEvent e){
+                        mMenu.showReplenish();
+                    }
+                });
+
+                mMenu.setVisible(true);
             }
         });
 
         this.view.setFeaturesBtn(new ActionListener() {
             public void actionPerformed(ActionEvent e){
-                
+                FeaturesMenu fMenu = new FeaturesMenu();
+                ArrayList<VendingMachine> currentList = factory.getVendingMachineList();
+                VendingMachine vm = currentList.get(currentList.size()-1);
+
+                fMenu.setTable(vm);
+                fMenu.setVisible(true);
             }
         });
     }

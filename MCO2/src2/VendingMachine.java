@@ -38,13 +38,26 @@ public class VendingMachine {
     }
 
     public void addSlot(Slot s) {
-        inventory.add(s);
+        this.inventory.add(s);
     }
 
     //TEMPORARY
     public void addSlot(String name) {
         Slot n = new Slot(name);
-        inventory.add(n);
+        this.inventory.add(n);
+    }
+
+    public void stockItem(Item item, int amount){
+        String itemName = item.getName().toLowerCase();
+
+        for(Slot s : this.inventory){
+            String slotName = s.getName().toLowerCase();
+            
+            if(slotName.equals(itemName)){
+                s.addItem(item, amount);
+                s.setInitQuantity(amount);
+            }
+        }
     }
 
     //TEMPORARY
