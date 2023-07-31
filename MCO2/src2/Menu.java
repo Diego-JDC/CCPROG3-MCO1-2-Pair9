@@ -285,7 +285,7 @@ public class Menu {
      * @param vm vending machine object
      */
 
-    public void collectIncomeMenu(VendingMachine vm) {
+    public void collectIncomeMenu() {
         String choice;
         System.out.println("Current Income is : " + vm.getIncome());
         do {
@@ -309,7 +309,7 @@ public class Menu {
      * Picks an item to set a new price in the menu.
      */
 
-    public void setPriceMenu(VendingMachine vm) {
+    public void setPriceMenu() {
         Scanner scan = new Scanner(System.in);
         if(vm.getInventorySize() != 0) {
             int index, newPrice = 0;
@@ -347,7 +347,7 @@ public class Menu {
      * @param vm vending machine object
      */
 
-    public void addBalanceMenu(VendingMachine vm) {
+    public void addBalanceMenu() {
         int addedBalance;
         do {
             System.out.print("Enter balance to add to machine (-1 to Exit): ");
@@ -369,7 +369,7 @@ public class Menu {
      * @param vm vending machine object
      */
 
-    public void printTransactionSummary(VendingMachine vm) {
+    public void printTransactionSummary() {
         if(vm.getInventorySize() > 0){
             System.out.println("\nPrinting Transaction Summary...\n");
 
@@ -383,4 +383,9 @@ public class Menu {
             System.out.println("No items in inventory yet!\n");
         }
     }
+
+    public void setVendingMachine(VendingMachine vm) {
+        this.currentVM = vm;
+    }
+
 }

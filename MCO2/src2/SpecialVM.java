@@ -1,9 +1,10 @@
-
-
 import java.util.ArrayList;
 
 public class SpecialVM extends VendingMachine {
     private Recipe iceScramble;
+    private ArrayList<Slot> specialInventory;
+    private ArrayList<Item> currentOrder;
+    private double totalCalories;
 
     //order of operations for ingredient preparation
     private String[] ingredientOrder = {"Shaved Ice","Powdered Milk", 
@@ -11,22 +12,22 @@ public class SpecialVM extends VendingMachine {
 
     public SpecialVM(String name) {
         super(name);
+        this.specialInventory = new ArrayList<Slot>();
+        this.currentOrder = new ArrayList<Item>();
     }
 
     public Recipe getRecipe() {
         return this.iceScramble;
     }
 
-    public void prepareRecipe() { // NOTE: only assumes that checkRecipe() is TRUE
-        for(int i = 0; i < ingredientOrder.length; i++) {//for each ingredient order
-            for(Ingredient ing : iceScramble.getIngredientList()) { //for each slot in recipe's ingredient list
-                if(ing.getType().equals(ingredientOrder[i])) {
-                    //display prep msg
-                    //remove ingredient from 
-                }
-                
-            }
-        }
+    //prepare's order based on the currentOrder item list
+    public void prepareOrder() { 
+        
+    }
+
+    //calculates calories and updates totalCalories attribute after.
+    public void calculateCalories() {
+
     }
 
     //TEMPORARY
@@ -50,5 +51,17 @@ public class SpecialVM extends VendingMachine {
             }
         }
         return ret;
+    }
+
+    public ArrayList<Slot> getSpecialInventory() {
+        return this.specialInventory;
+    }
+
+    public ArrayList<Item> getCurrentOrder() {
+        return this.currentOrder;
+    }
+
+    public double getTotalCalories() {
+        return this.totalCalories;
     }
 }

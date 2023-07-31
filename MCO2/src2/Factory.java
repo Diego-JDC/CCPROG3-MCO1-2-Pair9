@@ -7,7 +7,12 @@ public class Factory {
 
     public Factory() {
         this.vendingMachineList = new ArrayList<VendingMachine>();
-        this.menu = new Menu();
+        if(!vendingMachineList.isEmpty()) {
+            this.menu = new Menu(vendingMachineList.get(vendingMachineList.size() - 1));
+        } else {
+            this.menu = new Menu();
+        }
+        
     }
 
     public void addToVendingMachineList(VendingMachine vm) {
@@ -19,6 +24,6 @@ public class Factory {
     }
 
     public Menu getMenu() {
-        return menu;
+        return this.menu;
     }
 }
