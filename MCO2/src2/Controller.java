@@ -78,15 +78,23 @@ public class Controller {
                 ArrayList<VendingMachine> currentList = factory.getVendingMachineList();
                 VendingMachine vm = currentList.get(currentList.size()-1);
 
+                view.setEnabled(false);
                 mMenu.setIncomeLabel(vm.getIncome());
                 mMenu.setChangeLabel(vm.getChange());
                 mMenu.hideAll();
                 mMenu.resetList();
 
+                mMenu.setBack(new ActionListener() {
+                    public void actionPerformed(ActionEvent e){
+                        view.setEnabled(true);
+                        mMenu.dispose();
+                    }
+                });
+
                 mMenu.setPriceBtn(new ActionListener() {
                     public void actionPerformed(ActionEvent e){
                         ArrayList<Slot> list = vm.getInventory();
-
+                        mMenu.hideAll();
                         mMenu.setItemList(list);
                         mMenu.showPriceMenu();
 
@@ -113,9 +121,11 @@ public class Controller {
                         });
                     }
                 });
-
+                
+                
                 mMenu.setReplenishBtn(new ActionListener() {
                     public void actionPerformed(ActionEvent e){
+                        mMenu.hideAll();
                         mMenu.showReplenish();
                         mMenu.setChangeBtn(new ActionListener() {
                             public void actionPerformed(ActionEvent e){
@@ -127,6 +137,30 @@ public class Controller {
                     }
                 });
 
+                mMenu.setCollectBtn(new ActionListener(){
+                    public void actionPerformed(ActionEvent e){
+                        mMenu.hideAll();
+                        mMenu.showCollect();
+                        ArrayList<VendingMachine> currentList = factory.getVendingMachineList();
+                        VendingMachine vm = currentList.get(currentList.size()-1);
+                        mMenu.collectedIncomeLabel(vm.getIncome());
+                        mMenu.setConfirm(new ActionListener(){
+                            public void actionPerformed(ActionEvent e){
+                                mMenu.collectedAmt(vm.getIncome());
+                                vm.setIncome(0);
+                                mMenu.collectedIncomeLabel(vm.getIncome());
+                                mMenu.setCurrentIncome(vm.getIncome());
+                            }
+                        });
+                    }
+                });
+
+                mMenu.setSummaryBtn(new ActionListener() {
+                    public void actionPerformed(ActionEvent e){
+                        mMenu.hideAll();
+                        mMenu.showTransactionMenu();
+                    }
+                });
                 mMenu.setVisible(true);
             }
         });

@@ -6,6 +6,7 @@ public class Main {
         Factory factory = new Factory();
         VendingMachine vm = new VendingMachine("Test machine");
         
+        vm.setIncome(100);
         Item marshmallows = new Item("Marshmallows", 200.0, 30);
         Item chocolate = new Item("Chocolate", 100.0, 20);
         Item iceCream = new Item("Ice Cream", 350.0, 40);
