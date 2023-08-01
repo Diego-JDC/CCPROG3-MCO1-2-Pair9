@@ -6,6 +6,7 @@ public class SpecialVM extends VendingMachine {
     private double totalCalories;
 
     //order of operations for ingredient preparation
+    //checks based on name/type (type is aaplicable)
     private String[] ingredientOrder = {"Shaved Ice","Powdered Milk", 
                                          "Extract", "Food Color", "Topping"};
 

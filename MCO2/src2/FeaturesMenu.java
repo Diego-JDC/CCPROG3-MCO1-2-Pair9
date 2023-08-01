@@ -1,3 +1,4 @@
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 import javax.swing.table.DefaultTableModel;
@@ -178,6 +179,18 @@ public class FeaturesMenu extends javax.swing.JFrame {
                 table.addRow(new Object[]{itemName, stock, calories, price});
             }
         }
+    }
+
+    public void setVendingMachineName(String name) {
+        this.vmName.setText(name);
+    }
+
+    public void setType(String type) {
+        this.type.setText(type);
+    }
+    
+    public void setBack(ActionListener e) {
+        this.back.addActionListener(e);
     }
 
     // Variables declaration - do not modify                     
