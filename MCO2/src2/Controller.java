@@ -176,11 +176,11 @@ public class Controller {
                 //TRANSACTIONS SUMMARY
                 
                 mMenu.setSummaryBtn(new ActionListener() {
-                    int pressedBtn = 0; // so that the table gets set up only ONCE
+                    boolean pressedBtn = false; // so that the table gets set up only ONCE
                     public void actionPerformed(ActionEvent e){
-                        if(pressedBtn == 0) {
+                        if(!pressedBtn) {
                             mMenu.setTable(vm);
-                            pressedBtn++;
+                            pressedBtn = true;
                         }
                         mMenu.hideAll();
                         mMenu.showTransactionMenu();
