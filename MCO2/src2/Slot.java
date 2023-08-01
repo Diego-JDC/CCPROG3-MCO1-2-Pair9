@@ -43,4 +43,21 @@ public class Slot {
     public void setInitQuantity(int qty) {
         this.initQuantity = qty;
     }
+
+    // Gets price of an individual item
+    public int getItemPrice(){
+        return this.itemList.get(0).getPrice();
+    }
+
+    public void setItemPrice(int price){
+        for(Item i : itemList){
+            i.setPrice(price);
+        }
+    }
+
+    // This is to display the item name for combo box in maintenance menu
+    @Override
+    public String toString(){
+        return getName();
+    }
 }

@@ -1,4 +1,8 @@
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JComboBox;
 
 public class MaintenanceMenu extends javax.swing.JFrame{
     public MaintenanceMenu() {
@@ -21,7 +25,6 @@ public class MaintenanceMenu extends javax.swing.JFrame{
         setPriceBtn = new javax.swing.JButton();
         replenishBtn = new javax.swing.JButton();
         summaryBtn = new javax.swing.JButton();
-        jLabel4 = new javax.swing.JLabel();
         currentIncome = new javax.swing.JLabel();
         change = new javax.swing.JLabel();
         Parent = new javax.swing.JPanel();
@@ -32,26 +35,36 @@ public class MaintenanceMenu extends javax.swing.JFrame{
         setItemPrice = new javax.swing.JPanel();
         inputPrice = new javax.swing.JTextField();
         itemList = new javax.swing.JComboBox<>();
-        priceBtn = new javax.swing.JButton();
+        submitBtn = new javax.swing.JButton();
         priceMessage = new javax.swing.JLabel();
+        currentPrice = new javax.swing.JLabel();
+        priceLabel = new javax.swing.JLabel();
+        collectPanel = new javax.swing.JPanel();
+        collectedAmt = new javax.swing.JLabel();
+        collectedLabel = new javax.swing.JLabel();
+        confirmCollect = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setResizable(false);
 
         Title.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         Title.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         Title.setText("Maintenance");
 
         addItemBtn.setText("Add New Items / Restock");
+        addItemBtn.setFocusable(false);
 
         collectBtn.setText("Collect Income");
+        collectBtn.setFocusable(false);
 
         setPriceBtn.setText("Set Item Price");
+        setPriceBtn.setFocusable(false);
 
         replenishBtn.setText("Replenish Change");
+        replenishBtn.setFocusable(false);
 
-        summaryBtn.setText("Print Transaction Summary");
-
-        jLabel4.setText("Success!");
+        summaryBtn.setText("Transaction Summary");
+        summaryBtn.setFocusable(false);
 
         javax.swing.GroupLayout optionsLayout = new javax.swing.GroupLayout(options);
         options.setLayout(optionsLayout);
@@ -66,10 +79,6 @@ public class MaintenanceMenu extends javax.swing.JFrame{
                     .addComponent(setPriceBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(addItemBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(20, 20, 20))
-            .addGroup(optionsLayout.createSequentialGroup()
-                .addGap(87, 87, 87)
-                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
         );
 
         optionsLayout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {addItemBtn, collectBtn, replenishBtn, setPriceBtn, summaryBtn});
@@ -81,9 +90,7 @@ public class MaintenanceMenu extends javax.swing.JFrame{
                 .addComponent(addItemBtn)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 22, Short.MAX_VALUE)
                 .addComponent(collectBtn)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel4)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(22, 22, 22)
                 .addComponent(setPriceBtn)
                 .addGap(22, 22, 22)
                 .addComponent(replenishBtn)
@@ -103,6 +110,7 @@ public class MaintenanceMenu extends javax.swing.JFrame{
         inputR.setText("Input new change amount:");
 
         setChangeBtn.setText("Set Change");
+        setChangeBtn.setFocusable(false);
 
         javax.swing.GroupLayout replenishChangeLayout = new javax.swing.GroupLayout(replenishChange);
         replenishChange.setLayout(replenishChangeLayout);
@@ -114,7 +122,7 @@ public class MaintenanceMenu extends javax.swing.JFrame{
                     .addComponent(setChangeBtn)
                     .addComponent(replenishMoney, javax.swing.GroupLayout.PREFERRED_SIZE, 194, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(inputR, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(75, Short.MAX_VALUE))
+                .addContainerGap(71, Short.MAX_VALUE))
         );
         replenishChangeLayout.setVerticalGroup(
             replenishChangeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -125,16 +133,15 @@ public class MaintenanceMenu extends javax.swing.JFrame{
                 .addComponent(replenishMoney, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(setChangeBtn)
-                .addContainerGap(20, Short.MAX_VALUE))
+                .addContainerGap(37, Short.MAX_VALUE))
         );
 
         Parent.add(replenishChange, "card2");
 
-        itemList.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        submitBtn.setText("Set Price");
+        submitBtn.setFocusable(false);
 
-        priceBtn.setText("Set Price");
-
-        priceMessage.setText("Success!");
+        priceLabel.setText("Input new price:");
 
         javax.swing.GroupLayout setItemPriceLayout = new javax.swing.GroupLayout(setItemPrice);
         setItemPrice.setLayout(setItemPriceLayout);
@@ -144,30 +151,71 @@ public class MaintenanceMenu extends javax.swing.JFrame{
                 .addContainerGap()
                 .addGroup(setItemPriceLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(setItemPriceLayout.createSequentialGroup()
-                        .addComponent(itemList, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(submitBtn)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(inputPrice, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(priceMessage, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(110, Short.MAX_VALUE))
                     .addGroup(setItemPriceLayout.createSequentialGroup()
-                        .addComponent(priceBtn)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(priceMessage, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(34, Short.MAX_VALUE))
+                        .addGroup(setItemPriceLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(currentPrice, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(itemList, javax.swing.GroupLayout.Alignment.LEADING, 0, 111, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(setItemPriceLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(inputPrice)
+                            .addComponent(priceLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(19, 19, 19))))
         );
         setItemPriceLayout.setVerticalGroup(
             setItemPriceLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(setItemPriceLayout.createSequentialGroup()
-                .addGap(10, 10, 10)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, setItemPriceLayout.createSequentialGroup()
+                .addContainerGap(9, Short.MAX_VALUE)
+                .addGroup(setItemPriceLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(currentPrice, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(priceLabel, javax.swing.GroupLayout.Alignment.TRAILING))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(setItemPriceLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(itemList, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(inputPrice, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(setItemPriceLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(priceBtn)
-                    .addComponent(priceMessage))
-                .addContainerGap(36, Short.MAX_VALUE))
+                    .addComponent(submitBtn)
+                    .addComponent(priceMessage, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(29, 29, 29))
         );
 
         Parent.add(setItemPrice, "card3");
+
+        collectedAmt.setText("Successfully collected - PHP");
+
+        collectedLabel.setText("Collected income:");
+
+        confirmCollect.setText("Confirm");
+
+        javax.swing.GroupLayout collectPanelLayout = new javax.swing.GroupLayout(collectPanel);
+        collectPanel.setLayout(collectPanelLayout);
+        collectPanelLayout.setHorizontalGroup(
+            collectPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(collectPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(collectPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(collectedAmt, javax.swing.GroupLayout.PREFERRED_SIZE, 208, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(collectedLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(confirmCollect))
+                .addContainerGap(57, Short.MAX_VALUE))
+        );
+        collectPanelLayout.setVerticalGroup(
+            collectPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(collectPanelLayout.createSequentialGroup()
+                .addGap(29, 29, 29)
+                .addComponent(collectedLabel)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(collectedAmt)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(confirmCollect)
+                .addContainerGap(24, Short.MAX_VALUE))
+        );
+
+        Parent.add(collectPanel, "card4");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -175,13 +223,13 @@ public class MaintenanceMenu extends javax.swing.JFrame{
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(Title, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(28, 28, 28)
+                .addGap(16, 16, 16)
                 .addComponent(options, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(Parent, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(24, Short.MAX_VALUE))
+                .addContainerGap(34, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
-                .addGap(58, 58, 58)
+                .addGap(43, 43, 43)
                 .addComponent(currentIncome, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(change, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -199,31 +247,183 @@ public class MaintenanceMenu extends javax.swing.JFrame{
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(options, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(Parent, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(15, Short.MAX_VALUE))
+                    .addComponent(Parent, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(21, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>
 
+    /**
+     * Resets the combo box list
+     */
+
+    public void resetList(){
+        itemList.removeAllItems();
+    }
+
+    /**
+     * Sets the action listner
+     * @param e action listener created from controller
+     */
+
     public void setPriceBtn(ActionListener e){
         setPriceBtn.addActionListener(e);
     }
+
+    /**
+     * Sets the action listner
+     * @param e action listener created from controller
+     */
 
     public void setReplenishBtn(ActionListener e){
         replenishBtn.addActionListener(e);
     }
 
+    /**
+     * Shows the price menu
+     */
+    
     public void showPriceMenu(){
         Parent.removeAll();
         Parent.add(setItemPrice);
         Parent.revalidate();
     }
 
+    /**
+     * Shows the replenish change menu
+     */
+
     public void showReplenish(){
         Parent.removeAll();
         Parent.add(replenishChange);
         Parent.revalidate();
+    }
+
+    /**
+     * Sets the combo box to display item names
+     * @param list
+     */
+
+    public void setItemList(ArrayList<Slot> list){
+        DefaultComboBoxModel<Slot> model = new DefaultComboBoxModel<>();
+
+        for (Slot s : list) {
+            model.addElement(s);
+        }
+        itemList.setModel(model);
+    }
+
+    /**
+     * Sets the action listner
+     * @param e action listener created from controller
+     */
+
+    public void setItemListBtn(ActionListener e){
+        itemList.addActionListener(e);
+    }
+
+    /**
+     * Gets selected item in combo box
+     * @return Slot object
+     */
+
+    public Slot getSelected(){
+        return (Slot) itemList.getSelectedItem();
+    }
+
+    /**
+     * Updates current price of an item
+     * @param price price of current item selected
+     */
+
+    public void setPriceLabel(int price){
+        currentPrice.setText("Current price: " + price + ".00 PHP");
+    }
+
+    /**
+     * Sets the action listner
+     * @param e action listener created from controller
+     */
+
+    public void setSubmitBtn(ActionListener e){
+        submitBtn.addActionListener(e);
+    }
+
+    /**
+     * Gets text field input
+     * @return price input of user
+     */
+
+    public int getInput(){
+        String s = inputPrice.getText();
+        return Integer.parseInt(s);
+    }
+
+    /**
+     * Clears text field
+     */
+
+    public void clearField(){
+        inputPrice.setText("");
+        replenishMoney.setText("");
+    }
+
+    /**
+     * Shows success message when setting price
+     */
+
+    public void showMessage(){
+        priceMessage.setVisible(true);
+    }
+
+    /**
+     * Hides success message
+     */
+
+    public void hideMessage(){
+        priceMessage.setVisible(false);
+    }
+
+    /**
+     * Sets the current income label
+     * @param income current income of vending machine
+     */
+
+    public void setIncomeLabel(int income){
+        currentIncome.setText("Current income : " + income);
+    }
+
+    /**
+     * Sets the amount of change
+     * @param amount change in the vending machine
+     */
+
+    public void setChangeLabel(int amount){
+        change.setText("Change : " + amount);
+    }
+
+    /**
+     * Gets replenish amount inputted by user
+     * @return amount to be replenished
+     */
+
+    public int getReplenishAmt(){
+        String s = replenishMoney.getText();
+        return Integer.parseInt(s);
+    }
+
+    /**
+     * Sets the action listner
+     * @param e action listener created from controller
+     */
+
+    public void setChangeBtn(ActionListener e){
+        setChangeBtn.addActionListener(e);
+    }
+
+    public void hideAll(){
+        Parent.removeAll();
     }
 
     // Variables declaration - do not modify                     
@@ -232,13 +432,17 @@ public class MaintenanceMenu extends javax.swing.JFrame{
     private javax.swing.JButton addItemBtn;
     private javax.swing.JLabel change;
     private javax.swing.JButton collectBtn;
+    private javax.swing.JPanel collectPanel;
+    private javax.swing.JLabel collectedAmt;
+    private javax.swing.JLabel collectedLabel;
+    private javax.swing.JButton confirmCollect;
     private javax.swing.JLabel currentIncome;
+    private javax.swing.JLabel currentPrice;
     private javax.swing.JTextField inputPrice;
     private javax.swing.JLabel inputR;
-    private javax.swing.JComboBox<String> itemList;
-    private javax.swing.JLabel jLabel4;
+    private javax.swing.JComboBox<Slot> itemList;
     private javax.swing.JPanel options;
-    private javax.swing.JButton priceBtn;
+    private javax.swing.JLabel priceLabel;
     private javax.swing.JLabel priceMessage;
     private javax.swing.JButton replenishBtn;
     private javax.swing.JPanel replenishChange;
@@ -246,6 +450,7 @@ public class MaintenanceMenu extends javax.swing.JFrame{
     private javax.swing.JButton setChangeBtn;
     private javax.swing.JPanel setItemPrice;
     private javax.swing.JButton setPriceBtn;
+    private javax.swing.JButton submitBtn;
     private javax.swing.JButton summaryBtn;
     // End of variables declaration
 }

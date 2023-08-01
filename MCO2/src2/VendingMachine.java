@@ -30,7 +30,7 @@ public class VendingMachine {
     }
     
     public void setChange(int amount) {
-        this.change = amount;
+        this.change += amount;
     }
 
     public void setIncome(int amount) {
@@ -52,7 +52,7 @@ public class VendingMachine {
 
         for(Slot s : this.inventory){
             String slotName = s.getName().toLowerCase();
-            
+
             if(slotName.equals(itemName)){
                 s.addItem(item, amount);
                 s.setInitQuantity(amount);
