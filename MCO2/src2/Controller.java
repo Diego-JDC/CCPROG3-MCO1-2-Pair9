@@ -10,6 +10,8 @@ public class Controller {
     private ViewMenu view;
     private Factory factory;
     private VendingMachine vm;
+    String VMNameHolder = "Vending Machine: ";
+    String VMTypeHolder = "Type: ";
 
     public Controller(ViewMenu view, Factory factory){
         this.view = view;
@@ -51,8 +53,8 @@ public class Controller {
                                 public void actionPerformed(ActionEvent e){
                                     String name = cMenu.getName();
                                     cMenu.setMessage(name, "regular vending machine");
-                                    vm = new VendingMachine(name);
-                                    factory.addToVendingMachineList(vm);
+                                    VendingMachine nVM = new VendingMachine(name);
+                                    factory.addToVendingMachineList(nVM);
                                 }
                             });
     
@@ -60,6 +62,8 @@ public class Controller {
                                 public void actionPerformed(ActionEvent e){
                                     String name = cMenu.getName();
                                     cMenu.setMessage(name, "special vending machine");
+                                    VendingMachine svm = new SpecialVM(name);
+                                    factory.addToVendingMachineList(svm);
                                 }
                             });
                         }
@@ -132,6 +136,19 @@ public class Controller {
                 FeaturesMenu fMenu = new FeaturesMenu();
                 ArrayList<VendingMachine> currentList = factory.getVendingMachineList();
                 VendingMachine vm = currentList.get(currentList.size()-1);
+                fMenu.setVendingMachineName(VMNameHolder + vm.getName());
+                if(vm instanceof SpecialVM) {
+                    fMenu.setType(VMTypeHolder + "Special");
+                } else {
+                    fMenu.setType(VMTypeHolder + "Regular");
+                }
+                
+                fMenu.setBack(new ActionListener() {
+                    public void actionPerformed(ActionEvent e) {
+                        view.setEnabled(true);
+                        fMenu.dispose();
+                    }
+                });
 
                 fMenu.setTable(vm);
                 fMenu.setVisible(true);
