@@ -466,6 +466,7 @@ public class MaintenanceMenu extends javax.swing.JFrame{
         Parent.removeAll();
         Parent.add(setItemPrice);
         Parent.revalidate();
+        Parent.repaint();
     }
 
     /**
@@ -476,6 +477,7 @@ public class MaintenanceMenu extends javax.swing.JFrame{
         Parent.removeAll();
         Parent.add(replenishChange);
         Parent.revalidate();
+        Parent.repaint();
     }
 
     /**
@@ -486,6 +488,7 @@ public class MaintenanceMenu extends javax.swing.JFrame{
         Parent.removeAll();
         Parent.add(collectPanel);
         Parent.revalidate();
+        Parent.repaint();
     }
 
     /**
@@ -679,6 +682,7 @@ public class MaintenanceMenu extends javax.swing.JFrame{
         Parent.removeAll();
         Parent.add(jScrollPane1);
         Parent.revalidate();
+        Parent.repaint();
     }
 
     /**
