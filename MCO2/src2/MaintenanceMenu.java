@@ -2,6 +2,7 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.table.DefaultTableModel;
 
 public class MaintenanceMenu extends javax.swing.JFrame{
     public MaintenanceMenu() {
@@ -592,6 +593,7 @@ public class MaintenanceMenu extends javax.swing.JFrame{
 
     public void setChangeLabel(int amount){
         inputR.setText("Change : " + amount);
+        change.setText("Change : " + amount);
     }
 
     /**
@@ -692,6 +694,30 @@ public class MaintenanceMenu extends javax.swing.JFrame{
 
     public void setSummaryBtn(ActionListener e){
         summaryBtn.addActionListener(e);
+    }
+
+    /**
+     * Sets up the table for the transaction summary
+     * @param vm is the current VendingMachine instnace
+     */
+    public void setTable(VendingMachine vm){
+        DefaultTableModel table = (DefaultTableModel) SummaryTable.getModel();
+        
+        for(Slot s : vm.getInventory()){
+
+            if(s.getItemList().size() == 0){
+                table.addRow(new Object[]{s.getName(), 0, 0, 0});
+            }
+            
+            else{
+                String itemName = s.getName();
+                int initQuantity = s.getInitQuantity();
+                int amtSold = s.getInitQuantity() - s.getItemList().size();
+                int profit = amtSold * s.getItemPrice();
+    
+                table.addRow(new Object[]{itemName, initQuantity, amtSold, profit + ".00 PHP"});
+            }
+        }
     }
 
     // Variables declaration - do not modify                     

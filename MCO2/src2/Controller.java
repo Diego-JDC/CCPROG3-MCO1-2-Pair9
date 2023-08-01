@@ -16,8 +16,10 @@ public class Controller {
     public Controller(ViewMenu view, Factory factory){
         this.view = view;
         this.factory = factory;
+        this.vm = factory.getVendingMachineList().get(factory.getVendingMachineList().size() - 1);
         
         // Adds actionlistneer to "create" button
+        //CREATE VENDING MACHINE
         this.view.setCreateBtn(new ActionListener() {
             public void actionPerformed(ActionEvent e){
                 // Creates a new JFrame/window
@@ -72,6 +74,7 @@ public class Controller {
             }
         });
 
+        //MAINTENANCE ON CURRENT MACHINE
         this.view.setMaintenanceBtn(new ActionListener() {
             public void actionPerformed(ActionEvent e){
                 MaintenanceMenu mMenu = new MaintenanceMenu();
@@ -84,6 +87,7 @@ public class Controller {
                 mMenu.hideAll();
                 mMenu.resetList();
 
+                //BACK BUTTON
                 mMenu.setBack(new ActionListener() {
                     public void actionPerformed(ActionEvent e){
                         view.setEnabled(true);
@@ -91,6 +95,7 @@ public class Controller {
                     }
                 });
 
+                //SET ITEM PRICE
                 mMenu.setPriceBtn(new ActionListener() {
                     public void actionPerformed(ActionEvent e){
                         ArrayList<Slot> list = vm.getInventory();
@@ -122,7 +127,7 @@ public class Controller {
                     }
                 });
                 
-                
+                //REPLENISH CHANGE
                 mMenu.setReplenishBtn(new ActionListener() {
                     public void actionPerformed(ActionEvent e){
                         mMenu.hideAll();
@@ -137,12 +142,11 @@ public class Controller {
                     }
                 });
 
+                //COLLECT INCOME
                 mMenu.setCollectBtn(new ActionListener(){
                     public void actionPerformed(ActionEvent e){
                         mMenu.hideAll();
                         mMenu.showCollect();
-                        ArrayList<VendingMachine> currentList = factory.getVendingMachineList();
-                        VendingMachine vm = currentList.get(currentList.size()-1);
                         mMenu.collectedIncomeLabel(vm.getIncome());
                         mMenu.setConfirm(new ActionListener(){
                             public void actionPerformed(ActionEvent e){
@@ -155,16 +159,25 @@ public class Controller {
                     }
                 });
 
+                //TRANSACTIONS SUMMARY
+                
                 mMenu.setSummaryBtn(new ActionListener() {
+                    int pressedBtn = 0; // so that the table gets set up only ONCE
                     public void actionPerformed(ActionEvent e){
+                        if(pressedBtn == 0) {
+                            mMenu.setTable(vm);
+                            pressedBtn++;
+                        }
                         mMenu.hideAll();
                         mMenu.showTransactionMenu();
+
                     }
                 });
                 mMenu.setVisible(true);
             }
         });
 
+        //TEST CURRENT MACHINE
         this.view.setFeaturesBtn(new ActionListener() {
             public void actionPerformed(ActionEvent e){
                 FeaturesMenu fMenu = new FeaturesMenu();
