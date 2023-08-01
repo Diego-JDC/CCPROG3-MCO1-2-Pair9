@@ -2,6 +2,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
+import javax.swing.JRadioButton;
+
 /**
  * Controller for MVC structure
  */
@@ -99,8 +101,21 @@ public class Controller {
                 mMenu.setPriceBtn(new ActionListener() {
                     public void actionPerformed(ActionEvent e){
                         ArrayList<Slot> list = vm.getInventory();
+                        ArrayList<Slot> allItems = new ArrayList<Slot>();
+                        
+                        for(Slot s : list){
+                            allItems.add(s);
+                        }
+
                         mMenu.hideAll();
-                        mMenu.setItemList(list);
+
+                        if(vm instanceof SpecialVM){
+                            for(Slot s : ((SpecialVM)vm).getSpecialInventory()){
+                                allItems.add(s);
+                            }
+                        }
+
+                        mMenu.setItemList(allItems);
                         mMenu.showPriceMenu();
 
                         Slot s = mMenu.getSelected();
@@ -109,7 +124,6 @@ public class Controller {
                         mMenu.setItemListBtn(new ActionListener(){
                             public void actionPerformed(ActionEvent e){
                                 Slot s = mMenu.getSelected();
-                                mMenu.hideMessage();
                                 mMenu.setPriceLabel(s.getItemPrice());
                             }
                         });
@@ -121,7 +135,6 @@ public class Controller {
                                 s.setItemPrice(input);
                                 mMenu.setPriceLabel(s.getItemPrice());
                                 mMenu.clearField();
-                                mMenu.showMessage();
                             }
                         });
                     }
@@ -146,6 +159,7 @@ public class Controller {
                 mMenu.setCollectBtn(new ActionListener(){
                     public void actionPerformed(ActionEvent e){
                         mMenu.hideAll();
+                        mMenu.hideCollectMsg();
                         mMenu.showCollect();
                         mMenu.collectedIncomeLabel(vm.getIncome());
                         mMenu.setConfirm(new ActionListener(){
@@ -170,10 +184,112 @@ public class Controller {
                         }
                         mMenu.hideAll();
                         mMenu.showTransactionMenu();
-
                     }
                 });
                 mMenu.setVisible(true);
+
+                mMenu.setAddBtn(new ActionListener() {
+                    public void actionPerformed(ActionEvent e){
+                        mMenu.showAddMenuOptions();
+                        JRadioButton ingBtn = mMenu.getIngBtn();
+                        JRadioButton regBtn = mMenu.getRegBtn();
+                        ingBtn.setVisible(false);
+                        regBtn.setVisible(false);
+
+                        mMenu.setOptionAddBtn(new ActionListener() {
+                            public void actionPerformed(ActionEvent e){
+                                mMenu.showAddItemsMenu();
+
+                                if(vm instanceof SpecialVM){
+                                    ingBtn.setVisible(true);
+                                    regBtn.setVisible(true);
+                                }
+
+                                mMenu.setAddItemBtn(new ActionListener() {
+                                    public void actionPerformed(ActionEvent e){
+                                        mMenu.hideAddMessage();
+                                        Slot slot = new Slot(mMenu.getNewItemName());
+                                        if(vm instanceof SpecialVM){
+                                            if(ingBtn.isSelected()){
+                                                Ingredient ing = new Ingredient(mMenu.getNewItemName(), 
+                                                mMenu.getNewCalories(), mMenu.getNewPrice(), 
+                                                "Adding " + mMenu.getNewItemName() + " to Ice Scramble...");
+                                                slot.addItem(ing);
+                                                slot.setInitQuantity(1);
+                                                ((SpecialVM)vm).getSpecialInventory().add(slot);
+                                            }
+                                            else if(regBtn.isSelected()){
+                                                Item item = new Item(mMenu.getNewItemName(), mMenu.getNewCalories(), mMenu.getNewPrice());
+                                                slot.setInitQuantity(1);
+                                                slot.addItem(item);
+                                                vm.getInventory().add(slot);
+                                            }
+                                            else if(regBtn.isSelected() && ingBtn.isSelected()){
+                                                Ingredient ing = new Ingredient(mMenu.getNewItemName(), 
+                                                mMenu.getNewCalories(), mMenu.getNewPrice(), 
+                                                "Adding " + mMenu.getNewItemName() + " to Ice Scramble...");
+                                                slot.setInitQuantity(1);
+                                                slot.addItem(ing);
+                                                vm.getInventory().add(slot);
+                                                ((SpecialVM)vm).getSpecialInventory().add(slot);
+                                            }
+                                        }
+                                        else{
+                                            Item item = new Item(mMenu.getNewItemName(), mMenu.getNewCalories(), mMenu.getNewPrice());
+                                            slot.setInitQuantity(1);
+                                            slot.addItem(item);
+                                            vm.getInventory().add(slot);
+                                        }
+                                        mMenu.resetAddItemFields();
+                                        mMenu.showAddMessage();
+                                    }
+                                });
+                            }
+                        });
+                    
+                        mMenu.setOptionRestockBtn(new ActionListener() {
+                            public void actionPerformed(ActionEvent e){
+                                ArrayList<Slot> list = vm.getInventory();
+                                ArrayList<Slot> allItems = new ArrayList<Slot>();
+                                
+                                for(Slot s : list){
+                                    allItems.add(s);
+                                }
+
+                                if(vm instanceof SpecialVM){
+                                    for(Slot s : ((SpecialVM)vm).getSpecialInventory()){
+                                        allItems.add(s);
+                                    }
+                                }
+                                mMenu.setRestockItemList(allItems);
+                                mMenu.showRestockMenu();
+
+                                Slot s = mMenu.getSelectedRestock();
+                                ArrayList<Item> currList = s.getItemList();
+                                mMenu.setCurrentStock(currList.size());
+
+                                mMenu.setRestockList(new ActionListener(){
+                                    public void actionPerformed(ActionEvent e){
+                                        Slot s = mMenu.getSelectedRestock();
+                                        ArrayList<Item> currList = s.getItemList();
+                                        mMenu.setCurrentStock(currList.size());
+                                    }
+                                });
+
+                                mMenu.setRestockBtn(new ActionListener() {
+                                    public void actionPerformed(ActionEvent e){
+                                        Slot s = mMenu.getSelectedRestock();
+                                        ArrayList<Item> currList = s.getItemList();
+                                        s.setInitQuantity(s.getItemList().size() + mMenu.getInputStock());
+                                        s.addItem(s.getItemList().get(0), mMenu.getInputStock());
+                                        mMenu.setCurrentStock(currList.size());
+                                        mMenu.clearStockField();
+                                    }
+                                });
+                            }
+                        });
+                    }
+                });
             }
         });
 
@@ -198,6 +314,32 @@ public class Controller {
                 });
 
                 fMenu.setTable(vm);
+                fMenu.hideTransLabel();
+
+                fMenu.setSelectBtn(new ActionListener() {
+                    public void actionPerformed(ActionEvent e){
+                        String name = fMenu.getRow();
+
+                        for(Slot s : vm.getInventory()){
+                            if(name.equals(s.getName())){
+                                fMenu.updateSelect(s.getName());
+                            }
+                        }
+                    }
+                });
+
+                fMenu.setInsertBtn(new ActionListener() {
+                    public void actionPerformed(ActionEvent e){
+                        if(vm.isValidDenomination(fMenu.getCashField())){
+                            int currentTransaction = 0;
+                            fMenu.updateTransLabel(fMenu.getCashField());
+                        }
+                        else{
+                            fMenu.errorTransLabel();
+                        }
+                    }
+                });
+
                 fMenu.setVisible(true);
             }
         });

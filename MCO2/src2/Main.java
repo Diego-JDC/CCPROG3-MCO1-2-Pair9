@@ -33,6 +33,8 @@ public class Main {
         vm.addSlot("Pineapple");
 
         vm.stockItem(marshmallows, 10);
+        vm.stockItem(mango, 12);
+        vm.stockItem(milk, 4);
         vm.stockItem(chocolate, 10);
         vm.stockItem(iceCream, 10);
         vm.stockItem(wafers, 11);

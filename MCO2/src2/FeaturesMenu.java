@@ -29,11 +29,16 @@ public class FeaturesMenu extends javax.swing.JFrame {
         type = new javax.swing.JLabel();
         moneyLabel = new javax.swing.JLabel();
         cashField = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
+        insertBtn = new javax.swing.JButton();
         change = new javax.swing.JTextField();
         selectBtn = new javax.swing.JButton();
-        selected = new javax.swing.JLabel();
+        selectedLabel = new javax.swing.JLabel();
+        transLabel = new javax.swing.JLabel();
+        buyBtn = new javax.swing.JButton();
         back = new javax.swing.JButton();
+        cancelBtn = new javax.swing.JButton();
+        dispenseLabel = new javax.swing.JLabel();
+        specMenuBtn = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
@@ -66,18 +71,16 @@ public class FeaturesMenu extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        vmTable.setColumnSelectionAllowed(true);
         vmTable.setShowGrid(false);
         tableScroll.setViewportView(vmTable);
-        vmTable.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
 
         type.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         type.setText("Type:");
 
         moneyLabel.setText("Input money here:");
 
-        jButton1.setText("Buy");
-        jButton1.setFocusable(false);
+        insertBtn.setText("Insert Money");
+        insertBtn.setFocusable(false);
 
         change.setEditable(false);
         change.setText("Change: ");
@@ -85,7 +88,13 @@ public class FeaturesMenu extends javax.swing.JFrame {
 
         selectBtn.setText("Select");
 
+        buyBtn.setText("Buy");
+
         back.setText("Back");
+
+        cancelBtn.setText("Cancel");
+
+        specMenuBtn.setText("Special Menu");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -96,36 +105,44 @@ public class FeaturesMenu extends javax.swing.JFrame {
                 .addGap(24, 24, 24)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
+                        .addComponent(tableScroll, javax.swing.GroupLayout.PREFERRED_SIZE, 410, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(moneyLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(cashField)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(tableScroll, javax.swing.GroupLayout.PREFERRED_SIZE, 410, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(moneyLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 124, Short.MAX_VALUE)
-                                    .addComponent(cashField)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jButton1)
-                                        .addGap(0, 0, Short.MAX_VALUE))
-                                    .addComponent(change)))
-                            .addGroup(layout.createSequentialGroup()
+                                .addGap(3, 3, 3)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(empty, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGroup(layout.createSequentialGroup()
-                                            .addComponent(selectBtn)
-                                            .addGap(18, 18, 18)
-                                            .addComponent(selected, javax.swing.GroupLayout.PREFERRED_SIZE, 332, javax.swing.GroupLayout.PREFERRED_SIZE)))
                                     .addGroup(layout.createSequentialGroup()
-                                        .addComponent(back)
-                                        .addGap(350, 350, 350)))
-                                .addGap(0, 0, Short.MAX_VALUE)))
+                                        .addComponent(buyBtn)
+                                        .addGap(27, 27, 27)
+                                        .addComponent(cancelBtn))
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(type, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(insertBtn)
+                                        .addComponent(transLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(change, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGap(0, 8, Short.MAX_VALUE)))
                         .addGap(12, 12, 12))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(3, 3, 3)
-                        .addComponent(vmName, javax.swing.GroupLayout.PREFERRED_SIZE, 268, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(3, 3, 3)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(empty, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(vmName, javax.swing.GroupLayout.PREFERRED_SIZE, 268, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(back)
+                                .addGap(182, 182, 182)
+                                .addComponent(specMenuBtn)))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(selectBtn)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(selectedLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(type, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(52, 52, 52))))
+                        .addComponent(dispenseLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(33, 33, 33))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -139,32 +156,59 @@ public class FeaturesMenu extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(empty)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(tableScroll, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(moneyLabel)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(cashField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jButton1)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(tableScroll, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(moneyLabel)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(cashField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(insertBtn)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(transLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(change, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(buyBtn)
+                                    .addComponent(cancelBtn))))
                         .addGap(18, 18, 18)
-                        .addComponent(change, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(selectBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(selectedLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addComponent(dispenseLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(13, 13, 13)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(selectBtn)
-                    .addComponent(selected, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(back)
-                .addContainerGap(15, Short.MAX_VALUE))
+                    .addComponent(back)
+                    .addComponent(specMenuBtn))
+                .addContainerGap(14, Short.MAX_VALUE))
         );
 
         pack();
-    }// </editor-fold>>                        
+    }// </editor-fold>                        
+
+    /**
+     * Sets up the table
+     * @param vm current vending machine
+     */
 
     public void setTable(VendingMachine vm){
         DefaultTableModel table = (DefaultTableModel) vmTable.getModel();
-        
+        ArrayList<Slot> allItems = new ArrayList<Slot>();
+
         for(Slot s : vm.getInventory()){
+            allItems.add(s);
+        }
+
+        if(vm instanceof SpecialVM){
+            for(Slot s : ((SpecialVM)vm).getSpecialInventory()){
+                allItems.add(s);
+            }
+        }
+        
+        for(Slot s : allItems){
 
             if(s.getItemList().size() == 0){
                 table.addRow(new Object[]{s.getName(), 0, 0, 0});
@@ -193,19 +237,56 @@ public class FeaturesMenu extends javax.swing.JFrame {
         this.back.addActionListener(e);
     }
 
+    public void setSelectBtn(ActionListener e){
+        selectBtn.addActionListener(e);
+    }
+
+    public String getRow(){
+        return (String)vmTable.getValueAt(vmTable.getSelectedRow(), 0);
+    }
+
+    public void updateSelect(String s){
+        selectedLabel.setText("Current Selected : " + s);
+    }
+
+    public void setInsertBtn(ActionListener e){
+        insertBtn.addActionListener(e);
+    }
+
+    public int getCashField(){
+        return Integer.parseInt(cashField.getText());
+    }
+
+    public void updateTransLabel(int money){
+        transLabel.setText("Inserted : " + money + ".00 PHP");
+    }
+
+    public void errorTransLabel(){
+        transLabel.setText("Invalid denomination");
+    }
+
+    public void hideTransLabel(){
+        transLabel.setText("");
+    }
+
     // Variables declaration - do not modify                     
     private javax.swing.JLabel Title;
     private javax.swing.JButton back;
+    private javax.swing.JButton buyBtn;
+    private javax.swing.JButton cancelBtn;
     private javax.swing.JTextField cashField;
     private javax.swing.JTextField change;
+    private javax.swing.JLabel dispenseLabel;
     private javax.swing.JLabel empty;
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton insertBtn;
     private javax.swing.JLabel moneyLabel;
     private javax.swing.JButton selectBtn;
-    private javax.swing.JLabel selected;
+    private javax.swing.JLabel selectedLabel;
+    private javax.swing.JButton specMenuBtn;
     private javax.swing.JScrollPane tableScroll;
+    private javax.swing.JLabel transLabel;
     private javax.swing.JLabel type;
     private javax.swing.JLabel vmName;
     private javax.swing.JTable vmTable;
-    // End of variables declaration                     
+    // End of variables declaration                    
 }

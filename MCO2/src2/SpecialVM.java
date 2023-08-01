@@ -3,7 +3,7 @@ import java.util.ArrayList;
 public class SpecialVM extends VendingMachine {
     private ArrayList<Slot> specialInventory;
     private ArrayList<Item> currentOrder;
-    private double totalCalories;
+    private int totalCalories;
 
     //order of operations for ingredient preparation
     //checks based on name/type (type is aaplicable)
@@ -16,13 +16,17 @@ public class SpecialVM extends VendingMachine {
         this.currentOrder = new ArrayList<Item>();
         this.totalCalories = 0;
 
-        Item shavedIce = new Item("Shaved Ice", 0, 10);
-        Item powderedMilk = new Item("Powdered Milk", 2, 3);
+        Ingredient shavedIce = new Ingredient("Shaved Ice", 0, 10, "Shaving ice...");
+        Ingredient powderedMilk = new Ingredient("Powdered Milk", 2, 3, "Adding powdered milk...");
 
-        specialInventory.add(new Slot("Shaved Ice"));
-        specialInventory.add(new Slot("Powdered Milk"));
-        super.stockItem(shavedIce, 10);
-        super.stockItem(powderedMilk, 10);
+        Slot ShavedIce = new Slot("shaved Ice");
+        Slot PowderedMilk = new Slot("Powdered Milk");
+
+        this.specialInventory.add(ShavedIce);
+        this.specialInventory.add(PowderedMilk);
+        
+        stockItem(shavedIce, 10);
+        stockItem(powderedMilk, 10);
     }
 
     //prepare's order based on the currentOrder item list
@@ -54,5 +58,18 @@ public class SpecialVM extends VendingMachine {
 
     public double getTotalCalories() {
         return this.totalCalories;
+    }
+
+    public void stockItem(Ingredient item, int amount){
+        String itemName = item.getName().toLowerCase();
+
+        for(Slot s : this.specialInventory){
+            String slotName = s.getName().toLowerCase();
+
+            if(slotName.equals(itemName)){
+                s.addItem(item, amount);
+                s.setInitQuantity(amount);
+            }
+        }
     }
 }

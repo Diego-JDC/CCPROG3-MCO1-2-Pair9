@@ -81,4 +81,17 @@ public class VendingMachine {
     public void removeSlot(Slot s) {
         inventory.remove(s);
     }
+
+    public boolean isValidDenomination(int input){
+        int[] validInputs = new int[] {1, 5, 10, 20, 50, 100};
+        boolean valid = false;
+
+        for(int i : validInputs){
+            if(i == input){
+                valid = true;
+                break;
+            }
+        }
+        return valid;
+    }
 }

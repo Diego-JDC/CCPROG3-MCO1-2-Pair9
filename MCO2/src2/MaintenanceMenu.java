@@ -2,6 +2,7 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.JRadioButton;
 import javax.swing.table.DefaultTableModel;
 
 public class MaintenanceMenu extends javax.swing.JFrame{
@@ -36,7 +37,6 @@ public class MaintenanceMenu extends javax.swing.JFrame{
         inputPrice = new javax.swing.JTextField();
         itemList = new javax.swing.JComboBox<>();
         submitBtn = new javax.swing.JButton();
-        priceMessage = new javax.swing.JLabel();
         currentPrice = new javax.swing.JLabel();
         priceLabel = new javax.swing.JLabel();
         collectPanel = new javax.swing.JPanel();
@@ -53,16 +53,20 @@ public class MaintenanceMenu extends javax.swing.JFrame{
         AddItemsMenu = new javax.swing.JPanel();
         addBtn = new javax.swing.JButton();
         addMessage = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
-        jTextField2 = new javax.swing.JTextField();
-        jTextField3 = new javax.swing.JTextField();
-        jRadioButton1 = new javax.swing.JRadioButton();
-        jRadioButton2 = new javax.swing.JRadioButton();
+        nameField = new javax.swing.JTextField();
+        caloriesField = new javax.swing.JTextField();
+        priceField = new javax.swing.JTextField();
+        ingBtn = new javax.swing.JRadioButton();
+        regBtn = new javax.swing.JRadioButton();
         newNameLabel = new javax.swing.JLabel();
         caloriesLabel = new javax.swing.JLabel();
         newPrice = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         SummaryTable = new javax.swing.JTable();
+        addMenuOptions = new javax.swing.JPanel();
+        jLabel2 = new javax.swing.JLabel();
+        optionAddBtn = new javax.swing.JButton();
+        optionRestockBtn = new javax.swing.JButton();
         back = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -170,22 +174,17 @@ public class MaintenanceMenu extends javax.swing.JFrame{
         setItemPriceLayout.setHorizontalGroup(
             setItemPriceLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(setItemPriceLayout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(setItemPriceLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(submitBtn)
                     .addGroup(setItemPriceLayout.createSequentialGroup()
-                        .addContainerGap()
+                        .addGroup(setItemPriceLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(currentPrice, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(itemList, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(28, 28, 28)
                         .addGroup(setItemPriceLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(submitBtn)
-                            .addGroup(setItemPriceLayout.createSequentialGroup()
-                                .addGroup(setItemPriceLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                    .addComponent(currentPrice, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(itemList, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(28, 28, 28)
-                                .addGroup(setItemPriceLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(inputPrice, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(priceLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                    .addGroup(setItemPriceLayout.createSequentialGroup()
-                        .addGap(94, 94, 94)
-                        .addComponent(priceMessage, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(inputPrice, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(priceLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap(61, Short.MAX_VALUE))
         );
         setItemPriceLayout.setVerticalGroup(
@@ -201,9 +200,7 @@ public class MaintenanceMenu extends javax.swing.JFrame{
                     .addComponent(inputPrice, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(submitBtn)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 47, Short.MAX_VALUE)
-                .addComponent(priceMessage, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(30, 30, 30))
+                .addContainerGap(99, Short.MAX_VALUE))
         );
 
         Parent.add(setItemPrice, "card3");
@@ -250,22 +247,21 @@ public class MaintenanceMenu extends javax.swing.JFrame{
             AddRestockMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(AddRestockMenuLayout.createSequentialGroup()
                 .addGap(28, 28, 28)
-                .addGroup(AddRestockMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(AddRestockMenuLayout.createSequentialGroup()
-                        .addGroup(AddRestockMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(AddRestockMenuLayout.createSequentialGroup()
-                                .addComponent(restockItemList, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(currentItemStock, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(CurrentStock, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addContainerGap(31, Short.MAX_VALUE))
+                .addGroup(AddRestockMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(AddRestockMenuLayout.createSequentialGroup()
                         .addGroup(AddRestockMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(AddRestockMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                                 .addComponent(inputStock, javax.swing.GroupLayout.Alignment.LEADING)
                                 .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 114, Short.MAX_VALUE))
                             .addComponent(restockBtn))
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                        .addGap(145, 145, 145))
+                    .addGroup(AddRestockMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(AddRestockMenuLayout.createSequentialGroup()
+                            .addComponent(restockItemList, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                            .addComponent(currentItemStock, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(CurrentStock, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(31, Short.MAX_VALUE))
         );
         AddRestockMenuLayout.setVerticalGroup(
             AddRestockMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -290,11 +286,11 @@ public class MaintenanceMenu extends javax.swing.JFrame{
         addBtn.setText("Add");
         addBtn.setFocusable(false);
 
-        jRadioButton1.setText("Ingredient");
-        jRadioButton1.setFocusable(false);
+        ingBtn.setText("Ingredient");
+        ingBtn.setFocusable(false);
 
-        jRadioButton2.setText("Regular");
-        jRadioButton2.setFocusable(false);
+        regBtn.setText("Regular");
+        regBtn.setFocusable(false);
 
         newNameLabel.setText("Name");
 
@@ -310,9 +306,9 @@ public class MaintenanceMenu extends javax.swing.JFrame{
                 .addContainerGap(22, Short.MAX_VALUE)
                 .addGroup(AddItemsMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(AddItemsMenuLayout.createSequentialGroup()
-                        .addComponent(jRadioButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(ingBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jRadioButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(regBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(AddItemsMenuLayout.createSequentialGroup()
                         .addComponent(addBtn)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -324,9 +320,9 @@ public class MaintenanceMenu extends javax.swing.JFrame{
                             .addComponent(newPrice, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(AddItemsMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jTextField3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(nameField, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(caloriesField, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(priceField, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addGap(68, 68, 68))
         );
         AddItemsMenuLayout.setVerticalGroup(
@@ -334,15 +330,15 @@ public class MaintenanceMenu extends javax.swing.JFrame{
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, AddItemsMenuLayout.createSequentialGroup()
                 .addGap(21, 21, 21)
                 .addGroup(AddItemsMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(nameField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(newNameLabel))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(AddItemsMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(caloriesField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(caloriesLabel))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(AddItemsMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(priceField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(newPrice))
                 .addGap(18, 18, 18)
                 .addGroup(AddItemsMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -350,8 +346,8 @@ public class MaintenanceMenu extends javax.swing.JFrame{
                     .addComponent(addBtn, javax.swing.GroupLayout.Alignment.TRAILING))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(AddItemsMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jRadioButton1)
-                    .addComponent(jRadioButton2))
+                    .addComponent(ingBtn)
+                    .addComponent(regBtn))
                 .addContainerGap(33, Short.MAX_VALUE))
         );
 
@@ -382,6 +378,40 @@ public class MaintenanceMenu extends javax.swing.JFrame{
         }
 
         Parent.add(jScrollPane1, "card5");
+
+        jLabel2.setText("Would you like to add or restock an item?");
+
+        optionAddBtn.setText("Add Item");
+
+        optionRestockBtn.setText("Restock");
+
+        javax.swing.GroupLayout addMenuOptionsLayout = new javax.swing.GroupLayout(addMenuOptions);
+        addMenuOptions.setLayout(addMenuOptionsLayout);
+        addMenuOptionsLayout.setHorizontalGroup(
+            addMenuOptionsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(addMenuOptionsLayout.createSequentialGroup()
+                .addGap(19, 19, 19)
+                .addGroup(addMenuOptionsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 243, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(addMenuOptionsLayout.createSequentialGroup()
+                        .addComponent(optionAddBtn)
+                        .addGap(28, 28, 28)
+                        .addComponent(optionRestockBtn)))
+                .addContainerGap(56, Short.MAX_VALUE))
+        );
+        addMenuOptionsLayout.setVerticalGroup(
+            addMenuOptionsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(addMenuOptionsLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(addMenuOptionsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(optionAddBtn)
+                    .addComponent(optionRestockBtn))
+                .addContainerGap(161, Short.MAX_VALUE))
+        );
+
+        Parent.add(addMenuOptions, "card8");
 
         back.setText("Back");
         back.setFocusable(false);
@@ -562,22 +592,6 @@ public class MaintenanceMenu extends javax.swing.JFrame{
     }
 
     /**
-     * Shows success message when setting price
-     */
-
-    public void showMessage(){
-        priceMessage.setVisible(true);
-    }
-
-    /**
-     * Hides success message
-     */
-
-    public void hideMessage(){
-        priceMessage.setVisible(false);
-    }
-
-    /**
      * Sets the current income label
      * @param income current income of vending machine
      */
@@ -592,8 +606,8 @@ public class MaintenanceMenu extends javax.swing.JFrame{
      */
 
     public void setChangeLabel(int amount){
-        inputR.setText("Change : " + amount);
-        change.setText("Change : " + amount);
+        inputR.setText("Change : " + amount + ".00 PHP");
+        change.setText("Change : " + amount + ".00 PHP");
     }
 
     /**
@@ -646,6 +660,7 @@ public class MaintenanceMenu extends javax.swing.JFrame{
      */
 
     public void collectedAmt(int income){
+        collectedAmt.setVisible(true);
         collectedAmt.setText("Successfully collected " + income + ".00 PHP");
     }
 
@@ -702,8 +717,19 @@ public class MaintenanceMenu extends javax.swing.JFrame{
      */
     public void setTable(VendingMachine vm){
         DefaultTableModel table = (DefaultTableModel) SummaryTable.getModel();
-        
+        ArrayList<Slot> allItems = new ArrayList<Slot>();
+
         for(Slot s : vm.getInventory()){
+            allItems.add(s);
+        }
+
+        if(vm instanceof SpecialVM){
+            for(Slot s : ((SpecialVM)vm).getSpecialInventory()){
+                allItems.add(s);
+            }
+        }
+
+        for(Slot s : allItems){
 
             if(s.getItemList().size() == 0){
                 table.addRow(new Object[]{s.getName(), 0, 0, 0});
@@ -720,6 +746,210 @@ public class MaintenanceMenu extends javax.swing.JFrame{
         }
     }
 
+    /**
+     * Hides collected income message
+     */
+
+    public void hideCollectMsg(){
+        collectedAmt.setVisible(false);
+    }
+
+    /**
+     * Sets the action listner
+     * @param e action listener created from controller
+     */
+
+    public void setAddBtn(ActionListener e){
+        addItemBtn.addActionListener(e);
+    }
+
+    /**
+     * Shows the options when add/restocking button is clicked
+     */
+
+    public void showAddMenuOptions(){
+        Parent.removeAll();
+        Parent.add(addMenuOptions);
+        Parent.revalidate();
+        Parent.repaint();
+    }
+
+    /**
+     * Sets the action listner
+     * @param e action listener created from controller
+     */
+
+    public void setOptionAddBtn(ActionListener e){
+        optionAddBtn.addActionListener(e);
+    }
+
+    /**
+     * Sets the action listner
+     * @param e action listener created from controller
+     */
+
+    public void setOptionRestockBtn(ActionListener e){
+        optionRestockBtn.addActionListener(e);
+    }
+
+    /**
+     * Shows the add item menu
+     */
+    
+    public void showAddMenu(){
+        AddItemsMenu.setVisible(true);
+    }
+
+    /**
+     * Shows restock item menu
+     */
+
+    public void showRestockMenu(){
+        Parent.removeAll();
+        Parent.add(AddRestockMenu);
+        Parent.revalidate();
+        Parent.repaint();
+    }
+
+    /**
+     * Sets up the list of items in each slot
+     * @param list slots in the vending machine
+     */
+
+    public void setRestockItemList(ArrayList<Slot> list){
+        DefaultComboBoxModel<Slot> model = new DefaultComboBoxModel<>();
+
+        for (Slot s : list) {
+            model.addElement(s);
+        }
+        restockItemList.setModel(model);
+    }
+
+    /**
+     * Gets ingBtn
+     * @return JRadioButton
+     */
+
+    public JRadioButton getIngBtn(){
+        return ingBtn;
+    }
+
+    /**
+     * Gets regBtn
+     * @return JRadioButton
+     */
+
+    public JRadioButton getRegBtn(){
+        return regBtn;
+    }
+
+    /**
+     * Shows add items menu
+     */
+
+    public void showAddItemsMenu(){
+        Parent.removeAll();
+        Parent.add(AddItemsMenu);
+        Parent.revalidate();
+        Parent.repaint();
+    }
+
+    /**
+     * Sets the action listner
+     * @param e action listener created from controller
+     */
+
+    public void setAddItemBtn(ActionListener e){
+        addBtn.addActionListener(e);
+    }
+
+    /**
+     * Gets the new name of the item
+     * @return name of item
+     */
+
+    public String getNewItemName(){
+        return nameField.getText();
+    }
+
+    /**
+     * Gets the new calories
+     * @return new calorie count
+     */
+
+    public int getNewCalories(){
+        return Integer.parseInt(caloriesField.getText());
+    }
+
+    /**
+     * Gets the new item price
+     * @return new item price
+     */
+
+    public int getNewPrice(){
+        return Integer.parseInt(priceField.getText());
+    }
+
+    /**
+     * Resets all fields in add item menu
+     */
+
+    public void resetAddItemFields(){
+        nameField.setText("");
+        caloriesField.setText("");
+        priceField.setText("");
+    }
+
+    /**
+     * Shows the add item message
+     */
+
+    public void showAddMessage(){
+        addMessage.setText("Success!");
+    }
+
+    /**
+     * Hides message in add item
+     */
+
+    public void hideAddMessage(){
+        addMessage.setText("");
+    }
+
+    /**
+     * Gets the current selected slot in restock menu
+     * @return slot object
+     */
+
+    public Slot getSelectedRestock(){
+        return (Slot) restockItemList.getSelectedItem();
+    }
+
+    /**
+     * Sets current stock label
+     * @param stock of item
+     */
+
+    public void setCurrentStock(int stock){
+        currentItemStock.setText("Current item stock : " + stock);
+    }
+
+    public void setRestockList(ActionListener e){
+        restockItemList.addActionListener(e);
+    }
+
+    public void setRestockBtn(ActionListener e){
+        restockBtn.addActionListener(e);
+    }
+
+    public int getInputStock(){
+        return Integer.parseInt(inputStock.getText());
+    }
+
+    public void clearStockField(){
+        inputStock.setText("");
+    }
+
     // Variables declaration - do not modify                     
     private javax.swing.JPanel AddItemsMenu;
     private javax.swing.JPanel AddRestockMenu;
@@ -729,8 +959,10 @@ public class MaintenanceMenu extends javax.swing.JFrame{
     private javax.swing.JLabel Title;
     private javax.swing.JButton addBtn;
     private javax.swing.JButton addItemBtn;
+    private javax.swing.JPanel addMenuOptions;
     private javax.swing.JLabel addMessage;
     private javax.swing.JButton back;
+    private javax.swing.JTextField caloriesField;
     private javax.swing.JLabel caloriesLabel;
     private javax.swing.JLabel change;
     private javax.swing.JButton collectBtn;
@@ -742,27 +974,28 @@ public class MaintenanceMenu extends javax.swing.JFrame{
     private javax.swing.JLabel currentIncome;
     private javax.swing.JLabel currentItemStock;
     private javax.swing.JLabel currentPrice;
+    private javax.swing.JRadioButton ingBtn;
     private javax.swing.JTextField inputPrice;
     private javax.swing.JLabel inputR;
     private javax.swing.JTextField inputStock;
     private javax.swing.JComboBox<Slot> itemList;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JRadioButton jRadioButton1;
-    private javax.swing.JRadioButton jRadioButton2;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
+    private javax.swing.JTextField nameField;
     private javax.swing.JLabel newNameLabel;
     private javax.swing.JLabel newPrice;
+    private javax.swing.JButton optionAddBtn;
+    private javax.swing.JButton optionRestockBtn;
     private javax.swing.JPanel options;
+    private javax.swing.JTextField priceField;
     private javax.swing.JLabel priceLabel;
-    private javax.swing.JLabel priceMessage;
+    private javax.swing.JRadioButton regBtn;
     private javax.swing.JButton replenishBtn;
     private javax.swing.JPanel replenishChange;
     private javax.swing.JTextField replenishMoney;
     private javax.swing.JButton restockBtn;
-    private javax.swing.JComboBox<String> restockItemList;
+    private javax.swing.JComboBox<Slot> restockItemList;
     private javax.swing.JPanel setItemPrice;
     private javax.swing.JButton setPriceBtn;
     private javax.swing.JButton submitBtn;
