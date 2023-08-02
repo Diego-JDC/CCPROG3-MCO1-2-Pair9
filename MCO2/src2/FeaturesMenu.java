@@ -235,7 +235,7 @@ public class FeaturesMenu extends javax.swing.JFrame {
             
             else{
                 String itemName = s.getName();
-                int stock = s.getItemList().size();
+                int stock = s.getItemList().size() - 1;
                 double calories = s.getCalories();
                 double price = s.getPrice();
     

@@ -4,46 +4,57 @@ public class Main {
     //THIS IS WHERE WE RUN THE MCO2
     public static void main(String[] args) {
         Factory factory = new Factory();
-        VendingMachine vm = new VendingMachine("Test machine");
+        SpecialVM vm = new SpecialVM("Test machine");
         
         vm.setIncome(100);
-        Item marshmallows = new Item("Marshmallows", 200, 30);
-        Item chocolate = new Item("Chocolate", 100, 20);
-        Item iceCream = new Item("Ice Cream", 350, 40);
-        Item wafers = new Item("Wafers", 20, 10);
-        Item cookies = new Item("Cookies", 35, 25);
-        Item strawberries = new Item("Strawberries", 15, 16);
+
+        //ITEMS THAT ARE EXCLUSIVELY PART OF REGULAR VM
+        Item sandwich = new Item("Sandwich", 34, 30);
         Item water = new Item("Water bottle", 0, 12);
-        Item banana = new Item("Banana", 17, 22);
-        Item mango = new Item("Mango", 22, 17);
-        Item milk = new Item("Milk bottle", 22, 100);
-        Item pineapple = new Item("Pineapple", 2, 7);
+        
+        //ITEMS THAT CAN BE SOLD INDIVIDUALLY AND BE PART OF SPECIAL VM
+        
+        Ingredient stikO = new Ingredient("Stik-O", 7, 2, "Adding Stik-O...", "Topping");
+        Ingredient iceCream = new Ingredient("Ice Cream", 350, 40, "Scooping and placing ice cream...", "Topping");
 
+        //ITEMS THAT ARE EXCLUSIVELY FOR SPECIALVM
+        Ingredient miloPowder = new Ingredient("Milo Powder", 11, 5, "Sprinkling Milo Powder...", "Powdered Topping");
+        Ingredient milkPowder = new Ingredient("Milk Powder", 20, 11, "Adding Milk Powder...", "Powdered Topping");
+        Ingredient vanillaExtract = new Ingredient("Vanilla Extract", 7, 9, "Adding Vanilla Extract...", "Flavor Extract");
+        Ingredient bananaExtract = new Ingredient("Banana Extract", 5, 6, "Adding Banana Extract...", "Flavor Extract");
+        Ingredient pinkFoodColor = new Ingredient("Pink", 0, 1, "Coloring ice scramble pink...", "Food Color");
+        Ingredient yellowFoodColor = new Ingredient("Yellow", 0, 1, "Coloring ice scramble yellow...", "Food Color");
+
+        vm.getSpecialInventory().add(new Slot(miloPowder.getName(), miloPowder.getCalories(), miloPowder.getPrice()));
+        vm.getSpecialInventory().add(new Slot(milkPowder.getName(), milkPowder.getCalories(), milkPowder.getPrice()));
+
+        vm.getSpecialInventory().add(new Slot(vanillaExtract.getName(), vanillaExtract.getCalories(), vanillaExtract.getPrice()));
+        vm.getSpecialInventory().add(new Slot(bananaExtract.getName(), bananaExtract.getCalories(), bananaExtract.getPrice()));
+
+        vm.getSpecialInventory().add(new Slot(stikO.getName(), stikO.getCalories(), stikO.getPrice()));
+        vm.getSpecialInventory().add(new Slot(iceCream.getName(), iceCream.getCalories(), iceCream.getPrice()));
+
+        vm.getSpecialInventory().add(new Slot(yellowFoodColor.getName(), yellowFoodColor.getCalories(), yellowFoodColor.getPrice()));
+        vm.getSpecialInventory().add(new Slot(pinkFoodColor.getName(), pinkFoodColor.getCalories(), pinkFoodColor.getPrice()));
+
+        vm.addSlot(new Slot(sandwich.getName(), sandwich.getCalories(), sandwich.getPrice()));
+        vm.addSlot(new Slot(water.getName(), water.getCalories(), water.getPrice()));
+
+        vm.stockItem(sandwich, 3);
+        vm.stockItem(water, 3);
+        
+        vm.stockItem(stikO, 3);
+        vm.stockItem(iceCream, 3);
+
+        vm.stockItem(miloPowder, 3);
+        vm.stockItem(milkPowder, 3);
+
+        vm.stockItem(vanillaExtract, 3);
+        vm.stockItem(bananaExtract, 3);
+
+        vm.stockItem(pinkFoodColor, 3);
+        vm.stockItem(yellowFoodColor, 3);
         factory.addToVendingMachineList(vm);
-        vm.addSlot(new Slot("chocolate", chocolate.getCalories(), chocolate.getPrice()));
-        vm.addSlot(new Slot("marshmallows", marshmallows.getCalories(), marshmallows.getPrice()));
-        vm.addSlot(new Slot("ice Cream", iceCream.getCalories(), iceCream.getPrice()));
-        vm.addSlot(new Slot("Wafers", wafers.getCalories(), wafers.getPrice()));
-        vm.addSlot(new Slot("Cookies", cookies.getCalories(), cookies.getPrice()));
-        vm.addSlot(new Slot("Strawberries", strawberries.getCalories(), strawberries.getPrice()));
-        vm.addSlot(new Slot("Water bottle", water.getCalories(), water.getPrice()));
-        vm.addSlot(new Slot("BAnANA", banana.getCalories(), banana.getPrice()));
-        vm.addSlot(new Slot("MaNGO", mango.getCalories(), mango.getPrice()));
-        vm.addSlot(new Slot("MiLK BOtTLe", milk.getCalories(), milk.getPrice()));
-        vm.addSlot(new Slot("Pineapple", pineapple.getCalories(), pineapple.getPrice()));
-
-        vm.stockItem(marshmallows, 10);
-        vm.stockItem(mango, 12);
-        vm.stockItem(milk, 4);
-        vm.stockItem(chocolate, 10);
-        vm.stockItem(iceCream, 10);
-        vm.stockItem(wafers, 11);
-        vm.stockItem(cookies, 12);
-        vm.stockItem(strawberries, 13);
-        vm.stockItem(water, 9);
-        vm.stockItem(banana, 16);
-        vm.stockItem(pineapple, 1);
-
         ViewMenu view = new ViewMenu();
         view.setVisible(true);
         Controller cont = new Controller(view, factory);

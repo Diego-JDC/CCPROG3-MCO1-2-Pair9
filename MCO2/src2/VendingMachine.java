@@ -55,7 +55,7 @@ public class VendingMachine {
 
             if(slotName.equals(itemName)){
                 s.addItem(item, amount);
-                s.setInitQuantity(amount);
+                s.setInitQuantity(amount - 1);
             }
         }
     }

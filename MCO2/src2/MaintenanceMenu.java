@@ -2,6 +2,8 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.JComboBox;
+import javax.swing.JLabel;
 import javax.swing.JRadioButton;
 import javax.swing.table.DefaultTableModel;
 
@@ -748,14 +750,18 @@ public class MaintenanceMenu extends javax.swing.JFrame{
 
         for(Slot s : allItems){
 
-            if(s.getItemList().size() == 0){
-                table.addRow(new Object[]{s.getName(), 0, 0, 0});
+            if(s.getItemList().size() - 1 == 0){
+                table.addRow(new Object[]{s.getName(), s.getInitQuantity(), s.getInitQuantity() + 1 - s.getItemList().size(), (s.getInitQuantity() + 1 - s.getItemList().size()) * s.getPrice() + ".00 PHP"});
             }
             
             else{
                 String itemName = s.getName();
                 int initQuantity = s.getInitQuantity();
-                int amtSold = s.getInitQuantity() - s.getItemList().size();
+                int amtSold = s.getInitQuantity() + 1 - s.getItemList().size();
+                if(s.getName().equals("Shaved Ice")) {
+                    amtSold = s.getInitQuantity() + 2 - s.getItemList().size();
+                }
+                
                 int profit = amtSold * s.getPrice();
     
                 table.addRow(new Object[]{itemName, initQuantity, amtSold, profit + ".00 PHP"});
@@ -840,6 +846,31 @@ public class MaintenanceMenu extends javax.swing.JFrame{
             model.addElement(s);
         }
         restockItemList.setModel(model);
+    }
+
+    public void setTypeList(ArrayList<String> list) {
+        DefaultComboBoxModel<String> model = new DefaultComboBoxModel<>();
+
+        for(String type : list) {
+            model.addElement(type);
+        }
+        typeBox.setModel(model);
+    }
+
+    public JComboBox<String> getTypeList() {
+        return this.typeBox;
+    }
+
+    public void setTypeListAL(ActionListener e) {
+        typeBox.addActionListener(e);
+    }
+
+    public String getTypeSelected() {
+        return (String)typeBox.getSelectedItem();
+    }
+
+    public void setIngBtn(ActionListener e) {
+        ingBtn.addActionListener(e);
     }
 
     /**
@@ -965,6 +996,10 @@ public class MaintenanceMenu extends javax.swing.JFrame{
 
     public void clearStockField(){
         inputStock.setText("");
+    }
+
+    public JLabel getTypeLbl() {
+        return this.typeLabel;
     }
 
     // Variables declaration - do not modify                     

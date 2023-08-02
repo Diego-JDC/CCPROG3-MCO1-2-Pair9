@@ -1,4 +1,11 @@
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JComboBox;
+import javax.swing.JLabel;
+import javax.swing.JTextArea;
+import javax.swing.JTextField;
 
 public class SpecMenu extends javax.swing.JFrame {
 
@@ -32,7 +39,7 @@ public class SpecMenu extends javax.swing.JFrame {
         buildLabel = new javax.swing.JLabel();
         confirmBtn = new javax.swing.JButton();
         specMessage = new javax.swing.JLabel();
-        jLabel1 = new javax.swing.JLabel();
+        stockLabel = new javax.swing.JLabel();
         flavorStock = new javax.swing.JLabel();
         colorStock = new javax.swing.JLabel();
         toppingStock = new javax.swing.JLabel();
@@ -91,7 +98,7 @@ public class SpecMenu extends javax.swing.JFrame {
 
         specMessage.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
 
-        jLabel1.setText("Stock");
+        stockLabel.setText("Stock");
 
         back.setText("Back");
 
@@ -140,7 +147,7 @@ public class SpecMenu extends javax.swing.JFrame {
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(buildLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(stockLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGap(2, 2, 2))))
         );
 
@@ -152,7 +159,7 @@ public class SpecMenu extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(buildLabel)
-                    .addComponent(jLabel1))
+                    .addComponent(stockLabel))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -287,6 +294,8 @@ public class SpecMenu extends javax.swing.JFrame {
         pack();
     }// </editor-fold>
 
+    //SET UP ACTION LISTENERS
+
     /**
      * Adds actions listner to button
      * @param e action listener
@@ -296,37 +305,208 @@ public class SpecMenu extends javax.swing.JFrame {
         back.addActionListener(e);
     }
 
+    public void setBuyBtn(ActionListener e) {
+        buyBtn.addActionListener(e);
+    }
+
+    public void setCancelBtn(ActionListener e) {
+        cancelBtn.addActionListener(e);
+    }
+
+    public void setConfirmBtn(ActionListener e) {
+        confirmBtn.addActionListener(e);
+    }
+
+    public void setInsertBtn(ActionListener e) {
+        insertBtn.addActionListener(e);
+    }
+    
+    public void setFlavorBox(ActionListener e) {
+        flavorBox.addActionListener(e);
+    }
+
+    public void setColorBox(ActionListener e) {
+        colorBox.addActionListener(e);
+    }
+
+    public void setPToppingBox(ActionListener e) {
+        pToppingBox.addActionListener(e);
+    }
+
+    public void setToppingBox(ActionListener e) {
+        toppingBox.addActionListener(e);
+    }
+    
+
+    //GETTERS
+
+    public JComboBox<String> getColorBox() {
+        return this.colorBox;
+    }
+
+    public JComboBox<String> getFlavorBox() {
+        return this.flavorBox;
+    }
+
+    public JComboBox<String> getPToppingBox() {
+        return this.pToppingBox;
+    }
+
+    public JComboBox<String> getToppingBox() {
+        return this.toppingBox;
+    }
+
+    public JLabel getColorStock() {
+        return this.colorStock;
+    }
+
+    public JLabel getFlavorStock() {
+        return this.flavorStock;
+    }
+
+    public JLabel getPToppingStock() {
+        return this.powderStock;
+    }
+
+    public JLabel getToppingStock() {
+        return this.toppingStock;
+    }
+
+    public JLabel getSpecMsgLbl() {
+        return this.specMessage;
+    }
+
+    public JLabel getTransLbl() {
+        return this.transLabel;
+    }
+
+    public JTextField getCashField() {
+        return this.cashField;
+    }
+
+    public JTextField getChangeTF() {
+        return this.change;
+    }
+
+    public JLabel getStatusLbl() {
+        return this.statusLabel;
+    }
+
+    public JTextArea getPrepMsgTA() {
+        return this.prepMsg;
+    }
+
+    //ETC FUNCTIONS
+
+    public void showConstLbls() {
+        buildLabel.setVisible(true);
+        colorLabel.setVisible(true);
+        flavorLabel.setVisible(true);
+        moneyLabel.setVisible(true);
+        powderLabel.setVisible(true);
+        stockLabel.setVisible(true);
+        moneyLabel.setVisible(true);
+    }
+    
+    public void setColorBoxList(ArrayList<Slot> list) {
+        DefaultComboBoxModel<String> model = new DefaultComboBoxModel<>();
+        if(list.isEmpty()) {
+            model.addElement("Empty");
+        } else {
+            model.addElement("None");
+            for(Slot s : list) {
+                if(!s.getItemList().isEmpty()) {
+                    if(((Ingredient)s.getItemList().get(0)).getType().equals("Food Color")) {
+                        model.addElement(s.getName());
+                    }
+                }
+            }
+        }
+        colorBox.setModel(model);
+    }
+
+    public void setFlavorBoxList(ArrayList<Slot> list) {
+        DefaultComboBoxModel<String> model = new DefaultComboBoxModel<>();
+        if(list.isEmpty()) {
+            model.addElement("Empty");
+        } else {
+            model.addElement("None");
+            for(Slot s : list) {
+                if(!s.getItemList().isEmpty()) {
+                    if(((Ingredient)s.getItemList().get(0)).getType().equals("Flavor Extract")) {
+                        model.addElement(s.getName());
+                    }
+                }
+            }
+        }
+        flavorBox.setModel(model);
+    }
+
+    public void setPToppingBoxList(ArrayList<Slot> list) {
+        DefaultComboBoxModel<String> model = new DefaultComboBoxModel<>();
+        if(list.isEmpty()) {
+            model.addElement("Empty");
+        } else {
+            model.addElement("None");
+            for(Slot s : list) {
+                if(!s.getItemList().isEmpty()) {
+                    if(((Ingredient)s.getItemList().get(0)).getType().equals("Powdered Topping")) {
+                        model.addElement(s.getName());
+                    }
+                }
+            }
+        }
+        pToppingBox.setModel(model);
+    }
+
+    public void setToppingList(ArrayList<Slot> list) {
+        DefaultComboBoxModel<String> model = new DefaultComboBoxModel<>();
+        if(list.isEmpty()) {
+            model.addElement("Empty");
+        } else {
+            model.addElement("None");
+            for(Slot s : list) {
+                if(!s.getItemList().isEmpty()) {
+                    if(((Ingredient)s.getItemList().get(0)).getType().equals("Topping")) {
+                        model.addElement(s.getName());
+                    }
+                }
+            }
+        }
+        toppingBox.setModel(model);
+    }
+
     // Variables declaration - do not modify                     
-    private javax.swing.JButton back;
-    private javax.swing.JLabel buildLabel;
-    private javax.swing.JButton buyBtn;
-    private javax.swing.JButton cancelBtn;
+    private javax.swing.JButton back;// good
+    private javax.swing.JLabel buildLabel;// good
+    private javax.swing.JButton buyBtn;// set up
+    private javax.swing.JButton cancelBtn;// set up
     private javax.swing.JTextField cashField;
     private javax.swing.JTextField change;
-    private javax.swing.JComboBox<String> colorBox;
-    private javax.swing.JLabel colorLabel;
-    private javax.swing.JLabel colorStock;
-    private javax.swing.JButton confirmBtn;
-    private javax.swing.JComboBox<String> flavorBox;
-    private javax.swing.JLabel flavorLabel;
-    private javax.swing.JLabel flavorStock;
-    private javax.swing.JButton insertBtn;
-    private javax.swing.JLabel jLabel1;
+    private javax.swing.JComboBox<String> colorBox;// set up
+    private javax.swing.JLabel colorLabel;// good
+    private javax.swing.JLabel colorStock;// good
+    private javax.swing.JButton confirmBtn;// set up
+    private javax.swing.JComboBox<String> flavorBox;// set up
+    private javax.swing.JLabel flavorLabel;// good
+    private javax.swing.JLabel flavorStock;// good
+    private javax.swing.JButton insertBtn;// set up
+    private javax.swing.JLabel stockLabel;// good
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JLabel moneyLabel;
+    private javax.swing.JLabel moneyLabel;// good
     private javax.swing.JPanel moneyPanel;
-    private javax.swing.JComboBox<String> pToppingBox;
-    private javax.swing.JLabel powderLabel;
-    private javax.swing.JLabel powderStock;
+    private javax.swing.JComboBox<String> pToppingBox;// set up
+    private javax.swing.JLabel powderLabel;// good
+    private javax.swing.JLabel powderStock;// good
     private javax.swing.JTextArea prepMsg;
     private javax.swing.JLabel specMessage;
     private javax.swing.JPanel specTitle;
     private javax.swing.JLabel specVMTitle;
     private javax.swing.JLabel statusLabel;
-    private javax.swing.JComboBox<String> toppingBox;
-    private javax.swing.JLabel toppingLabel;
-    private javax.swing.JLabel toppingStock;
+    private javax.swing.JComboBox<String> toppingBox;// set up
+    private javax.swing.JLabel toppingLabel;// good
+    private javax.swing.JLabel toppingStock;// good
     private javax.swing.JLabel transLabel;
     // End of variables declaration                   
 }

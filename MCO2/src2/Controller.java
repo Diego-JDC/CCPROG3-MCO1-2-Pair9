@@ -17,6 +17,8 @@ public class Controller {
     String VMTypeHolder = "Type: ";
     int currentTransaction;
     String currentItem;
+    ArrayList<String> typesOfIng;
+    String typeSelected;
 
     public Controller(ViewMenu view, Factory factory){
         this.view = view;
@@ -24,6 +26,14 @@ public class Controller {
         this.vm = factory.getVendingMachineList().get(factory.getVendingMachineList().size() - 1);
         this.currentTransaction = 0;
         this.currentItem = new String();
+        this.typesOfIng = new ArrayList<String>() {
+            {
+                add("Topping");
+                add("Powdered Topping");
+                add("Food Color");
+                add("Flavor Extract");
+            }
+        };
         
         // Adds actionlistneer to "create" button
         //CREATE VENDING MACHINE
@@ -209,11 +219,32 @@ public class Controller {
                         mMenu.setOptionAddBtn(new ActionListener() {
                             public void actionPerformed(ActionEvent e){
                                 mMenu.showAddItemsMenu();
+                                mMenu.getTypeList().setVisible(false);
+                                mMenu.getTypeLbl().setVisible(false);
+                                
 
                                 if(vm instanceof SpecialVM){
                                     ingBtn.setVisible(true);
                                     regBtn.setVisible(true);
                                 }
+
+                                mMenu.setIngBtn(new ActionListener() {
+                                    public void actionPerformed(ActionEvent e) {
+                                        if(ingBtn.isSelected()) {
+                                            mMenu.setTypeList(typesOfIng);
+                                            mMenu.getTypeList().setVisible(true);
+                                            mMenu.getTypeLbl().setVisible(true);
+                                            mMenu.setTypeListAL(new ActionListener() {
+                                                public void actionPerformed(ActionEvent e) {
+                                                    typeSelected = mMenu.getTypeSelected();
+                                                }
+                                            });
+                                        } else {
+                                            mMenu.getTypeList().setVisible(false);
+                                            mMenu.getTypeLbl().setVisible(false);
+                                        }
+                                    }
+                                });
 
                                 mMenu.setAddItemBtn(new ActionListener() {
                                     public void actionPerformed(ActionEvent e){
@@ -223,22 +254,22 @@ public class Controller {
                                             if(ingBtn.isSelected()){
                                                 Ingredient ing = new Ingredient(mMenu.getNewItemName(), 
                                                 mMenu.getNewCalories(), mMenu.getNewPrice(), 
-                                                "Adding " + mMenu.getNewItemName() + " to Ice Scramble...");
-                                                slot.addItem(ing);
-                                                slot.setInitQuantity(1);
+                                                "Adding " + mMenu.getNewItemName() + " to Ice Scramble...", typeSelected); // TYPE DEPENDING ON COMBO BOX CHOICE
+                                                slot.addItem(ing); // might have to change this at some point
+                                                slot.setInitQuantity(0);
                                                 ((SpecialVM)vm).getSpecialInventory().add(slot);
                                             }
                                             else if(regBtn.isSelected()){
                                                 Item item = new Item(mMenu.getNewItemName(), mMenu.getNewCalories(), mMenu.getNewPrice());
-                                                slot.setInitQuantity(1);
+                                                slot.setInitQuantity(0);
                                                 slot.addItem(item);
                                                 vm.getInventory().add(slot);
                                             }
                                             else if(regBtn.isSelected() && ingBtn.isSelected()){
                                                 Ingredient ing = new Ingredient(mMenu.getNewItemName(), 
                                                 mMenu.getNewCalories(), mMenu.getNewPrice(), 
-                                                "Adding " + mMenu.getNewItemName() + " to Ice Scramble...");
-                                                slot.setInitQuantity(1);
+                                                "Adding " + mMenu.getNewItemName() + " to Ice Scramble...", typeSelected);
+                                                slot.setInitQuantity(0);
                                                 slot.addItem(ing);
                                                 vm.getInventory().add(slot);
                                                 ((SpecialVM)vm).getSpecialInventory().add(slot);
@@ -248,7 +279,7 @@ public class Controller {
                                         }
                                         else{
                                             Item item = new Item(mMenu.getNewItemName(), mMenu.getNewCalories(), mMenu.getNewPrice());
-                                            slot.setInitQuantity(1);
+                                            slot.setInitQuantity(0);
                                             slot.addItem(item);
                                             vm.getInventory().add(slot);
                                         }
@@ -278,13 +309,13 @@ public class Controller {
 
                                 Slot s = mMenu.getSelectedRestock();
                                 ArrayList<Item> currList = s.getItemList();
-                                mMenu.setCurrentStock(currList.size());
+                                mMenu.setCurrentStock(currList.size() - 1);
 
                                 mMenu.setRestockList(new ActionListener(){
                                     public void actionPerformed(ActionEvent e){
                                         Slot s = mMenu.getSelectedRestock();
                                         ArrayList<Item> currList = s.getItemList();
-                                        mMenu.setCurrentStock(currList.size());
+                                        mMenu.setCurrentStock(currList.size() - 1);
                                     }
                                 });
 
@@ -292,9 +323,9 @@ public class Controller {
                                     public void actionPerformed(ActionEvent e){
                                         Slot s = mMenu.getSelectedRestock();
                                         ArrayList<Item> currList = s.getItemList();
-                                        s.setInitQuantity(s.getItemList().size() + mMenu.getInputStock());
+                                        s.setInitQuantity(currList.size() - 1 + mMenu.getInputStock());
                                         s.addItem(s.getItemList().get(0), mMenu.getInputStock());
-                                        mMenu.setCurrentStock(currList.size());
+                                        mMenu.setCurrentStock(currList.size() - 1);
                                         mMenu.clearStockField();
                                     }
                                 });
@@ -348,7 +379,7 @@ public class Controller {
                     public void actionPerformed(ActionEvent e){
                         String name = fMenu.getRow();
                         for(Slot s : vm.getInventory()){
-                            if(!s.getItemList().isEmpty()) {
+                            if(s.getItemList().size() - 1 != 0) {
                                 if(name.equals(s.getName())) {
                                     currentItem = s.getName();
                                     fMenu.updateSelect(s.getName());
@@ -438,11 +469,30 @@ public class Controller {
                     }
                 });
 
+                //SPECIAL MENU FOR ICE SCRAMBLE MAKING
                 fMenu.setSpecBtn(new ActionListener() {
+                    Slot currColor;
+                    Slot currFlavor;
+                    Slot currPTopping;
+                    Slot currTopping;
+                    int totalPrice = 0;
+                    int totalCalories = 0;
+                    String fullPrepMsg = new String();
+                    boolean confirmedSelection = false;
+                    int currentTransaction = 0;
+                    boolean orderComplete = false;
+                    boolean invalid = false;
                     public void actionPerformed(ActionEvent e){
                         SpecMenu sMenu = new SpecMenu();
                         fMenu.dispose();
                         sMenu.setVisible(true);
+
+                        sMenu.setColorBoxList(((SpecialVM)vm).getSpecialInventory());
+                        sMenu.setFlavorBoxList(((SpecialVM)vm).getSpecialInventory());
+                        sMenu.setPToppingBoxList(((SpecialVM)vm).getSpecialInventory());
+                        sMenu.setToppingList(((SpecialVM)vm).getSpecialInventory());
+
+                        sMenu.getChangeTF().setText("Change:");
 
                         sMenu.setBack(new ActionListener() {
                             public void actionPerformed(ActionEvent e){
@@ -450,6 +500,259 @@ public class Controller {
                                 view.setEnabled(true);
                             }
                         });
+
+                        sMenu.setColorBox(new ActionListener() {
+                            public void actionPerformed(ActionEvent e) {
+                                if(sMenu.getColorBox().getSelectedItem().equals("None")) {
+                                    sMenu.getColorStock().setText("");
+                                    currColor = null;
+                                }
+                                for(Slot s : ((SpecialVM)vm).getSpecialInventory()) {
+                                    if(s.getName().equals(sMenu.getColorBox().getSelectedItem())) {
+                                        sMenu.getColorStock().setText(Integer.toString(s.getItemList().size() - 1) + "(" + s.getPrice() + " PHP)");
+                                        currColor = s;
+                                    }
+                                }
+                            }
+                        });
+
+                        sMenu.setFlavorBox(new ActionListener() {
+                            public void actionPerformed(ActionEvent e) {
+                                if(sMenu.getFlavorBox().getSelectedItem().equals("None")) {
+                                    sMenu.getFlavorStock().setText("");
+                                    currFlavor = null;
+                                }
+                                for(Slot s : ((SpecialVM)vm).getSpecialInventory()) {
+                                    if(s.getName().equals(sMenu.getFlavorBox().getSelectedItem())) {
+                                        sMenu.getFlavorStock().setText(Integer.toString(s.getItemList().size() - 1) + "(" + s.getPrice() + " PHP)");
+                                        currFlavor = s;
+                                    }
+                                }
+                            }
+                        });
+
+                        sMenu.setPToppingBox(new ActionListener() {
+                            public void actionPerformed(ActionEvent e) {
+                                if(sMenu.getPToppingBox().getSelectedItem().equals("None")) {
+                                    sMenu.getPToppingStock().setText("");
+                                    currPTopping = null;
+                                }
+                                for(Slot s : ((SpecialVM)vm).getSpecialInventory()) {
+                                    if(s.getName().equals(sMenu.getPToppingBox().getSelectedItem())) {
+                                        sMenu.getPToppingStock().setText(Integer.toString(s.getItemList().size() - 1) + "(" + s.getPrice() + " PHP)");
+                                        currPTopping = s;
+                                    }
+                                }
+                            }
+                        });
+
+                        sMenu.setToppingBox(new ActionListener() {
+                            public void actionPerformed(ActionEvent e) {
+                                
+                                if(sMenu.getToppingBox().getSelectedItem().equals("None")) {
+                                    sMenu.getToppingStock().setText("");
+                                    currTopping = null;
+                                }
+                                for(Slot s : ((SpecialVM)vm).getSpecialInventory()) {
+                                    if(s.getName().equals(sMenu.getToppingBox().getSelectedItem())) {
+                                        sMenu.getToppingStock().setText(Integer.toString(s.getItemList().size() - 1) + "(" + s.getPrice() + " PHP)");
+                                        currTopping = s;
+                                    }
+                                }
+                            }
+                        });
+
+                        sMenu.setConfirmBtn(new ActionListener() {
+                            public void actionPerformed(ActionEvent e) {
+                                if(!confirmedSelection) {
+                                    if(sMenu.getFlavorBox().getSelectedItem().equals("None")) {
+                                        sMenu.getSpecMsgLbl().setText("Choose a flavor first!");
+                                    } else {
+                                        for(Slot s : ((SpecialVM)vm).getSpecialInventory()) {
+                                            if(s.equals(currColor)) {
+                                                if(s.getItemList().size() - 1 != 0) {
+                                                    totalPrice += s.getPrice();
+                                                    totalCalories += s.getCalories();
+                                                } else {
+                                                    invalid = true;
+                                                }
+                                            }
+                                            if(s.equals(currFlavor)) {
+                                                if(s.getItemList().size() - 1 != 0) {
+                                                    totalPrice += s.getPrice();
+                                                    totalCalories += s.getCalories();
+                                                } else {
+                                                    invalid = true;
+                                                }
+                                            }
+                                            if(s.equals(currPTopping)) {
+                                                if(s.getItemList().size() - 1 != 0) {
+                                                    totalPrice += s.getPrice();
+                                                    totalCalories += s.getCalories();
+                                                } else {
+                                                    invalid = true;
+                                                }
+                                            }
+                                            if(s.equals(currTopping)) {
+                                                if(s.getItemList().size() - 1 != 0) {
+                                                    totalPrice += s.getPrice();
+                                                    totalCalories += s.getCalories();
+                                                } else {
+                                                    invalid = true;
+                                                }
+                                            }
+                                            if(s.getName().equals("Shaved Ice")) {
+                                                if(s.getItemList().size() - 1 == 0) {
+                                                    sMenu.getSpecMsgLbl().setText("Ran out of shaved ice! Restock needed");
+                                                    orderComplete = false;
+                                                } else {
+                                                    totalPrice += s.getPrice();
+                                                    totalCalories += s.getCalories();
+                                                    orderComplete = true;
+                                                }
+                                            }
+                                        }
+                                        if(orderComplete && !invalid) {
+                                            sMenu.getSpecMsgLbl().setText("Success! Order Price: " + totalPrice + " PHP");
+                                            confirmedSelection = true;
+
+                                            sMenu.getTransLbl().setText("");
+                                            sMenu.getStatusLbl().setText("");
+                                            sMenu.getChangeTF().setText("Change:");
+                                        } else if(invalid) {
+                                            sMenu.getSpecMsgLbl().setText("Invalid Selection!");
+                                        }
+                                    }
+                                } else {
+                                    sMenu.getSpecMsgLbl().setText("Press Cancel to redo order!");
+                                }
+                            }
+                        });
+
+                        sMenu.setInsertBtn(new ActionListener() {
+                            public void actionPerformed(ActionEvent e) {
+                                if(confirmedSelection) {
+                                    if(vm.isValidDenomination(Integer.parseInt(sMenu.getCashField().getText()))) {
+                                        currentTransaction += Integer.parseInt(sMenu.getCashField().getText());
+                                        sMenu.getTransLbl().setText("Inserted: " + currentTransaction + " PHP");
+                                        sMenu.getCashField().setText("");
+                                    } else {
+                                        sMenu.getTransLbl().setText("Invalid Denomination!");
+                                        sMenu.getCashField().setText("");
+                                    }
+                                } else {
+                                    sMenu.getTransLbl().setText("Select ingredients first!");
+                                    sMenu.getCashField().setText("");
+                                }
+                            }
+                        });
+
+                        sMenu.setBuyBtn(new ActionListener() {
+                            public void actionPerformed(ActionEvent e) {
+                                if(confirmedSelection) {
+                                    if(currentTransaction >= totalPrice) {
+                                        sMenu.getChangeTF().setText("Change: " + (currentTransaction - totalPrice) + " PHP");
+                                        vm.setIncome(vm.getIncome() + totalPrice);
+                                        if(currColor != null && currColor.getItemList().size()-1 == 0) {
+                                            currColor.getItemList().remove(1);
+                                        }
+                                        if(currFlavor != null && currFlavor.getItemList().size()-1 == 0) {
+                                            currFlavor.getItemList().remove(1);
+                                        }
+                                        if(currPTopping != null && currFlavor.getItemList().size()-1 == 0) {
+                                            currPTopping.getItemList().remove(1);
+                                        }
+                                        if(currTopping != null && currTopping.getItemList().size()-1 == 0) {
+                                            currTopping.getItemList().remove(1);
+                                        }
+                                        for(Slot s : ((SpecialVM)vm).getSpecialInventory()) {
+                                            if(s.getName().equals("Shaved Ice")) {
+                                                s.getItemList().remove(1);
+                                                break;
+                                            }
+                                        }
+                                        currentTransaction = 0;
+                                        sMenu.getStatusLbl().setText("Success! Preparing order...");
+                                        for(int i = 0; i < 5; i++) {
+                                            if(i == 0) {
+                                                fullPrepMsg += "Shaving ice...\n";
+                                            }
+                                            if(i == 1) {
+                                                if(currFlavor != null) {
+                                                    fullPrepMsg += ((Ingredient)currFlavor.getItemList().get(0)).getPreparationMsg() + "\n";
+                                                }
+                                            }
+                                            if(i == 2) {
+                                                if(currColor != null) {
+                                                    fullPrepMsg += ((Ingredient)currColor.getItemList().get(0)).getPreparationMsg() + "\n";
+                                                }
+                                            }
+                                            if(i == 3) {
+                                                if(currPTopping != null) {
+                                                    fullPrepMsg += ((Ingredient)currPTopping.getItemList().get(0)).getPreparationMsg() + "\n";
+                                                }
+                                            }
+                                            if(i == 4) {
+                                                if(currTopping != null) {
+                                                    fullPrepMsg += ((Ingredient)currTopping.getItemList().get(0)).getPreparationMsg() + "\n";
+                                                }
+                                                fullPrepMsg += "Mixing...\n";
+                                            }
+                                                
+                                            
+                                            sMenu.getPrepMsgTA().setText(fullPrepMsg);
+                                        }
+                                        fullPrepMsg += "Full order completed!\n Total calories: " + totalCalories + "\nEnjoy!";
+                                        sMenu.getPrepMsgTA().setText(fullPrepMsg);
+                                        
+                                     } else {
+                                        sMenu.getTransLbl().setText("Not enough funds!");
+                                    }
+                                } else {
+                                    sMenu.getTransLbl().setText("Select ingredients first!");
+                                }
+                            }
+                        });
+
+                        sMenu.setCancelBtn(new ActionListener() {
+                            public void actionPerformed(ActionEvent e) {
+                                if(confirmedSelection) {
+                                    sMenu.getSpecMsgLbl().setText("Cancelled selection");
+                                    confirmedSelection = false;
+
+                                    sMenu.getColorBox().removeAll();
+                                    sMenu.getFlavorBox().removeAll();
+                                    sMenu.getPToppingBox().removeAll();
+                                    sMenu.getToppingBox().removeAll();
+
+                                    sMenu.setColorBoxList(((SpecialVM)vm).getSpecialInventory());
+                                    sMenu.setFlavorBoxList(((SpecialVM)vm).getSpecialInventory());
+                                    sMenu.setPToppingBoxList(((SpecialVM)vm).getSpecialInventory());
+                                    sMenu.setToppingList(((SpecialVM)vm).getSpecialInventory());
+
+                                    sMenu.getColorStock().setText("");
+                                    sMenu.getFlavorStock().setText("");
+                                    sMenu.getToppingStock().setText("");
+                                    sMenu.getPToppingStock().setText("");
+
+                                    currColor = null;
+                                    currFlavor = null;
+                                    currPTopping = null;
+                                    currTopping = null;
+
+                                    totalPrice = 0;
+                                    totalCalories = 0;
+
+                                    sMenu.getPrepMsgTA().setText("");
+
+                                    if(currentTransaction > 0) {
+                                        sMenu.getTransLbl().setText("Returned " + currentTransaction + " PHP");
+                                        currentTransaction = 0;
+                                    }
+                                }
+                            }
+                        });
+
                     }
                 });
 

@@ -3,7 +3,6 @@ import java.util.ArrayList;
 public class SpecialVM extends VendingMachine {
     private ArrayList<Slot> specialInventory;
     private ArrayList<Item> currentOrder;
-    private int totalCalories;
 
     //order of operations for ingredient preparation
     //checks based on name/type (type is aaplicable)
@@ -14,38 +13,13 @@ public class SpecialVM extends VendingMachine {
         super(name);
         this.specialInventory = new ArrayList<Slot>();
         this.currentOrder = new ArrayList<Item>();
-        this.totalCalories = 0;
 
-        Ingredient shavedIce = new Ingredient("Shaved Ice", 0, 10, "Shaving ice...");
-        Ingredient powderedMilk = new Ingredient("Powdered Milk", 2, 3, "Adding powdered milk...");
-
-        Slot ShavedIce = new Slot("shaved Ice", shavedIce.getCalories(), shavedIce.getPrice());
-        Slot PowderedMilk = new Slot("Powdered Milk", powderedMilk.getCalories(), powderedMilk.getPrice());
-
+        Ingredient shavedIce = new Ingredient("Shaved Ice", 0, 10, "Shaving ice...", "Base");
+        Slot ShavedIce = new Slot("Shaved Ice", shavedIce.getCalories(), shavedIce.getPrice());
         this.specialInventory.add(ShavedIce);
-        this.specialInventory.add(PowderedMilk);
-        
+        ShavedIce.setInitQuantity(0);
+        ShavedIce.addItem(shavedIce);
         stockItem(shavedIce, 10);
-        stockItem(powderedMilk, 10);
-    }
-
-    //prepare's order based on the currentOrder item list
-    public ArrayList<String> prepareOrder() { 
-
-        //LOGIC RESERVED FOR CONTROLLER
-        ArrayList<String> result = new ArrayList<String>();
-        if(!currentOrder.isEmpty()) {
-            for(Item item : currentOrder) {
-                if(item instanceof Ingredient) {
-                    Ingredient i = (Ingredient)item;
-                    result.add(i.getPreparationMsg());
-                    currentOrder.remove(item);
-                }
-                totalCalories += item.getCalories(); //IDC ANYMORE
-            }
-        }
-
-        return result;
     }
 
     public ArrayList<Slot> getSpecialInventory() {
@@ -56,10 +30,6 @@ public class SpecialVM extends VendingMachine {
         return this.currentOrder;
     }
 
-    public double getTotalCalories() {
-        return this.totalCalories;
-    }
-
     public void stockItem(Ingredient item, int amount){
         String itemName = item.getName().toLowerCase();
 
@@ -68,7 +38,7 @@ public class SpecialVM extends VendingMachine {
 
             if(slotName.equals(itemName)){
                 s.addItem(item, amount);
-                s.setInitQuantity(amount);
+                s.setInitQuantity(amount - 1);
             }
         }
     }
