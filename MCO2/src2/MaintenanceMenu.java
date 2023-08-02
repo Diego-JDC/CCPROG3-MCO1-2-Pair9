@@ -61,6 +61,8 @@ public class MaintenanceMenu extends javax.swing.JFrame{
         newNameLabel = new javax.swing.JLabel();
         caloriesLabel = new javax.swing.JLabel();
         newPrice = new javax.swing.JLabel();
+        typeBox = new javax.swing.JComboBox<>();
+        typeLabel = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         SummaryTable = new javax.swing.JTable();
         addMenuOptions = new javax.swing.JPanel();
@@ -298,17 +300,17 @@ public class MaintenanceMenu extends javax.swing.JFrame{
 
         newPrice.setText("Price");
 
+        typeBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Topping", "Powder Topping", "Food Color", "Flavor Extract" }));
+
+        typeLabel.setText("Choose type of ingredient");
+
         javax.swing.GroupLayout AddItemsMenuLayout = new javax.swing.GroupLayout(AddItemsMenu);
         AddItemsMenu.setLayout(AddItemsMenuLayout);
         AddItemsMenuLayout.setHorizontalGroup(
             AddItemsMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, AddItemsMenuLayout.createSequentialGroup()
-                .addContainerGap(22, Short.MAX_VALUE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(AddItemsMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(AddItemsMenuLayout.createSequentialGroup()
-                        .addComponent(ingBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(regBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(AddItemsMenuLayout.createSequentialGroup()
                         .addComponent(addBtn)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -322,8 +324,18 @@ public class MaintenanceMenu extends javax.swing.JFrame{
                         .addGroup(AddItemsMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(nameField, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(caloriesField, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(priceField, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addGap(68, 68, 68))
+                            .addComponent(priceField, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(AddItemsMenuLayout.createSequentialGroup()
+                        .addComponent(ingBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(regBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(118, 118, 118))
+            .addGroup(AddItemsMenuLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(typeLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(typeBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         AddItemsMenuLayout.setVerticalGroup(
             AddItemsMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -348,7 +360,11 @@ public class MaintenanceMenu extends javax.swing.JFrame{
                 .addGroup(AddItemsMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(ingBtn)
                     .addComponent(regBtn))
-                .addContainerGap(33, Short.MAX_VALUE))
+                .addGap(3, 3, 3)
+                .addGroup(AddItemsMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(typeBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(typeLabel))
+                .addContainerGap(8, Short.MAX_VALUE))
         );
 
         Parent.add(AddItemsMenu, "card7");
@@ -1000,5 +1016,7 @@ public class MaintenanceMenu extends javax.swing.JFrame{
     private javax.swing.JButton setPriceBtn;
     private javax.swing.JButton submitBtn;
     private javax.swing.JButton summaryBtn;
+    private javax.swing.JComboBox<String> typeBox;
+    private javax.swing.JLabel typeLabel;
     // End of variables declaration
 }

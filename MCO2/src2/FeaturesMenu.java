@@ -30,18 +30,19 @@ public class FeaturesMenu extends javax.swing.JFrame {
         tableScroll = new javax.swing.JScrollPane();
         vmTable = new javax.swing.JTable();
         type = new javax.swing.JLabel();
-        moneyLabel = new javax.swing.JLabel();
-        cashField = new javax.swing.JTextField();
-        insertBtn = new javax.swing.JButton();
-        change = new javax.swing.JTextField();
         selectBtn = new javax.swing.JButton();
         selectedLabel = new javax.swing.JLabel();
-        transLabel = new javax.swing.JLabel();
-        buyBtn = new javax.swing.JButton();
         back = new javax.swing.JButton();
-        cancelBtn = new javax.swing.JButton();
         dispenseLabel = new javax.swing.JLabel();
         specMenuBtn = new javax.swing.JButton();
+        moneyPanel = new javax.swing.JPanel();
+        insertBtn = new javax.swing.JButton();
+        cashField = new javax.swing.JTextField();
+        buyBtn = new javax.swing.JButton();
+        cancelBtn = new javax.swing.JButton();
+        transLabel = new javax.swing.JLabel();
+        change = new javax.swing.JTextField();
+        moneyLabel = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
@@ -80,24 +81,69 @@ public class FeaturesMenu extends javax.swing.JFrame {
         type.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         type.setText("Type:");
 
-        moneyLabel.setText("Input money here:");
+        selectBtn.setText("Select");
+
+        back.setText("Back");
+
+        dispenseLabel.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+
+        specMenuBtn.setText("Special Menu");
 
         insertBtn.setText("Insert Money");
         insertBtn.setFocusable(false);
+
+        buyBtn.setText("Buy");
+
+        cancelBtn.setText("Cancel");
 
         change.setEditable(false);
         change.setText("Change: ");
         change.setFocusable(false);
 
-        selectBtn.setText("Select");
+        moneyLabel.setText("Input money here:");
 
-        buyBtn.setText("Buy");
-
-        back.setText("Back");
-
-        cancelBtn.setText("Cancel");
-
-        specMenuBtn.setText("Special Menu");
+        javax.swing.GroupLayout moneyPanelLayout = new javax.swing.GroupLayout(moneyPanel);
+        moneyPanel.setLayout(moneyPanelLayout);
+        moneyPanelLayout.setHorizontalGroup(
+            moneyPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(moneyPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(moneyPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(moneyLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(cashField)
+                    .addGroup(moneyPanelLayout.createSequentialGroup()
+                        .addGap(3, 3, 3)
+                        .addGroup(moneyPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(moneyPanelLayout.createSequentialGroup()
+                                .addComponent(buyBtn)
+                                .addGap(27, 27, 27)
+                                .addComponent(cancelBtn))
+                            .addGroup(moneyPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(insertBtn)
+                                .addComponent(change, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(transLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(0, 8, Short.MAX_VALUE)))
+                .addContainerGap())
+        );
+        moneyPanelLayout.setVerticalGroup(
+            moneyPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(moneyPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(moneyLabel)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(cashField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(insertBtn)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(transLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(change, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(moneyPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(buyBtn)
+                    .addComponent(cancelBtn))
+                .addContainerGap())
+        );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -109,24 +155,15 @@ public class FeaturesMenu extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(tableScroll, javax.swing.GroupLayout.PREFERRED_SIZE, 410, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(moneyLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(cashField)
                             .addGroup(layout.createSequentialGroup()
-                                .addGap(3, 3, 3)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(buyBtn)
-                                        .addGap(27, 27, 27)
-                                        .addComponent(cancelBtn))
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(type, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(insertBtn)
-                                        .addComponent(transLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(change, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                .addGap(0, 8, Short.MAX_VALUE)))
-                        .addGap(12, 12, 12))
+                                .addGap(15, 15, 15)
+                                .addComponent(type, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(moneyPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addContainerGap())))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
@@ -138,13 +175,13 @@ public class FeaturesMenu extends javax.swing.JFrame {
                                 .addComponent(back)
                                 .addGap(182, 182, 182)
                                 .addComponent(specMenuBtn)))
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addContainerGap())
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(selectBtn)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(selectedLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(dispenseLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(dispenseLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGap(33, 33, 33))))
         );
         layout.setVerticalGroup(
@@ -159,29 +196,17 @@ public class FeaturesMenu extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(empty)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(tableScroll, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(moneyLabel)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(cashField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(insertBtn)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(transLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(change, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(buyBtn)
-                                    .addComponent(cancelBtn))))
+                        .addComponent(tableScroll, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(selectBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(selectedLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                    .addComponent(dispenseLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(moneyPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(dispenseLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(13, 13, 13)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(back)
@@ -351,23 +376,28 @@ public class FeaturesMenu extends javax.swing.JFrame {
         tableScroll.setViewportView(vmTable);
     }
 
+    public void setSpecBtn(ActionListener e){
+        specMenuBtn.addActionListener(e);
+    }
+
     // Variables declaration - do not modify                     
     private javax.swing.JLabel Title;
     private javax.swing.JButton back;
-    private javax.swing.JButton buyBtn; // the buy button
-    private javax.swing.JButton cancelBtn; // the cancel button
-    private javax.swing.JTextField cashField; // get the money the user put in the machine
-    private javax.swing.JTextField change; // where change would be outputted
-    private javax.swing.JLabel dispenseLabel; // if the current transaction is successful display 'success!' otherwise if error etc.
-    private javax.swing.JLabel empty; // if the inventory is empty, display this.
-    private javax.swing.JButton insertBtn; // the insert money button
-    private javax.swing.JLabel moneyLabel; // CONSTANT
+    private javax.swing.JButton buyBtn;
+    private javax.swing.JButton cancelBtn;
+    private javax.swing.JTextField cashField;
+    private javax.swing.JTextField change;
+    private javax.swing.JLabel dispenseLabel;
+    private javax.swing.JLabel empty;
+    private javax.swing.JButton insertBtn;
+    private javax.swing.JLabel moneyLabel;
+    private javax.swing.JPanel moneyPanel;
     private javax.swing.JButton selectBtn;
-    private javax.swing.JLabel selectedLabel; // where the current item selected woule be displayed
-    private javax.swing.JButton specMenuBtn; 
+    private javax.swing.JLabel selectedLabel;
+    private javax.swing.JButton specMenuBtn;
     private javax.swing.JScrollPane tableScroll;
-    private javax.swing.JLabel transLabel; // where the current transaction would be recorded
-    private javax.swing.JLabel type; // vending machine type label
+    private javax.swing.JLabel transLabel;
+    private javax.swing.JLabel type;
     private javax.swing.JLabel vmName;
     private javax.swing.JTable vmTable;
     // End of variables declaration                    

@@ -432,6 +432,21 @@ public class Controller {
                     }
                 });
 
+                fMenu.setSpecBtn(new ActionListener() {
+                    public void actionPerformed(ActionEvent e){
+                        SpecMenu sMenu = new SpecMenu();
+                        fMenu.dispose();
+                        sMenu.setVisible(true);
+
+                        sMenu.setBack(new ActionListener() {
+                            public void actionPerformed(ActionEvent e){
+                                sMenu.dispose();
+                                view.setEnabled(true);
+                            }
+                        });
+                    }
+                });
+
                 fMenu.setVisible(true);
             }
         });
