@@ -1,7 +1,18 @@
+/**
+ * Item class that holds properties of an item
+ */
+
 public class Item {
     private String name;
     private int calories;
     private int price;
+
+    /**
+     * Constructor
+     * @param name name of item
+     * @param calories number of calories of an item
+     * @param price price of an item
+     */
 
     public Item(String name, int calories, int price) {
         this.name = name;

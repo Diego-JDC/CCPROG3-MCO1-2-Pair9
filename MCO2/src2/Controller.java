@@ -1,8 +1,6 @@
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
-
-import javax.swing.Action;
 import javax.swing.JRadioButton;
 
 /**
@@ -20,6 +18,12 @@ public class Controller {
     ArrayList<String> typesOfIng;
     String typeSelected;
 
+    /**
+     * Constructor
+     * @param view view object
+     * @param factory factory object
+     */
+
     public Controller(ViewMenu view, Factory factory){
         this.view = view;
         this.factory = factory;
@@ -35,8 +39,9 @@ public class Controller {
             }
         };
         
-        // Adds actionlistneer to "create" button
-        //CREATE VENDING MACHINE
+        /**
+         * Button opens a new menu to create a new vending machine
+         */
         this.view.setCreateBtn(new ActionListener() {
             public void actionPerformed(ActionEvent e){
                 // Creates a new JFrame/window
@@ -48,8 +53,8 @@ public class Controller {
 
                 cMenu.setBack(new ActionListener() {
                     public void actionPerformed(ActionEvent e) {
-                        view.setEnabled(true);
-                        cMenu.dispose();
+                        view.setEnabled(true); // disables the menu window
+                        cMenu.dispose(); // closes the create menu
                     }
                 });
 
@@ -57,6 +62,7 @@ public class Controller {
                     public void actionPerformed(ActionEvent e){
                         String name = cMenu.getName();
 
+                        // Checks if the name is too long or if text field is empty
                         if(name.length() > 10 || name.length() == 0){
                             do{
                                 if(name.length() > 10) {
@@ -210,12 +216,13 @@ public class Controller {
 
                 mMenu.setAddBtn(new ActionListener() {
                     public void actionPerformed(ActionEvent e){
-                        mMenu.showAddMenuOptions();
+                        mMenu.showAddMenuOptions(); // Displays the option buttons for user to choose to add or restock
                         JRadioButton ingBtn = mMenu.getIngBtn();
                         JRadioButton regBtn = mMenu.getRegBtn();
                         ingBtn.setVisible(false);
                         regBtn.setVisible(false);
 
+                        // Opens a different menu when user selects add items
                         mMenu.setOptionAddBtn(new ActionListener() {
                             public void actionPerformed(ActionEvent e){
                                 mMenu.showAddItemsMenu();
@@ -255,7 +262,7 @@ public class Controller {
                                                 Ingredient ing = new Ingredient(mMenu.getNewItemName(), 
                                                 mMenu.getNewCalories(), mMenu.getNewPrice(), 
                                                 "Adding " + mMenu.getNewItemName() + " to Ice Scramble...", typeSelected); // TYPE DEPENDING ON COMBO BOX CHOICE
-                                                slot.addItem(ing); // might have to change this at some point
+                                                slot.addItem(ing);
                                                 slot.setInitQuantity(0);
                                                 ((SpecialVM)vm).getSpecialInventory().add(slot);
                                             }
@@ -289,7 +296,8 @@ public class Controller {
                                 });
                             }
                         });
-                    
+                
+                        // Opens the restock menu if button is pressed
                         mMenu.setOptionRestockBtn(new ActionListener() {
                             public void actionPerformed(ActionEvent e){
                                 ArrayList<Slot> list = vm.getInventory();
@@ -408,6 +416,7 @@ public class Controller {
                     }
                 });
 
+                //Inserts money into vending machine whenever pressed
                 fMenu.setInsertBtn(new ActionListener() {
                     public void actionPerformed(ActionEvent e){
                         if(vm.isValidDenomination(fMenu.getCashField())){
@@ -421,6 +430,7 @@ public class Controller {
                     }
                 });
 
+                //Cancels current order and returns inserted money to user
                 fMenu.setCancelBtn(new ActionListener() {
                    public void actionPerformed(ActionEvent e) {
 
@@ -440,23 +450,30 @@ public class Controller {
                    } 
                 });
 
+                // Dispenses item or displays error message
                 fMenu.setBuyBtn(new ActionListener() {
                     public void actionPerformed(ActionEvent e) {
                         for(Slot s : vm.getInventory()) {
                             if(currentItem.equals(s.getName())) {
                                 if(currentTransaction >= s.getItemPrice()) {
-                                    fMenu.getCashFieldTF().setText("");
-                                    int change = currentTransaction - s.getItemPrice();
-                                    int profit = currentTransaction - change;
-                                    fMenu.setChangeLbl(Integer.toString(change) + ".00 PHP");
-                                    vm.setIncome(vm.getIncome() + profit);
-                                    fMenu.hideBuyingFunction();
-                                    fMenu.getChangeField().setVisible(true);
-                                    fMenu.updateSelect("None");
-                                    fMenu.setDispenseLbl("Success! Dispensing: " + s.getName());
-                                    s.getItemList().remove(0);
-                                    currentTransaction = 0;
-                                    fMenu.updateTransLabel(currentTransaction);
+                                    if(vm.getChange() < currentTransaction - s.getItemPrice()){
+                                        fMenu.setDispenseLbl("No change!");
+                                    }
+                                    else{
+                                        fMenu.getCashFieldTF().setText("");
+                                        int change = currentTransaction - s.getItemPrice();
+                                        int profit = currentTransaction - change;
+                                        fMenu.setChangeLbl(Integer.toString(change) + ".00 PHP");
+                                        vm.setIncome(vm.getIncome() + profit);
+                                        fMenu.hideBuyingFunction();
+                                        fMenu.getChangeField().setVisible(true);
+                                        fMenu.updateSelect("None");
+                                        fMenu.setDispenseLbl("Success! Dispensing: " + s.getName());
+                                        s.getItemList().remove(0);
+                                        currentTransaction = 0;
+                                        fMenu.updateTransLabel(currentTransaction);
+                                        vm.setChange(-change);
+                                    }
                                 } else {
                                     fMenu.setDispenseLbl("Not enough funds!");
                                 }
@@ -464,8 +481,7 @@ public class Controller {
                                 fMenu.setTable(vm);
                                 break;
                             }
-                        }
-                        
+                        }   
                     }
                 });
 
@@ -651,6 +667,10 @@ public class Controller {
                             public void actionPerformed(ActionEvent e) {
                                 if(confirmedSelection) {
                                     if(currentTransaction >= totalPrice) {
+                                        if(vm.getChange() < currentTransaction-totalPrice){
+                                            sMenu.getStatusLbl().setText("No change!");
+                                        }
+                                    else{
                                         sMenu.getChangeTF().setText("Change: " + (currentTransaction - totalPrice) + " PHP");
                                         vm.setIncome(vm.getIncome() + totalPrice);
                                         if(currColor != null && currColor.getItemList().size()-1 != 0) {
@@ -671,6 +691,7 @@ public class Controller {
                                                 break;
                                             }
                                         }
+                                        vm.setChange(-(currentTransaction-totalPrice));
                                         currentTransaction = 0;
                                         sMenu.getStatusLbl().setText("Success! Preparing order...");
                                         for(int i = 0; i < 5; i++) {
@@ -704,11 +725,12 @@ public class Controller {
                                         }
                                         fullPrepMsg += "Full order completed!\n Total calories: " + totalCalories + "\nEnjoy!";
                                         sMenu.getPrepMsgTA().setText(fullPrepMsg);
-                                        
+                                    }    
                                      } else {
                                         sMenu.getTransLbl().setText("Not enough funds!");
                                     }
-                                } else {
+                                } 
+                                else {
                                     sMenu.getTransLbl().setText("Select ingredients first!");
                                 }
                             }

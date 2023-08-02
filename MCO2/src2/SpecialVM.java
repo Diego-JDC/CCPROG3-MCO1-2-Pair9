@@ -1,12 +1,16 @@
 import java.util.ArrayList;
 
+/**
+ * Child class of VendingMachine class
+ */
+
 public class SpecialVM extends VendingMachine {
     private ArrayList<Slot> specialInventory;
 
-    //order of operations for ingredient preparation
-    //checks based on name/type (type is aaplicable)
-    private String[] ingredientOrder = {"Shaved Ice","Powdered Milk", 
-                                         "Extract", "Food Color", "Topping"};
+    /**
+     * Constructor
+     * @param name name of special vending machine
+     */
 
     public SpecialVM(String name) {
         super(name);
@@ -24,6 +28,11 @@ public class SpecialVM extends VendingMachine {
         return this.specialInventory;
     }
 
+    /**
+     * Stocks a specific number of an item
+     * @param item ingredient object
+     * @param amount amount to be stocked
+     */
 
     public void stockItem(Ingredient item, int amount){
         String itemName = item.getName().toLowerCase();
