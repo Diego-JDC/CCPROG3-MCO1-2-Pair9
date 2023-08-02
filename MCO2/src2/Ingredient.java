@@ -2,9 +2,10 @@ public class Ingredient extends Item {
     private String preparationMsg;
     private String type;
 
-    public Ingredient(String name, int calories, int price, String pMsg) {
+    public Ingredient(String name, int calories, int price, String pMsg, String type) {
         super(name, calories, price);
         this.preparationMsg = pMsg;
+        this.type = type;
     }
 
     public void setPreparationMsg(String msg) {
