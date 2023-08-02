@@ -19,8 +19,8 @@ public class SpecialVM extends VendingMachine {
         Ingredient shavedIce = new Ingredient("Shaved Ice", 0, 10, "Shaving ice...");
         Ingredient powderedMilk = new Ingredient("Powdered Milk", 2, 3, "Adding powdered milk...");
 
-        Slot ShavedIce = new Slot("shaved Ice");
-        Slot PowderedMilk = new Slot("Powdered Milk");
+        Slot ShavedIce = new Slot("shaved Ice", shavedIce.getCalories(), shavedIce.getPrice());
+        Slot PowderedMilk = new Slot("Powdered Milk", powderedMilk.getCalories(), powderedMilk.getPrice());
 
         this.specialInventory.add(ShavedIce);
         this.specialInventory.add(PowderedMilk);
@@ -71,5 +71,20 @@ public class SpecialVM extends VendingMachine {
                 s.setInitQuantity(amount);
             }
         }
+    }
+
+    /**
+     * Checks if every slot in special inventory is empty (no more item instances in it)
+     * @return boolean value. True is the inventory has slots but is all out of stock, otherwise return false
+     */
+    @Override
+    public boolean isAllOutOfStock() {
+        boolean result = true;
+        for(Slot s : specialInventory) {
+            if(!s.getItemList().isEmpty()) {
+                result = false;
+            }
+        }
+        return result;
     }
 }

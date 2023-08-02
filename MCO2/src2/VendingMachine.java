@@ -42,8 +42,8 @@ public class VendingMachine {
     }
 
     //TEMPORARY
-    public void addSlot(String name) {
-        Slot n = new Slot(name);
+    public void addSlot(String name, int calories, int price) {
+        Slot n = new Slot(name, calories, price);
         this.inventory.add(n);
     }
 
@@ -93,5 +93,19 @@ public class VendingMachine {
             }
         }
         return valid;
+    }
+
+    /**
+     * Checks if every slot in inventory is empty (no more item instances in it)
+     * @return boolean value. True is the inventory has slots but is all out of stock, otherwise return false
+     */
+    public boolean isAllOutOfStock() {
+        boolean result = true;
+        for(Slot s : inventory) {
+            if(!s.getItemList().isEmpty()) {
+                result = false;
+            }
+        }
+        return result;
     }
 }

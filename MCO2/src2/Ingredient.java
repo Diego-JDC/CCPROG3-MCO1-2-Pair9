@@ -1,7 +1,7 @@
 public class Ingredient extends Item {
     private String preparationMsg;
 
-    public Ingredient(String name, double calories, int price, String pMsg) {
+    public Ingredient(String name, int calories, int price, String pMsg) {
         super(name, calories, price);
         this.preparationMsg = pMsg;
     }

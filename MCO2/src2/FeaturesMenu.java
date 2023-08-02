@@ -1,6 +1,9 @@
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 
 public class FeaturesMenu extends javax.swing.JFrame {
@@ -217,8 +220,8 @@ public class FeaturesMenu extends javax.swing.JFrame {
             else{
                 String itemName = s.getName();
                 int stock = s.getItemList().size();
-                double calories = s.getItemList().get(0).getCalories();
-                double price = s.getItemList().get(0).getPrice();
+                double calories = s.getCalories();
+                double price = s.getPrice();
     
                 table.addRow(new Object[]{itemName, stock, calories, price});
             }
@@ -246,7 +249,7 @@ public class FeaturesMenu extends javax.swing.JFrame {
     }
 
     public void updateSelect(String s){
-        selectedLabel.setText("Current Selected : " + s);
+        selectedLabel.setText("Selected Item : " + s);
     }
 
     public void setInsertBtn(ActionListener e){
@@ -269,23 +272,102 @@ public class FeaturesMenu extends javax.swing.JFrame {
         transLabel.setText("");
     }
 
+    public JButton getSpecMenuBtn() {
+        return this.specMenuBtn;
+    }
+
+    public JLabel getEmptyLbl() {
+        return this.empty;
+    }
+
+    public JLabel getMoneyLbl() {
+        return this.moneyLabel;
+    }
+
+    public void hideBuyingFunction() {
+        cashField.setVisible(false);
+        buyBtn.setVisible(false);
+        cancelBtn.setVisible(false);
+        //change.setVisible(false);
+        //dispenseLabel.setVisible(false);
+        insertBtn.setVisible(false);
+        moneyLabel.setVisible(false);
+        transLabel.setVisible(false);
+    }
+
+    public void showBuyingFunction() {
+        cashField.setVisible(true);
+        buyBtn.setVisible(true);
+        cancelBtn.setVisible(true);
+        //change.setVisible(true);
+        //dispenseLabel.setVisible(true);
+        insertBtn.setVisible(true);
+        moneyLabel.setVisible(true);
+        transLabel.setVisible(true);
+    }
+
+    public JTextField getChangeField() {
+        return this.change;
+    }
+
+    public void setCancelBtn(ActionListener e) {
+        this.cancelBtn.addActionListener(e);
+    }
+
+    public void setChangeLbl(String change) {
+        this.change.setText("Change: " + change);
+    }
+
+    public void setDispenseLbl(String str) {
+        dispenseLabel.setText(str);
+    }
+
+    public JTextField getCashFieldTF() {
+        return this.cashField;
+    }
+
+    public void setBuyBtn(ActionListener e) {
+        this.buyBtn.addActionListener(e);
+    }
+
+    public void removeTable() {
+        vmTable.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Item Name", "Stock", "Calories", "Price"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        vmTable.setShowGrid(false);
+        tableScroll.setViewportView(vmTable);
+    }
+
     // Variables declaration - do not modify                     
     private javax.swing.JLabel Title;
     private javax.swing.JButton back;
-    private javax.swing.JButton buyBtn;
-    private javax.swing.JButton cancelBtn;
-    private javax.swing.JTextField cashField;
-    private javax.swing.JTextField change;
-    private javax.swing.JLabel dispenseLabel;
-    private javax.swing.JLabel empty;
-    private javax.swing.JButton insertBtn;
-    private javax.swing.JLabel moneyLabel;
+    private javax.swing.JButton buyBtn; // the buy button
+    private javax.swing.JButton cancelBtn; // the cancel button
+    private javax.swing.JTextField cashField; // get the money the user put in the machine
+    private javax.swing.JTextField change; // where change would be outputted
+    private javax.swing.JLabel dispenseLabel; // if the current transaction is successful display 'success!' otherwise if error etc.
+    private javax.swing.JLabel empty; // if the inventory is empty, display this.
+    private javax.swing.JButton insertBtn; // the insert money button
+    private javax.swing.JLabel moneyLabel; // CONSTANT
     private javax.swing.JButton selectBtn;
-    private javax.swing.JLabel selectedLabel;
-    private javax.swing.JButton specMenuBtn;
+    private javax.swing.JLabel selectedLabel; // where the current item selected woule be displayed
+    private javax.swing.JButton specMenuBtn; 
     private javax.swing.JScrollPane tableScroll;
-    private javax.swing.JLabel transLabel;
-    private javax.swing.JLabel type;
+    private javax.swing.JLabel transLabel; // where the current transaction would be recorded
+    private javax.swing.JLabel type; // vending machine type label
     private javax.swing.JLabel vmName;
     private javax.swing.JTable vmTable;
     // End of variables declaration                    

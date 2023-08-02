@@ -2,6 +2,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
+import javax.swing.Action;
 import javax.swing.JRadioButton;
 
 /**
@@ -14,11 +15,15 @@ public class Controller {
     private VendingMachine vm;
     String VMNameHolder = "Vending Machine: ";
     String VMTypeHolder = "Type: ";
+    int currentTransaction;
+    String currentItem;
 
     public Controller(ViewMenu view, Factory factory){
         this.view = view;
         this.factory = factory;
         this.vm = factory.getVendingMachineList().get(factory.getVendingMachineList().size() - 1);
+        this.currentTransaction = 0;
+        this.currentItem = new String();
         
         // Adds actionlistneer to "create" button
         //CREATE VENDING MACHINE
@@ -208,7 +213,7 @@ public class Controller {
                                 mMenu.setAddItemBtn(new ActionListener() {
                                     public void actionPerformed(ActionEvent e){
                                         mMenu.hideAddMessage();
-                                        Slot slot = new Slot(mMenu.getNewItemName());
+                                        Slot slot = new Slot(mMenu.getNewItemName(), mMenu.getNewCalories(), mMenu.getNewPrice());
                                         if(vm instanceof SpecialVM){
                                             if(ingBtn.isSelected()){
                                                 Ingredient ing = new Ingredient(mMenu.getNewItemName(), 
@@ -297,13 +302,30 @@ public class Controller {
         this.view.setFeaturesBtn(new ActionListener() {
             public void actionPerformed(ActionEvent e){
                 FeaturesMenu fMenu = new FeaturesMenu();
+                
+                fMenu.getSpecMenuBtn().setVisible(false);
+
+                fMenu.hideBuyingFunction();
+                fMenu.getChangeField().setVisible(false);
+                fMenu.updateSelect("None");
+
+
+
                 ArrayList<VendingMachine> currentList = factory.getVendingMachineList();
                 VendingMachine vm = currentList.get(currentList.size()-1);
                 fMenu.setVendingMachineName(VMNameHolder + vm.getName());
                 if(vm instanceof SpecialVM) {
                     fMenu.setType(VMTypeHolder + "Special");
+                    fMenu.getSpecMenuBtn().setVisible(true);
                 } else {
                     fMenu.setType(VMTypeHolder + "Regular");
+                }
+
+                fMenu.getEmptyLbl().setVisible(false);
+                if(vm.getInventory().isEmpty()) {
+                    fMenu.getEmptyLbl().setVisible(true);
+                } else if(vm.isAllOutOfStock()) {
+                    fMenu.getEmptyLbl().setText("All out of stock...");
                 }
                 
                 fMenu.setBack(new ActionListener() {
@@ -319,11 +341,32 @@ public class Controller {
                 fMenu.setSelectBtn(new ActionListener() {
                     public void actionPerformed(ActionEvent e){
                         String name = fMenu.getRow();
-
                         for(Slot s : vm.getInventory()){
-                            if(name.equals(s.getName())){
-                                fMenu.updateSelect(s.getName());
+                            if(!s.getItemList().isEmpty()) {
+                                if(name.equals(s.getName())) {
+                                    currentItem = s.getName();
+                                    fMenu.updateSelect(s.getName());
+                                    fMenu.showBuyingFunction();
+                                    fMenu.getChangeField().setVisible(true);
+                                    if(currentTransaction > 0) {
+                                        fMenu.setDispenseLbl("Returned " + currentTransaction + ".00 PHP");
+                                        currentTransaction = 0;
+                                        fMenu.updateTransLabel(currentTransaction);
+                                        fMenu.getCashFieldTF().setText("");
+                                    } else {
+                                        fMenu.setDispenseLbl("");
+                                        fMenu.setChangeLbl("");
+                                        fMenu.getCashFieldTF().setText("");
+                                    }
+
+                                    break;
+                                }
+                            } else {
+                                fMenu.hideBuyingFunction();
+                                fMenu.getChangeField().setVisible(false);
+                                fMenu.setDispenseLbl(s.getName() + " is out of stock!");
                             }
+                            
                         }
                     }
                 });
@@ -331,12 +374,61 @@ public class Controller {
                 fMenu.setInsertBtn(new ActionListener() {
                     public void actionPerformed(ActionEvent e){
                         if(vm.isValidDenomination(fMenu.getCashField())){
-                            int currentTransaction = 0;
-                            fMenu.updateTransLabel(fMenu.getCashField());
+                            currentTransaction += fMenu.getCashField();
+                            fMenu.updateTransLabel(currentTransaction);
+                            fMenu.getCashFieldTF().setText("");
                         }
                         else{
                             fMenu.errorTransLabel();
                         }
+                    }
+                });
+
+                fMenu.setCancelBtn(new ActionListener() {
+                   public void actionPerformed(ActionEvent e) {
+
+                        fMenu.hideBuyingFunction();
+                        fMenu.getChangeField().setVisible(false);
+                        fMenu.updateSelect("None");
+                        if(currentTransaction > 0) {
+                            fMenu.setDispenseLbl("Returned " + currentTransaction + ".00 PHP");
+                            currentTransaction = 0;
+                            fMenu.updateTransLabel(currentTransaction);
+                            fMenu.getCashFieldTF().setText("");
+                        } else {
+                            fMenu.getCashFieldTF().setText("");
+                            fMenu.setDispenseLbl("");
+                            fMenu.setChangeLbl("");
+                        }
+                   } 
+                });
+
+                fMenu.setBuyBtn(new ActionListener() {
+                    public void actionPerformed(ActionEvent e) {
+                        for(Slot s : vm.getInventory()) {
+                            if(currentItem.equals(s.getName())) {
+                                if(currentTransaction >= s.getItemPrice()) {
+                                    fMenu.getCashFieldTF().setText("");
+                                    int change = currentTransaction - s.getItemPrice();
+                                    int profit = currentTransaction - change;
+                                    fMenu.setChangeLbl(Integer.toString(change) + ".00 PHP");
+                                    vm.setIncome(vm.getIncome() + profit);
+                                    fMenu.hideBuyingFunction();
+                                    fMenu.getChangeField().setVisible(true);
+                                    fMenu.updateSelect("None");
+                                    fMenu.setDispenseLbl("Success! Dispensing: " + s.getName());
+                                    s.getItemList().remove(0);
+                                    currentTransaction = 0;
+                                    fMenu.updateTransLabel(currentTransaction);
+                                } else {
+                                    fMenu.setDispenseLbl("Not enough funds!");
+                                }
+                                fMenu.removeTable();
+                                fMenu.setTable(vm);
+                                break;
+                            }
+                        }
+                        
                     }
                 });
 
