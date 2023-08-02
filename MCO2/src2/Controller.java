@@ -653,16 +653,16 @@ public class Controller {
                                     if(currentTransaction >= totalPrice) {
                                         sMenu.getChangeTF().setText("Change: " + (currentTransaction - totalPrice) + " PHP");
                                         vm.setIncome(vm.getIncome() + totalPrice);
-                                        if(currColor != null && currColor.getItemList().size()-1 == 0) {
+                                        if(currColor != null && currColor.getItemList().size()-1 != 0) {
                                             currColor.getItemList().remove(1);
                                         }
-                                        if(currFlavor != null && currFlavor.getItemList().size()-1 == 0) {
+                                        if(currFlavor != null && currFlavor.getItemList().size()-1 != 0) {
                                             currFlavor.getItemList().remove(1);
                                         }
-                                        if(currPTopping != null && currFlavor.getItemList().size()-1 == 0) {
+                                        if(currPTopping != null && currFlavor.getItemList().size()-1 != 0) {
                                             currPTopping.getItemList().remove(1);
                                         }
-                                        if(currTopping != null && currTopping.getItemList().size()-1 == 0) {
+                                        if(currTopping != null && currTopping.getItemList().size()-1 != 0) {
                                             currTopping.getItemList().remove(1);
                                         }
                                         for(Slot s : ((SpecialVM)vm).getSpecialInventory()) {
