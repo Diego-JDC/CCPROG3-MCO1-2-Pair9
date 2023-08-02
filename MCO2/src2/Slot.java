@@ -25,11 +25,6 @@ public class Slot {
         }
     }
 
-    //removes the first Item in the array
-    public void sellItem() {
-        itemList.remove(itemList.get(0));
-    }
-
     public ArrayList<Item> getItemList() {
         return itemList;
     }

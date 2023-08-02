@@ -41,12 +41,6 @@ public class VendingMachine {
         this.inventory.add(s);
     }
 
-    //TEMPORARY
-    public void addSlot(String name, int calories, int price) {
-        Slot n = new Slot(name, calories, price);
-        this.inventory.add(n);
-    }
-
     public void stockItem(Item item, int amount){
         String itemName = item.getName().toLowerCase();
 
@@ -58,28 +52,6 @@ public class VendingMachine {
                 s.setInitQuantity(amount - 1);
             }
         }
-    }
-
-    //TEMPORARY
-    public void displayInventory() {
-        int index = 0;
-        for(Slot s : this.inventory) {
-            System.out.println(index + " " + s.getName() + " stock: " + s.getItemList().size());
-        }
-    }
-
-    //TEMPORARY
-    public void removeSlot(String name) {
-        for(Slot s : inventory) {
-            if(s.getName() == name) {
-                inventory.remove(s);
-            }
-        }
-    }
-
-    //TEMPORARY
-    public void removeSlot(Slot s) {
-        inventory.remove(s);
     }
 
     public boolean isValidDenomination(int input){
