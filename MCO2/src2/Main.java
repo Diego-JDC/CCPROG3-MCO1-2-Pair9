@@ -1,7 +1,8 @@
-
+/**
+ * Main class that runs the program
+ */
 
 public class Main {
-    //THIS IS WHERE WE RUN THE MCO2
     public static void main(String[] args) {
         Factory factory = new Factory();
         SpecialVM vm = new SpecialVM("Test machine");
