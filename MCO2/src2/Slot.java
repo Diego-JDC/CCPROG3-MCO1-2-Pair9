@@ -60,6 +60,7 @@ public class Slot {
     }
 
     public void setItemPrice(int price){
+        this.price = price;
         for(Item i : itemList){
             i.setPrice(price);
         }

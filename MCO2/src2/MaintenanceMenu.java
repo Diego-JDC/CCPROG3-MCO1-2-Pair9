@@ -755,7 +755,7 @@ public class MaintenanceMenu extends javax.swing.JFrame{
                 String itemName = s.getName();
                 int initQuantity = s.getInitQuantity();
                 int amtSold = s.getInitQuantity() - s.getItemList().size();
-                int profit = amtSold * s.getItemPrice();
+                int profit = amtSold * s.getPrice();
     
                 table.addRow(new Object[]{itemName, initQuantity, amtSold, profit + ".00 PHP"});
             }
