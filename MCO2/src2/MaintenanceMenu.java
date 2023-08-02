@@ -302,6 +302,7 @@ public class MaintenanceMenu extends javax.swing.JFrame{
 
         typeBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Topping", "Powder Topping", "Food Color", "Flavor Extract" }));
 
+        typeLabel.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         typeLabel.setText("Choose type of ingredient");
 
         javax.swing.GroupLayout AddItemsMenuLayout = new javax.swing.GroupLayout(AddItemsMenu);
@@ -332,7 +333,7 @@ public class MaintenanceMenu extends javax.swing.JFrame{
                 .addGap(118, 118, 118))
             .addGroup(AddItemsMenuLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(typeLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(typeLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(typeBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
