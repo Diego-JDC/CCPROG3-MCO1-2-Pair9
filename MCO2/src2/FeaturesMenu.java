@@ -199,22 +199,13 @@ public class FeaturesMenu extends javax.swing.JFrame {
 
     public void setTable(VendingMachine vm){
         DefaultTableModel table = (DefaultTableModel) vmTable.getModel();
-        ArrayList<Slot> allItems = new ArrayList<Slot>();
-
-        for(Slot s : vm.getInventory()){
-            allItems.add(s);
-        }
-
-        if(vm instanceof SpecialVM){
-            for(Slot s : ((SpecialVM)vm).getSpecialInventory()){
-                allItems.add(s);
-            }
-        }
+        //REMOVED ALL LIST BECAUSE WE ONLY WANT THE REG VM INVENTORY NOT SPEC VM INVENTORY AS WELL
+        //SPEC VM INVENTORY WILL BE SHOWN IN SPECIAL MENU
         
-        for(Slot s : allItems){
+        for(Slot s : vm.getInventory()){
 
             if(s.getItemList().size() == 0){
-                table.addRow(new Object[]{s.getName(), 0, 0, 0});
+                table.addRow(new Object[]{s.getName(), 0, s.getCalories() + ".0", s.getPrice() + ".0"});
             }
             
             else{

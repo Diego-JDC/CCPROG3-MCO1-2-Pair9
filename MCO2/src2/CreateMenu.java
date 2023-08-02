@@ -205,8 +205,9 @@ public class CreateMenu extends javax.swing.JFrame {
         return RVMName.getText();
     }
 
-    public void showErrMsg(){
+    public void setErrMsg(String err){
         errMessage.setVisible(true);
+        errMessage.setText(err);
     }
 
     public void hideErrMsg(){

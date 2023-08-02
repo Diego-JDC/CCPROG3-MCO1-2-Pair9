@@ -47,9 +47,14 @@ public class Controller {
                     public void actionPerformed(ActionEvent e){
                         String name = cMenu.getName();
 
-                        if(name.length() > 10){
+                        if(name.length() > 10 || name.length() == 0){
                             do{
-                                cMenu.showErrMsg();
+                                if(name.length() > 10) {
+                                    cMenu.setErrMsg("Name is too long! Try again.");
+                                } else if(name.length() == 0) {
+                                    cMenu.setErrMsg("Input name first!");
+                                }
+                                
                                 cMenu.resetTextField();
                                 name = cMenu.getName();
                             }while(name.length() > 10);
@@ -57,7 +62,7 @@ public class Controller {
 
                         else{
                             cMenu.showOptions();
-                            
+                            cMenu.setErrMsg("");
                             cMenu.setRegularBtn(new ActionListener() {
                                 public void actionPerformed(ActionEvent e){
                                     String name = cMenu.getName();
@@ -237,6 +242,8 @@ public class Controller {
                                                 slot.addItem(ing);
                                                 vm.getInventory().add(slot);
                                                 ((SpecialVM)vm).getSpecialInventory().add(slot);
+                                            } else {
+                                                System.out.println("Could not add item!");
                                             }
                                         }
                                         else{
@@ -309,10 +316,9 @@ public class Controller {
                 fMenu.getChangeField().setVisible(false);
                 fMenu.updateSelect("None");
 
-
-
                 ArrayList<VendingMachine> currentList = factory.getVendingMachineList();
                 VendingMachine vm = currentList.get(currentList.size()-1);
+
                 fMenu.setVendingMachineName(VMNameHolder + vm.getName());
                 if(vm instanceof SpecialVM) {
                     fMenu.setType(VMTypeHolder + "Special");
